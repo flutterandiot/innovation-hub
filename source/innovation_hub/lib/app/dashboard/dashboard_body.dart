@@ -10,6 +10,7 @@
 * Description: This file is shown when there is not any project in database
  */
 import 'package:flutter/material.dart';
+import 'package:innovation_hub/app/project/new_project_page.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 
@@ -19,11 +20,12 @@ class DashboardPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final isSmallScreen = Breakpoints.small.isActive(context);
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
           padding: const EdgeInsets.only(left: 4 * defaultPadding, right: 2 * defaultPadding, top: 4 * defaultPadding),
-          color: Colors.grey[200],
+          color: Theme.of(context).scaffoldBackgroundColor,
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
             child: Column(
@@ -68,7 +70,11 @@ class DashboardPageBody extends StatelessWidget {
                     children: [
                       ElevatedButton.icon(
                         onPressed: () {
-                          //TODO - add action code
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const NewProjectPage(),
+                            ),
+                          );
                         },
                         icon: const Icon(Icons.add),
                         label: const Text('New idea project'),
@@ -82,8 +88,16 @@ class DashboardPageBody extends StatelessWidget {
                           //TODO - add action code
                         },
                         icon: const Icon(Icons.add),
-                        label: const Text('New problem solving project'),
-                        style: ElevatedButton.styleFrom(minimumSize: const Size(128, 64), backgroundColor: Colors.amber),
+                        label: Text(
+                          'New problem solving project',
+                          style: TextStyle(
+                            color: isLight ? Colors.amber : Colors.white,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(128, 64),
+                          backgroundColor: isLight ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColorDark,
+                        ),
                       ),
                     ],
                   ),

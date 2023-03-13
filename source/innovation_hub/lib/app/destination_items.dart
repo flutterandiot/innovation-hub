@@ -7,7 +7,9 @@ final List<NavigationDestination> destinations = [
     label: 'Dashboard',
   ),
   const NavigationDestination(
-    icon: Icon(Icons.explore_outlined),
+    icon: Icon(
+      Icons.explore_outlined,
+    ),
     selectedIcon: Icon(Icons.explore),
     label: 'Explore',
   ),

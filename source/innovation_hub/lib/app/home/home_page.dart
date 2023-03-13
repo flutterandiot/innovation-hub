@@ -30,6 +30,31 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = ref.watch(destinationIndexProvider);
+    final isLight = Theme.of(context).brightness == Brightness.light;
+    final theme = Theme.of(context);
+    final iconColor = isLight ? theme.primaryColor : theme.primaryColorDark;
+
+    final List<NavigationDestination> destinations = [
+      NavigationDestination(
+        icon: Icon(Icons.dashboard_outlined, color: iconColor),
+        selectedIcon: const Icon(Icons.dashboard),
+        label: 'Dashboard',
+      ),
+      NavigationDestination(
+        icon: Icon(Icons.explore_outlined, color: iconColor),
+        selectedIcon: const Icon(Icons.explore),
+        label: 'Explore',
+      ),
+      NavigationDestination(
+        icon: Icon(
+          Icons.settings_outlined,
+          color: iconColor,
+        ),
+        selectedIcon: const Icon(Icons.settings),
+        label: 'Settings',
+      ),
+    ];
+
     return Scaffold(
       body: AdaptiveLayout(
         primaryNavigation: SlotLayout(

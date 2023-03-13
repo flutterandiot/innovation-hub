@@ -16,8 +16,10 @@ class EmptyProjectPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.only(left: 32, right: 16, top: 48),
+      color: Colors.grey[200],
+      height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,46 +49,26 @@ class EmptyProjectPageBody extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Material(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: SizedBox(
-                    height: 180,
-                    width: 240,
-                    child: InkWell(
-                      onTap: () {
-                        //TODO - add action code for new idea
-                      },
-                      child: Image.asset(
-                        'assets/images/new-idea.png',
-                        fit: BoxFit.contain,
-                        height: 100,
-                        width: 100,
-                      ),
-                    ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    //TODO - add action code
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('New idea project'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(128, 64),
                   ),
                 ),
                 const SizedBox(
                   width: 20,
                 ),
-                Material(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: SizedBox(
-                    height: 180,
-                    width: 240,
-                    child: InkWell(
-                      onTap: () {
-                        //TODO - add action code for problem solving
-                      },
-                      child: Image.asset(
-                        'assets/images/problem-solving.png',
-                        fit: BoxFit.contain,
-                        height: 100,
-                        width: 100,
-                      ),
-                    ),
-                  ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    //TODO - add action code
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('New problem solving project'),
+                  style: ElevatedButton.styleFrom(minimumSize: const Size(128, 64), backgroundColor: Colors.amber),
                 ),
               ],
             ),

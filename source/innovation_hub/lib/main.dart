@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:innovation_hub/theme.dart';
-import 'app/home/home_page.dart';
+import 'router.dart';
 
 void main() {
   runApp(
@@ -17,8 +17,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      routerConfig: router,
       // Made for FlexColorScheme version 7.0.0-dev.2 (beta). Make sure
 // you use same or higher version, but still same major version. If
 // you use a lower version, some properties may not be supported. In
@@ -59,7 +60,7 @@ class MainApp extends StatelessWidget {
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,
-      home: const HomePage(),
+      // home: const HomePage(),
     );
   }
 }

@@ -10,7 +10,7 @@
 * Description: This file is shown when there is not any project in database
  */
 import 'package:flutter/material.dart';
-import 'package:innovation_hub/app/project/new_project_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 
@@ -70,11 +70,7 @@ class DashboardPageBody extends StatelessWidget {
                     children: [
                       ElevatedButton.icon(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const NewProjectPage(),
-                            ),
-                          );
+                          context.goNamed('new-project');
                         },
                         icon: const Icon(Icons.add),
                         label: const Text('New idea project'),

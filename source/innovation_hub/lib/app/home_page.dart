@@ -18,10 +18,10 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
-import 'package:innovation_hub/destination_items.dart';
-import 'package:innovation_hub/empty_project_body.dart';
 
 import 'demo_items.dart';
+import 'destination_items.dart';
+import 'empty_project_body.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -19,9 +19,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
-import 'demo_items.dart';
 import 'destination_items.dart';
 import 'empty_project_body.dart';
+import 'empty_project_small_body.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -63,12 +63,21 @@ class HomePage extends StatelessWidget {
           config: {
             Breakpoints.small: SlotLayout.from(
               key: const Key('Small Body'),
-              builder: (_) => ListView.builder(
-                itemCount: demoItems.length,
-                itemBuilder: (_, index) => demoItems[index],
-              ),
+              builder: (_) => const EmptyProjectPageSmallBody(),
+              // builder: (_) => ListView.builder(
+              //   itemCount: demoItems.length,
+              //   itemBuilder: (_, index) => demoItems[index],
+              // ),
             ),
-            Breakpoints.mediumAndUp: SlotLayout.from(
+            Breakpoints.medium: SlotLayout.from(
+              key: const Key('Small Body'),
+              builder: (_) => const EmptyProjectPageBody(),
+              // builder: (_) => ListView.builder(
+              //   itemCount: demoItems.length,
+              //   itemBuilder: (_, index) => demoItems[index],
+              // ),
+            ),
+            Breakpoints.large: SlotLayout.from(
               key: const Key('Medium and up body'),
               builder: (_) => const EmptyProjectPageBody(),
               // builder: (_) => GridView.count(

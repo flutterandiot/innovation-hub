@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_adaptive_scaffold: ^0.1.0
+  flex_color_scheme: ^7.0.0-dev.2
 
 dev_dependencies:
   flutter_test:

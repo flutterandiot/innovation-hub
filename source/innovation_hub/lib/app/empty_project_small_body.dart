@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 
-class EmptyProjectPageBody extends StatelessWidget {
-  const EmptyProjectPageBody({super.key});
+class EmptyProjectPageSmallBody extends StatelessWidget {
+  const EmptyProjectPageSmallBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class EmptyProjectPageBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 400,
+                  width: 350,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
@@ -55,35 +55,33 @@ class EmptyProjectPageBody extends StatelessWidget {
               ],
             ),
             Space.y(20),
-            SizedBox(
-              width: double.infinity,
-              child: Wrap(
-                runSpacing: 24,
-                spacing: 32,
-                alignment: WrapAlignment.center,
-                runAlignment: WrapAlignment.center,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      //TODO - add action code
-                    },
-                    icon: const Icon(Icons.add),
-                    label: const Text('New idea project'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(128, 64),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        //TODO - add action code
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('New idea project'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(260, 64),
+                      ),
                     ),
-                  ),
-                  // Space.x(20),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      //TODO - add action code
-                    },
-                    icon: const Icon(Icons.add),
-                    label: const Text('New problem solving project'),
-                    style: ElevatedButton.styleFrom(minimumSize: const Size(128, 64), backgroundColor: Colors.amber),
-                  ),
-                ],
-              ),
+                    Space.y(20),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        //TODO - add action code
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('New problem solving project'),
+                      style: ElevatedButton.styleFrom(minimumSize: const Size(260, 64), backgroundColor: Colors.amber),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

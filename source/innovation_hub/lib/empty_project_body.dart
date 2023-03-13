@@ -10,6 +10,8 @@
 * Description: This file is shown when there is not any project in database
  */
 import 'package:flutter/material.dart';
+import 'package:innovation_hub/utils/padding.dart';
+import 'package:innovation_hub/utils/space.dart';
 
 class EmptyProjectPageBody extends StatelessWidget {
   const EmptyProjectPageBody({super.key});
@@ -17,7 +19,7 @@ class EmptyProjectPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 32, right: 16, top: 48),
+      padding: const EdgeInsets.only(left: 4 * defaultPadding, right: 2 * defaultPadding, top: 4 * defaultPadding),
       color: Colors.grey[200],
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
@@ -43,9 +45,7 @@ class EmptyProjectPageBody extends StatelessWidget {
                 Image.asset('assets/images/time-to-innovate.png'),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            Space.y(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -59,9 +59,7 @@ class EmptyProjectPageBody extends StatelessWidget {
                     minimumSize: const Size(128, 64),
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                Space.x(20),
                 ElevatedButton.icon(
                   onPressed: () {
                     //TODO - add action code

@@ -22,7 +22,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:innovation_hub/app/dashboard/dashboard_body.dart';
 import 'package:innovation_hub/app/explore/explore_body.dart';
 import 'package:innovation_hub/app/home/home_page_providers.dart';
-import '../destination_items.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});

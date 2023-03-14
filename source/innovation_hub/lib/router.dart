@@ -48,7 +48,9 @@ final router = GoRouter(
         GoRoute(
           path: '/dashboard',
           name: AppRoute.dashboard.name,
+          //NOTE - this builder will use default animation, which cause unintended animation when switching between destinations, we we don't use this builder
           // builder: (context, state) => const DashboardPageBody(),
+          //!Use NoTransitionPage
           //NOTE - We use a NoTransitionPage inside the main (/dashboard, /explore,/settings) routes to prevent unintended animations when switching between destination (this is the default behavior on popular iOS apps).
 
           pageBuilder: (context, state) => NoTransitionPage(
@@ -82,10 +84,6 @@ final router = GoRouter(
                   },
                 );
               },
-              // pageBuilder: (context, state) => NoTransitionPage(
-              //   key: state.pageKey,
-              //   child: const NewProjectPage(),
-              // ),
             ),
           ],
         ),

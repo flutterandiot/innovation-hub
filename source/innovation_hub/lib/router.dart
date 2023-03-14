@@ -59,7 +59,32 @@ final router = GoRouter(
             GoRoute(
               path: 'add-project',
               name: AppRoute.addProject.name,
-              builder: (context, state) => const NewProjectPage(),
+
+              // builder: (context, state) => const NewProjectPage(),
+              pageBuilder: (context, state) {
+                return CustomTransitionPage(
+                  child: const NewProjectPage(),
+                  transitionsBuilder: (context, animation, secondAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+                    final tween = Tween(begin: begin, end: end).chain(
+                      CurveTween(curve: curve),
+                    );
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: FadeTransition(
+                        opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                        child: child,
+                      ),
+                    );
+                    // return FadeTransition(
+                    //   opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                    //   child: child,
+                    // );
+                  },
+                );
+              },
               // pageBuilder: (context, state) => NoTransitionPage(
               //   key: state.pageKey,
               //   child: const NewProjectPage(),

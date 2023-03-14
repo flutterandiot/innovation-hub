@@ -4,6 +4,7 @@ import 'package:innovation_hub/app/dashboard/dashboard_body.dart';
 import 'package:innovation_hub/app/explore/explore_body.dart';
 import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
+import 'package:innovation_hub/app/settings/explore_body.dart';
 
 // GoRouter configuration
 // private navigators
@@ -30,6 +31,7 @@ final router = GoRouter(
         return HomePage(body: child);
       },
       routes: [
+        // Dashboard
         GoRoute(
           path: '/dashboard',
           name: 'dashboard',
@@ -42,6 +44,7 @@ final router = GoRouter(
             ),
           ],
         ),
+        // Explore
         GoRoute(
           path: '/explore',
           name: 'explore',
@@ -53,6 +56,11 @@ final router = GoRouter(
               builder: (context, state) => const NewProjectPage(),
             ),
           ],
+        ),
+        GoRoute(
+          path: '/settings',
+          name: 'settings',
+          builder: (context, state) => const SettingsPageBody(),
         ),
       ],
     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/dashboard/dashboard_body.dart';
+import 'package:innovation_hub/app/explore/explore_body.dart';
 import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
 
@@ -44,7 +45,7 @@ final router = GoRouter(
         GoRoute(
           path: '/explore',
           name: 'explore',
-          builder: (context, state) => const DashboardPageBody(),
+          builder: (context, state) => const ExplorePageBody(),
           routes: [
             GoRoute(
               path: 'learn-create-idea',

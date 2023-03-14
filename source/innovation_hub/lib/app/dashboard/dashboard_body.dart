@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/router.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
+import 'package:lottie/lottie.dart';
 
 class DashboardPageBody extends StatelessWidget {
   const DashboardPageBody({super.key});
@@ -36,7 +37,7 @@ class DashboardPageBody extends StatelessWidget {
                   height: 48,
                 ),
                 Text(
-                  'Welcome to our dashboard,',
+                  'Welcome back innovator,',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Text(
@@ -50,12 +51,17 @@ class DashboardPageBody extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: constraints.maxWidth * 0.6,
+                      height: constraints.maxHeight * 0.5,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          'assets/images/time-to-innovate.png',
+                        child: Lottie.asset(
+                          'assets/animations/118991-idea-innovation.json',
                           fit: BoxFit.contain,
                         ),
+                        // child: Image.asset(
+                        //   'assets/images/time-to-innovate.png',
+                        //   fit: BoxFit.contain,
+                        // ),
                       ),
                     ),
                   ],

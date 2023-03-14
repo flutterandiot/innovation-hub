@@ -12,6 +12,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
+import 'package:lottie/lottie.dart';
 
 class ExplorePageBody extends StatelessWidget {
   const ExplorePageBody({super.key});
@@ -37,7 +38,7 @@ class ExplorePageBody extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               Text(
-                'time to innovate!',
+                'enrich your knowledge now!',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontStyle: FontStyle.italic,
                     ),
@@ -47,10 +48,11 @@ class ExplorePageBody extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: constraints.maxWidth * 0.6,
+                    height: constraints.maxHeight * 0.5,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        'assets/images/time-to-innovate.png',
+                      child: Lottie.asset(
+                        'assets/animations/73243-happy-students-studying.json',
                         fit: BoxFit.contain,
                       ),
                     ),

@@ -41,6 +41,7 @@ class SettingsPageBody extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: constraints.maxWidth * 0.6,
+                    height: constraints.maxHeight * 0.5,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Image.asset(

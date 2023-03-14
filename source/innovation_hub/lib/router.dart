@@ -4,7 +4,7 @@ import 'package:innovation_hub/app/dashboard/dashboard_body.dart';
 import 'package:innovation_hub/app/explore/explore_body.dart';
 import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
-import 'package:innovation_hub/app/settings/explore_body.dart';
+import 'package:innovation_hub/app/settings/settings_body.dart';
 
 // GoRouter configuration
 // private navigators

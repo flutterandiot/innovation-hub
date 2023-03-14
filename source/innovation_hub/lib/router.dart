@@ -22,6 +22,7 @@ enum AppRoute {
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/dashboard',
+  //NOTE - Show debug info of routing
   debugLogDiagnostics: true,
   routes: [
     // GoRoute(
@@ -36,20 +37,33 @@ final router = GoRouter(
     // ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) {
-        return HomePage(body: child);
+      pageBuilder: (context, state, child) {
+        return NoTransitionPage(
+          child: HomePage(body: child),
+          key: state.pageKey,
+        );
       },
       routes: [
         // Dashboard
         GoRoute(
           path: '/dashboard',
           name: AppRoute.dashboard.name,
-          builder: (context, state) => const DashboardPageBody(),
+          // builder: (context, state) => const DashboardPageBody(),
+          //NOTE - We use a NoTransitionPage inside the main (/dashboard, /explore,/settings) routes to prevent unintended animations when switching between destination (this is the default behavior on popular iOS apps).
+
+          pageBuilder: (context, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const DashboardPageBody(),
+          ),
           routes: [
             GoRoute(
               path: 'add-project',
               name: AppRoute.addProject.name,
               builder: (context, state) => const NewProjectPage(),
+              // pageBuilder: (context, state) => NoTransitionPage(
+              //   key: state.pageKey,
+              //   child: const NewProjectPage(),
+              // ),
             ),
           ],
         ),
@@ -57,7 +71,11 @@ final router = GoRouter(
         GoRoute(
           path: '/explore',
           name: AppRoute.explore.name,
-          builder: (context, state) => const ExplorePageBody(),
+          // builder: (context, state) => const ExplorePageBody(),
+          pageBuilder: (context, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const ExplorePageBody(),
+          ),
           routes: [
             GoRoute(
               path: 'learn-sit',
@@ -70,7 +88,11 @@ final router = GoRouter(
         GoRoute(
           path: '/settings',
           name: AppRoute.settings.name,
-          builder: (context, state) => const SettingsPageBody(),
+          // builder: (context, state) => const SettingsPageBody(),
+          pageBuilder: (context, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const SettingsPageBody(),
+          ),
         ),
       ],
     ),

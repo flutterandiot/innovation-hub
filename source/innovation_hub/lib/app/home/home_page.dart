@@ -21,10 +21,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:innovation_hub/app/home/home_page_providers.dart';
 import 'package:innovation_hub/router.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({
     super.key,
     required this.body,
@@ -32,8 +31,13 @@ class HomePage extends ConsumerWidget {
 
   final Widget body;
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final selectedIndex = ref.watch(destinationIndexProvider);
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    // final selectedIndex = ref.watch(destinationIndexProvider);
     final isLight = Theme.of(context).brightness == Brightness.light;
     final theme = Theme.of(context);
     final iconColor = isLight ? theme.primaryColor : theme.primaryColorDark;
@@ -89,8 +93,8 @@ class HomePage extends ConsumerWidget {
           config: {
             Breakpoints.medium: SlotLayout.from(
               key: const Key('primary-navi-medium'),
-              inAnimation: AdaptiveScaffold.fadeIn,
-              outAnimation: AdaptiveScaffold.fadeOut,
+              // inAnimation: AdaptiveScaffold.fadeIn,
+              // outAnimation: AdaptiveScaffold.fadeOut,
               builder: (context) => AdaptiveScaffold.standardNavigationRail(
                 destinations: destinations.map(AdaptiveScaffold.toRailDestination).toList(),
                 leading: Image.asset(
@@ -129,7 +133,7 @@ class HomePage extends ConsumerWidget {
             Breakpoints.small: SlotLayout.from(
               key: const Key('Small Body'),
               builder: (_) {
-                return body;
+                return widget.body;
                 // switch (selectedIndex) {
                 //   case 0:
                 //     return const DashboardPageBody();
@@ -143,7 +147,7 @@ class HomePage extends ConsumerWidget {
             Breakpoints.medium: SlotLayout.from(
               key: const Key('medium-body'),
               builder: (_) {
-                return body;
+                return widget.body;
                 // switch (selectedIndex) {
                 //   case 0:
                 //     return const DashboardPageBody();
@@ -157,7 +161,7 @@ class HomePage extends ConsumerWidget {
             Breakpoints.large: SlotLayout.from(
               key: const Key('large-body'),
               builder: (_) {
-                return body;
+                return widget.body;
                 // switch (selectedIndex) {
                 //   case 0:
                 //     return const DashboardPageBody();

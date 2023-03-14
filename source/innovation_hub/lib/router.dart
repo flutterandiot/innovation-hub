@@ -65,7 +65,7 @@ final router = GoRouter(
                 return CustomTransitionPage(
                   child: const NewProjectPage(),
                   transitionsBuilder: (context, animation, secondAnimation, child) {
-                    const begin = Offset(0.0, 1.0);
+                    const begin = Offset(1.0, 0.0);
                     const end = Offset.zero;
                     const curve = Curves.ease;
                     final tween = Tween(begin: begin, end: end).chain(
@@ -73,15 +73,12 @@ final router = GoRouter(
                     );
                     return SlideTransition(
                       position: animation.drive(tween),
+                      // child: child,
                       child: FadeTransition(
                         opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
                         child: child,
                       ),
                     );
-                    // return FadeTransition(
-                    //   opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                    //   child: child,
-                    // );
                   },
                 );
               },

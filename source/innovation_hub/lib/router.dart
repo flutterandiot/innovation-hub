@@ -11,9 +11,18 @@ import 'package:innovation_hub/app/settings/explore_body.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
+enum AppRoute {
+  dashboard,
+  explore,
+  settings,
+  addProject,
+  learnSIT,
+}
+
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/dashboard',
+  debugLogDiagnostics: true,
   routes: [
     // GoRoute(
     //   path: '/',
@@ -34,12 +43,12 @@ final router = GoRouter(
         // Dashboard
         GoRoute(
           path: '/dashboard',
-          name: 'dashboard',
+          name: AppRoute.dashboard.name,
           builder: (context, state) => const DashboardPageBody(),
           routes: [
             GoRoute(
-              path: 'new-project',
-              name: 'new-project',
+              path: 'add-project',
+              name: AppRoute.addProject.name,
               builder: (context, state) => const NewProjectPage(),
             ),
           ],
@@ -47,19 +56,20 @@ final router = GoRouter(
         // Explore
         GoRoute(
           path: '/explore',
-          name: 'explore',
+          name: AppRoute.explore.name,
           builder: (context, state) => const ExplorePageBody(),
           routes: [
             GoRoute(
-              path: 'learn-create-idea',
-              name: 'learn-create-idea',
+              path: 'learn-sit',
+              name: AppRoute.learnSIT.name,
               builder: (context, state) => const NewProjectPage(),
             ),
           ],
         ),
+        // Settings
         GoRoute(
           path: '/settings',
-          name: 'settings',
+          name: AppRoute.settings.name,
           builder: (context, state) => const SettingsPageBody(),
         ),
       ],

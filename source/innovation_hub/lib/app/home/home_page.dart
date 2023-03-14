@@ -22,6 +22,7 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/home/home_page_providers.dart';
+import 'package:innovation_hub/router.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({
@@ -58,6 +59,30 @@ class HomePage extends ConsumerWidget {
       ),
     ];
 
+    void _selectedNavi(BuildContext context, int index) {
+      if (index == 0) {
+        context.goNamed(AppRoute.dashboard.name);
+      } else if (index == 1) {
+        context.goNamed(AppRoute.explore.name);
+      } else if (index == 2) {
+        context.goNamed(AppRoute.settings.name);
+      }
+      // switch (index) {
+      //   case 0:
+      //     context.goNamed(AppRoute.dashboard.name);
+      //     break;
+      //   case 1:
+      //     context.goNamed(AppRoute.explore.name);
+      //     break;
+      //   case 2:
+      //     context.goNamed(AppRoute.settings.name);
+      //     break;
+      //   default:
+      //      context.goNamed(AppRoute.dashboard.name);
+      //     break;
+      // }
+    }
+
     return Scaffold(
       body: AdaptiveLayout(
         primaryNavigation: SlotLayout(
@@ -73,19 +98,9 @@ class HomePage extends ConsumerWidget {
                   height: 48,
                 ),
                 onDestinationSelected: (index) {
-                  ref.read(destinationIndexProvider.notifier).state = index;
-                  debugPrint('New index: $selectedIndex');
-                  switch (selectedIndex) {
-                    case 0:
-                      context.goNamed('dashboard');
-                      break;
-                    case 1:
-                      context.goNamed('explore');
-                      break;
-                    default:
-                      context.goNamed('dashboard');
-                      break;
-                  }
+                  // ref.read(destinationIndexProvider.notifier).state = index;
+                  // debugPrint('New index: $selectedIndex');
+                  _selectedNavi(context, index);
                 },
               ),
             ),
@@ -101,19 +116,9 @@ class HomePage extends ConsumerWidget {
                   height: 64,
                 ),
                 onDestinationSelected: (index) {
-                  ref.read(destinationIndexProvider.notifier).state = index;
-                  debugPrint('New index: $selectedIndex');
-                  switch (selectedIndex) {
-                    case 0:
-                      context.goNamed('dashboard');
-                      break;
-                    case 1:
-                      context.goNamed('explore');
-                      break;
-                    default:
-                      context.goNamed('dashboard');
-                      break;
-                  }
+                  // ref.read(destinationIndexProvider.notifier).state = index;
+                  // debugPrint('New index: $selectedIndex');
+                  _selectedNavi(context, index);
                 },
               ),
             ),
@@ -171,9 +176,10 @@ class HomePage extends ConsumerWidget {
               key: const Key('small-bottom-navi'),
               builder: (_) => AdaptiveScaffold.standardBottomNavigationBar(
                 destinations: destinations,
-                onDestinationSelected: (value) {
-                  ref.read(destinationIndexProvider.notifier).state = value;
-                  debugPrint('New index: $selectedIndex');
+                onDestinationSelected: (index) {
+                  _selectedNavi(context, index);
+                  // ref.read(destinationIndexProvider.notifier).state = value;
+                  // debugPrint('New index: $selectedIndex');
                 },
               ),
             ),

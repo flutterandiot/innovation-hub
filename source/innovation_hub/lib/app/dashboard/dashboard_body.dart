@@ -11,6 +11,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:innovation_hub/router.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 
@@ -70,7 +71,7 @@ class DashboardPageBody extends StatelessWidget {
                     children: [
                       ElevatedButton.icon(
                         onPressed: () {
-                          context.goNamed('new-project');
+                          context.goNamed(AppRoute.addProject.name);
                         },
                         icon: const Icon(Icons.add),
                         label: const Text('New idea project'),

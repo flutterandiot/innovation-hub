@@ -10,7 +10,9 @@
 * Description: show new project page
  */
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/project/method_card.dart';
+import 'package:innovation_hub/router.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 
@@ -72,7 +74,7 @@ class NewProjectPage extends StatelessWidget {
  It involves taking an essential part out of a product or service and giving new life to it. 
  SIT contains five thinking patterns that humans have used for thousands of years, such as ‘thinking inside the box’.""",
                     onTap: () {
-                      //TODO - add action for SIT method
+                      context.goNamed(AppRoute.sitMethod.name);
                     },
                   ),
                   Space.x(defaultPadding),

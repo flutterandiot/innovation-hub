@@ -49,7 +49,7 @@ class MethodCard extends HookWidget {
                       textAlign: TextAlign.center,
                     ),
                     //Use spacer for leading to center the title
-                    leading: const Spacer(),
+                    // leading: const Spacer(),
 
                     trailing: IconButton(
                       onPressed: () {

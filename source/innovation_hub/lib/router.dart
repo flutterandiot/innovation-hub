@@ -87,33 +87,34 @@ final router = GoRouter(
                   },
                 );
               },
-              routes: [
-                GoRoute(
-                  path: 'sit-method',
-                  name: AppRoute.sitMethod.name,
-                  pageBuilder: (context, state) {
-                    return CustomTransitionPage(
-                      child: const SITMethodPage(),
-                      transitionsBuilder: (context, animation, secondAnimation, child) {
-                        const begin = Offset(1.0, 0.0);
-                        const end = Offset.zero;
-                        const curve = Curves.ease;
-                        final tween = Tween(begin: begin, end: end).chain(
-                          CurveTween(curve: curve),
-                        );
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          // child: child,
-                          child: FadeTransition(
-                            opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                            child: child,
-                          ),
-                        );
-                      },
+            ),
+            GoRoute(
+              path: ':id/sit-method',
+              name: AppRoute.sitMethod.name,
+              pageBuilder: (context, state) {
+                final projectId = state.params['id']!;
+                return CustomTransitionPage(
+                  child: SITMethodPage(
+                    projectId: projectId,
+                  ),
+                  transitionsBuilder: (context, animation, secondAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+                    final tween = Tween(begin: begin, end: end).chain(
+                      CurveTween(curve: curve),
+                    );
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      // child: child,
+                      child: FadeTransition(
+                        opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                        child: child,
+                      ),
                     );
                   },
-                ),
-              ],
+                );
+              },
             ),
           ],
         ),

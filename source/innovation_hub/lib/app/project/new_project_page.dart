@@ -74,7 +74,9 @@ class NewProjectPage extends StatelessWidget {
  It involves taking an essential part out of a product or service and giving new life to it. 
  SIT contains five thinking patterns that humans have used for thousands of years, such as ‘thinking inside the box’.""",
                     onTap: () {
-                      context.goNamed(AppRoute.sitMethod.name);
+                      //FIXME - replace the project id from a uid in database
+                      final projectId = UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
+                      context.goNamed(AppRoute.sitMethod.name, params: {'id': projectId});
                     },
                   ),
                   Space.x(defaultPadding),

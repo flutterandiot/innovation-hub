@@ -10,6 +10,7 @@
 * Description: show new project page
  */
 import 'package:flutter/material.dart';
+import 'package:innovation_hub/app/project/method_card.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 
@@ -28,20 +29,69 @@ class NewProjectPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 3 * defaultPadding),
           child: Column(
             children: [
-              Card(
-                child: Form(
-                  child: Column(
-                    children: [
-                      TextFormField(),
-                      Space.y(20),
-                      TextFormField(),
-                    ],
-                  ),
+              Space.y(40),
+              Form(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Project name',
+                        hintText: 'Enter project name',
+                      ),
+                    ),
+                    Space.y(20),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Project description',
+                        hintText: 'Describe current situation, problem,...',
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const Card(
-                child: Text('Select tool'),
+              Space.y(20),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.only(top: 2 * defaultPadding, bottom: defaultPadding),
+                child: Text(
+                  'Choose a method',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
+              Wrap(
+                runSpacing: 2 * defaultPadding,
+                children: [
+                  MethodCard(
+                    title: 'SIT',
+                    subtitle: 'Systematic Inventive Thinking',
+                    useCase: 'Best for generate inventive ideas',
+                    backgroundColor: Colors.amber,
+                    tooltip: """
+ Systematic Inventive Thinking (SIT) is a practical approach to creativity, 
+ innovation and problem-solving developed by Genrich Altshuller's TRIZ engineering discipline in the mid-1990s.
+ It involves taking an essential part out of a product or service and giving new life to it. 
+ SIT contains five thinking patterns that humans have used for thousands of years, such as ‘thinking inside the box’.""",
+                    onTap: () {
+                      //TODO - add action for SIT method
+                    },
+                  ),
+                  Space.x(defaultPadding),
+                  MethodCard(
+                    title: 'TRIZ',
+                    subtitle: 'Theory of Inventive Problem Solving',
+                    useCase: 'Best for problem solving',
+                    backgroundColor: Colors.blue,
+                    tooltip: """
+ TRIZ is the Theory of Inventive Problem Solving developed by Genrich Altshuller in the former Soviet Union.
+ It involves observing the commonalities in solutions discovered in the past, recognizing that certain patterns emerge whenever inventions are made.
+ TRIZ is based on empirical data, patents, and documentation of how inventive people solved inventive problems.
+""",
+                    onTap: () {
+                      //TODO - add action for TRIZ method
+                    },
+                  ),
+                ],
+              )
             ],
           ),
         ),

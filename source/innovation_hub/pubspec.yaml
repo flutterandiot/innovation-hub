@@ -7,11 +7,11 @@ environment:
   sdk: ">=2.19.4 <3.0.0"
 
 dependencies:
-  
   flex_color_scheme: ^7.0.0-dev.2
   flutter:
     sdk: flutter
   flutter_adaptive_scaffold: ^0.1.0
+  flutter_hooks: ^0.18.6
   flutter_riverpod: ^2.3.1
   go_router: ^6.2.0
   lottie: ^2.2.0
@@ -19,8 +19,9 @@ dependencies:
   url_strategy: ^0.2.0
 
 dev_dependencies:
-  # help to run code generator
   build_runner: ^2.3.3
+  # riverpod_lint depent on this, custom_lint
+  custom_lint: ^0.3.2
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
@@ -28,8 +29,6 @@ dev_dependencies:
   riverpod_generator: ^2.1.3
   # riverpod lint help to warn or highlight riverpod syntax
   riverpod_lint: ^1.1.5
-  # riverpod_lint depent on this, custom_lint
-  custom_lint: ^0.3.2
 
 flutter:
   uses-material-design: true

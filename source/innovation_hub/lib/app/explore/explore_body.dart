@@ -24,7 +24,7 @@ class ExplorePageBody extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) => Container(
         padding: const EdgeInsets.only(left: 4 * defaultPadding, right: 2 * defaultPadding, top: 4 * defaultPadding),
-        color: Colors.grey[200],
+        color: Theme.of(context).scaffoldBackgroundColor,
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
           child: Column(

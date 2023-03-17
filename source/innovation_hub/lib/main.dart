@@ -3,7 +3,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:innovation_hub/theme.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'router.dart';
+import 'app_routing.dart';
 
 void main() {
   setPathUrlStrategy();

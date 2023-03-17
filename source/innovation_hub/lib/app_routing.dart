@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/dashboard/dashboard_body.dart';
 import 'package:innovation_hub/app/explore/explore_body.dart';
+import 'package:innovation_hub/app/explore/study_sit_page.dart';
 import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
+import 'package:innovation_hub/app/project/project_model.dart';
 import 'package:innovation_hub/app/project/sit_method_page.dart';
 import 'package:innovation_hub/app/settings/settings_body.dart';
 
@@ -62,13 +64,16 @@ final router = GoRouter(
           ),
           routes: [
             GoRoute(
-              path: 'add-project',
+              path: 'add-project/:id',
               name: AppRoute.addProject.name,
 
               // builder: (context, state) => const NewProjectPage(),
               pageBuilder: (context, state) {
                 return CustomTransitionPage(
-                  child: const NewProjectPage(),
+                  child: NewProjectPage(
+                    projectId: state.params['id']!,
+                    project: state.extra as Project,
+                  ),
                   transitionsBuilder: (context, animation, secondAnimation, child) {
                     const begin = Offset(1.0, 0.0);
                     const end = Offset.zero;
@@ -131,7 +136,7 @@ final router = GoRouter(
             GoRoute(
               path: 'learn-sit',
               name: AppRoute.learnSIT.name,
-              builder: (context, state) => const NewProjectPage(),
+              builder: (context, state) => const StudySITPage(),
             ),
           ],
         ),

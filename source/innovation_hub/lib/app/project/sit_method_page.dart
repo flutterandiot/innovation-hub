@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:innovation_hub/router.dart';
+import 'package:innovation_hub/app_routing.dart';
 
 class SITMethodPage extends StatelessWidget {
   const SITMethodPage({
@@ -23,7 +23,7 @@ class SITMethodPage extends StatelessWidget {
             onPressed: () {
               //TODO - go back to project
               debugPrint('Go back to prject page');
-              context.goNamed(AppRoute.addProject.name);
+              context.goNamed(AppRoute.addProject.name, params: {'id': projectId});
             },
             tooltip: 'Go back to project page',
             icon: const Icon(Icons.arrow_back),

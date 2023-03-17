@@ -1,7 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/utils/space.dart';
 
+import '../../app_routing.dart';
 import 'model/project_model.dart';
 
 class ProjectPage extends StatelessWidget {
@@ -12,17 +13,27 @@ class ProjectPage extends StatelessWidget {
   final Project project;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(project.name),
-      ),
-      body: SingleChildScrollView(
-        // controller: controller,
-        child: Column(
-          children: [
-            Space.y(200),
-            Text(project.name),
-          ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              context.goNamed(AppRoute.dashboard.name);
+            },
+            tooltip: 'Go back to project dashboard',
+            icon: const Icon(Icons.arrow_back),
+          ),
+          title: Text(project.name),
+        ),
+        body: SingleChildScrollView(
+          // controller: controller,
+          child: Column(
+            children: [
+              Space.y(200),
+              Text(project.name),
+            ],
+          ),
         ),
       ),
     );

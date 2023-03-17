@@ -18,7 +18,6 @@ import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/utils/padding.dart';
-import 'package:innovation_hub/utils/space.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../app_routing.dart';
@@ -28,6 +27,7 @@ class DashboardPageBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final projects = ref.watch(projectsProvider);
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
@@ -63,35 +63,68 @@ class DashboardPageBody extends ConsumerWidget {
                           'assets/animations/118991-idea-innovation.json',
                           fit: BoxFit.contain,
                         ),
-                        // child: Image.asset(
-                        //   'assets/images/time-to-innovate.png',
-                        //   fit: BoxFit.contain,
-                        // ),
                       ),
                     ),
                   ],
                 ),
-                Space.y(20),
-                SizedBox(
-                  width: double.infinity,
-                  child: Wrap(
-                    runSpacing: 24,
-                    spacing: 32,
-                    alignment: WrapAlignment.center,
-                    runAlignment: WrapAlignment.center,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () async {
-                          final _ = await _showEnterProjectNameDialog(context, ref);
-                        },
-                        icon: const Icon(Icons.add),
-                        label: const Text('New project'),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(128, 64),
-                        ),
-                      ),
-                    ],
+                if (projects.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 2 * defaultPadding,
+                    ),
+                    child: Text(
+                      'Recent projects',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
+                if (projects.isNotEmpty)
+                  SizedBox(
+                    width: double.infinity,
+                    height: 200,
+                    child: ListView.builder(
+                      itemExtent: 200,
+                      padding: const EdgeInsets.symmetric(horizontal: defaultPadding, vertical: defaultPadding),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: projects.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                          // width: 250,
+                          height: 180,
+                          child: Material(
+                            color: Colors.amberAccent,
+                            borderRadius: BorderRadius.circular(defaultPadding),
+                            child: InkWell(
+                              onTap: () {
+                                context.goNamed(
+                                  AppRoute.projectPage.name,
+                                  params: {'id': projects[index].id},
+                                  extra: projects[index],
+                                );
+                              },
+                              child: Center(
+                                child: Text(projects[index].name),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        final _ = await _showEnterProjectNameDialog(context, ref);
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('New project'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(128, 64),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

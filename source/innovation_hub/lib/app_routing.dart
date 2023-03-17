@@ -71,7 +71,6 @@ final router = GoRouter(
               pageBuilder: (context, state) {
                 return CustomTransitionPage(
                   child: NewProjectPage(
-                    projectId: state.params['id']!,
                     project: state.extra as Project,
                   ),
                   transitionsBuilder: (context, animation, secondAnimation, child) {
@@ -97,10 +96,10 @@ final router = GoRouter(
               path: ':id/sit-method',
               name: AppRoute.sitMethod.name,
               pageBuilder: (context, state) {
-                final projectId = state.params['id']!;
+                final project = state.extra as Project;
                 return CustomTransitionPage(
                   child: SITMethodPage(
-                    projectId: projectId,
+                    project: project,
                   ),
                   transitionsBuilder: (context, animation, secondAnimation, child) {
                     const begin = Offset(1.0, 0.0);

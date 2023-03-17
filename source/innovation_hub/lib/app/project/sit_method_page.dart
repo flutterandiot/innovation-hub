@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app_routing.dart';
 
+import 'project_model.dart';
+
 class SITMethodPage extends StatelessWidget {
   const SITMethodPage({
     Key? key,
-    required this.projectId,
+    required this.project,
   }) : super(key: key);
 
-  final String projectId;
+  final Project project;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -18,11 +20,15 @@ class SITMethodPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('SIT Method'),
+          title: Text('Apply SIT for ${project.name}'),
           leading: IconButton(
             onPressed: () {
               debugPrint('Go back to prject page');
-              context.goNamed(AppRoute.addProject.name, params: {'id': projectId});
+              context.goNamed(
+                AppRoute.addProject.name,
+                params: {'id': project.id},
+                extra: project,
+              );
             },
             tooltip: 'Go back to project page',
             icon: const Icon(Icons.arrow_back),

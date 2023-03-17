@@ -22,18 +22,16 @@ import 'package:innovation_hub/utils/space.dart';
 class NewProjectPage extends StatelessWidget {
   const NewProjectPage({
     Key? key,
-    required this.projectId,
-    this.project,
+    required this.project,
   }) : super(key: key);
-  final String projectId;
-  final Project? project;
+  final Project project;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(project != null ? project!.name : projectId),
+          title: Text(project.name),
           leading: IconButton(
             onPressed: () {
               context.goNamed(AppRoute.dashboard.name);
@@ -74,7 +72,11 @@ class NewProjectPage extends StatelessWidget {
                       backgroundColor: Colors.amber,
                       tooltip: sitTooltip,
                       onTap: () {
-                        context.goNamed(AppRoute.sitMethod.name, params: {'id': projectId});
+                        context.goNamed(
+                          AppRoute.sitMethod.name,
+                          params: {'id': project.id},
+                          extra: project,
+                        );
                       },
                     ),
                     Space.x(defaultPadding),

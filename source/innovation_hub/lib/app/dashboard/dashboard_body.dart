@@ -83,18 +83,7 @@ class DashboardPageBody extends StatelessWidget {
                     children: [
                       ElevatedButton.icon(
                         onPressed: () async {
-                          final projectName = await _showEnterProjectNameDialog(context);
-                          if (projectName != null) {
-                            project.name = projectName;
-                            project.id = UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
-                            context.goNamed(
-                              AppRoute.addProject.name,
-                              params: {
-                                'id': project.id,
-                              },
-                              extra: project,
-                            );
-                          }
+                          final _ = await _showEnterProjectNameDialog(context);
                         },
                         icon: const Icon(Icons.add),
                         label: const Text('New project'),
@@ -102,23 +91,6 @@ class DashboardPageBody extends StatelessWidget {
                           minimumSize: const Size(128, 64),
                         ),
                       ),
-                      // Space.x(20),
-                      // ElevatedButton.icon(
-                      //   onPressed: () {
-                      //     //TODO - add action code
-                      //   },
-                      //   icon: const Icon(Icons.add),
-                      //   label: Text(
-                      //     'New problem solving project',
-                      //     style: TextStyle(
-                      //       color: isLight ? Colors.amber : Colors.white,
-                      //     ),
-                      //   ),
-                      //   style: ElevatedButton.styleFrom(
-                      //     minimumSize: const Size(128, 64),
-                      //     backgroundColor: isLight ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColorDark,
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -136,18 +108,28 @@ class DashboardPageBody extends StatelessWidget {
       title: 'Enter project name',
       message: 'Please enter project name to continue',
       textFields: [
-        const DialogTextField(
+        DialogTextField(
           initialText: 'ProjectA',
           hintText: 'Input your project name',
+          validator: (value) => value!.isEmpty ? 'Input more than one character' : null,
         ),
       ],
       okLabel: 'Continue',
       cancelLabel: 'Cancel',
     );
-    if (results != null && results.isNotEmpty && results.first.isNotEmpty) {
+    if (results != null && results.isNotEmpty) {
       debugPrint('Results: ${results[0]}');
+      //NOTE - Create project if the project name is not empty
       final project = Project();
       project.name = results.first;
+      project.id = UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
+      context.goNamed(
+        AppRoute.addProject.name,
+        params: {
+          'id': project.id,
+        },
+        extra: project,
+      );
       return results.first;
     } else {
       return null;

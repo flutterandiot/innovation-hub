@@ -29,72 +29,82 @@ class NewProjectPage extends StatelessWidget {
   final Project? project;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(project != null ? project!.name : projectId),
-      ),
-      body: SingleChildScrollView(
-        // controller: controller,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3 * defaultPadding),
-          child: Column(
-            children: [
-              Space.y(40),
-              Form(
-                child: Column(
-                  children: [
-                    // TextFormField(
-                    //   decoration: const InputDecoration(
-                    //     labelText: 'Project name',
-                    //     hintText: 'Enter project name',
-                    //   ),
-                    // ),
-                    Space.y(20),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Project description',
-                        hintText: 'Describe current situation, problem,...',
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(project != null ? project!.name : projectId),
+          leading: IconButton(
+            onPressed: () {
+              context.goNamed(AppRoute.dashboard.name);
+            },
+            tooltip: 'Go back to project dashboard',
+            icon: const Icon(Icons.arrow_back),
+          ),
+        ),
+        body: SingleChildScrollView(
+          // controller: controller,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3 * defaultPadding),
+            child: Column(
+              children: [
+                Space.y(40),
+                Form(
+                  child: Column(
+                    children: [
+                      // TextFormField(
+                      //   decoration: const InputDecoration(
+                      //     labelText: 'Project name',
+                      //     hintText: 'Enter project name',
+                      //   ),
+                      // ),
+                      Space.y(20),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Project description',
+                          hintText: 'Describe current situation, problem,...',
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+                Space.y(20),
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 2 * defaultPadding, bottom: defaultPadding),
+                  child: Text(
+                    'Choose a method',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                Wrap(
+                  runSpacing: 2 * defaultPadding,
+                  children: [
+                    MethodCard(
+                      title: 'SIT',
+                      subtitle: 'Systematic Inventive Thinking',
+                      useCase: 'Best for generate inventive ideas',
+                      backgroundColor: Colors.amber,
+                      tooltip: sitTooltip,
+                      onTap: () {
+                        context.goNamed(AppRoute.sitMethod.name, params: {'id': projectId});
+                      },
+                    ),
+                    Space.x(defaultPadding),
+                    MethodCard(
+                      title: 'TRIZ',
+                      subtitle: 'Theory of Inventive Problem Solving',
+                      useCase: 'Best for problem solving',
+                      backgroundColor: Colors.blue,
+                      tooltip: trizTooltip,
+                      onTap: () {
+                        //TODO - add action for TRIZ method
+                      },
                     ),
                   ],
-                ),
-              ),
-              Space.y(20),
-              const Divider(),
-              Padding(
-                padding: const EdgeInsets.only(top: 2 * defaultPadding, bottom: defaultPadding),
-                child: Text(
-                  'Choose a method',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              Wrap(
-                runSpacing: 2 * defaultPadding,
-                children: [
-                  MethodCard(
-                    title: 'SIT',
-                    subtitle: 'Systematic Inventive Thinking',
-                    useCase: 'Best for generate inventive ideas',
-                    backgroundColor: Colors.amber,
-                    tooltip: sitTooltip,
-                    onTap: () {
-                      context.goNamed(AppRoute.sitMethod.name, params: {'id': projectId});
-                    },
-                  ),
-                  Space.x(defaultPadding),
-                  MethodCard(
-                    title: 'TRIZ',
-                    subtitle: 'Theory of Inventive Problem Solving',
-                    useCase: 'Best for problem solving',
-                    backgroundColor: Colors.blue,
-                    tooltip: trizTooltip,
-                    onTap: () {
-                      //TODO - add action for TRIZ method
-                    },
-                  ),
-                ],
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

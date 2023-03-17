@@ -21,7 +21,6 @@ class SITMethodPage extends StatelessWidget {
           title: const Text('SIT Method'),
           leading: IconButton(
             onPressed: () {
-              //TODO - go back to project
               debugPrint('Go back to prject page');
               context.goNamed(AppRoute.addProject.name, params: {'id': projectId});
             },

@@ -64,7 +64,7 @@ final router = GoRouter(
           ),
           routes: [
             GoRoute(
-              path: 'add-project/:id',
+              path: 'projects/:id',
               name: AppRoute.addProject.name,
 
               // builder: (context, state) => const NewProjectPage(),

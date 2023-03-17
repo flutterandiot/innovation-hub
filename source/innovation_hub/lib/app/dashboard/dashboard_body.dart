@@ -9,12 +9,14 @@
 *
 * Description: This file is shown when there is not any project in database
  */
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:innovation_hub/router.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../router.dart';
 
 class DashboardPageBody extends StatelessWidget {
   const DashboardPageBody({super.key});
@@ -76,32 +78,35 @@ class DashboardPageBody extends StatelessWidget {
                     runAlignment: WrapAlignment.center,
                     children: [
                       ElevatedButton.icon(
-                        onPressed: () {
-                          context.goNamed(AppRoute.addProject.name);
+                        onPressed: () async {
+                          final projectName = await _showEnterProjectNameDialog(context);
+                          if (projectName != null) {
+                            context.goNamed(AppRoute.addProject.name);
+                          }
                         },
                         icon: const Icon(Icons.add),
-                        label: const Text('New idea project'),
+                        label: const Text('New project'),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(128, 64),
                         ),
                       ),
                       // Space.x(20),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          //TODO - add action code
-                        },
-                        icon: const Icon(Icons.add),
-                        label: Text(
-                          'New problem solving project',
-                          style: TextStyle(
-                            color: isLight ? Colors.amber : Colors.white,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(128, 64),
-                          backgroundColor: isLight ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColorDark,
-                        ),
-                      ),
+                      // ElevatedButton.icon(
+                      //   onPressed: () {
+                      //     //TODO - add action code
+                      //   },
+                      //   icon: const Icon(Icons.add),
+                      //   label: Text(
+                      //     'New problem solving project',
+                      //     style: TextStyle(
+                      //       color: isLight ? Colors.amber : Colors.white,
+                      //     ),
+                      //   ),
+                      //   style: ElevatedButton.styleFrom(
+                      //     minimumSize: const Size(128, 64),
+                      //     backgroundColor: isLight ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColorDark,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -182,5 +187,27 @@ class DashboardPageBody extends StatelessWidget {
       //   ),
       // ),
     );
+  }
+
+  Future<String?> _showEnterProjectNameDialog(BuildContext context) async {
+    final results = await showTextInputDialog(
+      context: context,
+      title: 'Enter project name',
+      message: 'Please enter project name to continue',
+      textFields: [
+        const DialogTextField(
+          initialText: 'ProjectA',
+          hintText: 'Input your project name',
+        ),
+      ],
+      okLabel: 'Continue',
+      cancelLabel: 'Cancel',
+    );
+    if (results != null && results.isNotEmpty && results.first.isNotEmpty) {
+      debugPrint('Results: ${results[0]}');
+      return results.first;
+    } else {
+      return null;
+    }
   }
 }

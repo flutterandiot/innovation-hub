@@ -23,9 +23,8 @@ class SITMethodPage extends StatelessWidget {
           title: Text('Apply SIT for ${project.name}'),
           leading: IconButton(
             onPressed: () {
-              debugPrint('Go back to prject page');
               context.goNamed(
-                AppRoute.addProject.name,
+                AppRoute.projectPage.name,
                 params: {'id': project.id},
                 extra: project,
               );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:innovation_hub/app_routing.dart';
 
 import '../../../utils/space.dart';
 import '../model/project_model.dart';
@@ -33,7 +35,11 @@ class ProjectListNaviRail extends StatelessWidget {
                 leading: Text('${index + 1}. '),
                 title: Text(projectList[index].name),
                 onTap: () {
-                  //TODO - add action for project listtile
+                  context.goNamed(
+                    AppRoute.projectPage.name,
+                    params: {'id': projectList[index].id},
+                    extra: projectList[index],
+                  );
                 },
               );
             },

@@ -126,9 +126,6 @@ class DashboardPageBody extends ConsumerWidget {
       ref.read(projectsProvider).add(project);
       context.goNamed(
         AppRoute.addProject.name,
-        params: {
-          'id': project.id,
-        },
         extra: project,
       );
       return results.first;

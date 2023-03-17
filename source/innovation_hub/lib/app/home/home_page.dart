@@ -111,17 +111,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                   // debugPrint('New index: $selectedIndex');
                   _selectedNavi(context, index);
                 },
-                trailing: projectList.isEmpty
-                    ? null
-                    : ListView.builder(
-                        itemCount: projectList.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            leading: Text('${index + 1}. '),
-                            title: Text(projectList[index].name),
-                          );
-                        },
-                      ),
+                // trailing: projectList.isEmpty
+                //     ? null
+                //     : ListView.builder(
+                //         itemCount: projectList.length,
+                //         itemBuilder: (context, index) {
+                //           return ListTile(
+                //             leading: Text('${index + 1}. '),
+                //             title: Text(projectList[index].name),
+                //           );
+                //         },
+                //       ),
               ),
             ),
             Breakpoints.large: SlotLayout.from(

@@ -13,19 +13,21 @@
  */
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:innovation_hub/app/project/project_model.dart';
+import 'package:innovation_hub/app/project/model/project_model.dart';
+import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../app_routing.dart';
 
-class DashboardPageBody extends StatelessWidget {
+class DashboardPageBody extends ConsumerWidget {
   const DashboardPageBody({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
@@ -80,7 +82,7 @@ class DashboardPageBody extends StatelessWidget {
                     children: [
                       ElevatedButton.icon(
                         onPressed: () async {
-                          final _ = await _showEnterProjectNameDialog(context);
+                          final _ = await _showEnterProjectNameDialog(context, ref);
                         },
                         icon: const Icon(Icons.add),
                         label: const Text('New project'),
@@ -99,7 +101,7 @@ class DashboardPageBody extends StatelessWidget {
     );
   }
 
-  Future<String?> _showEnterProjectNameDialog(BuildContext context) async {
+  Future<String?> _showEnterProjectNameDialog(BuildContext context, WidgetRef ref) async {
     final results = await showTextInputDialog(
       context: context,
       title: 'Enter project name',
@@ -120,6 +122,8 @@ class DashboardPageBody extends StatelessWidget {
       final project = Project();
       project.name = results.first;
       project.id = UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
+      //Save project
+      ref.read(projectsProvider).add(project);
       context.goNamed(
         AppRoute.addProject.name,
         params: {

@@ -5,7 +5,7 @@ import 'package:innovation_hub/app/explore/explore_body.dart';
 import 'package:innovation_hub/app/explore/study_sit_page.dart';
 import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
-import 'package:innovation_hub/app/project/project_model.dart';
+import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/sit_method_page.dart';
 import 'package:innovation_hub/app/settings/settings_body.dart';
 

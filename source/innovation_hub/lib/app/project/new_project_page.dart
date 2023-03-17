@@ -13,7 +13,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/project/method_card.dart';
-import 'package:innovation_hub/app/project/project_model.dart';
+import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app_routing.dart';
 import 'package:innovation_hub/constants.dart';
 import 'package:innovation_hub/utils/padding.dart';

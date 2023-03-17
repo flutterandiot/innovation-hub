@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app_routing.dart';
 
-import 'project_model.dart';
+import 'model/project_model.dart';
 
 class SITMethodPage extends StatelessWidget {
   const SITMethodPage({

@@ -22,6 +22,9 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app_routing.dart';
+import 'package:innovation_hub/utils/space.dart';
+
+import '../project/provider/project_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -87,6 +90,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       // }
     }
 
+    final projectList = ref.watch(projectsProvider);
+
     return Scaffold(
       body: AdaptiveLayout(
         primaryNavigation: SlotLayout(
@@ -106,6 +111,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                   // debugPrint('New index: $selectedIndex');
                   _selectedNavi(context, index);
                 },
+                trailing: projectList.isEmpty
+                    ? null
+                    : ListView.builder(
+                        itemCount: projectList.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: Text('${index + 1}. '),
+                            title: Text(projectList[index].name),
+                          );
+                        },
+                      ),
               ),
             ),
             Breakpoints.large: SlotLayout.from(
@@ -124,6 +140,39 @@ class _HomePageState extends ConsumerState<HomePage> {
                   // debugPrint('New index: $selectedIndex');
                   _selectedNavi(context, index);
                 },
+                trailing: projectList.isEmpty
+                    ? null
+                    : SizedBox(
+                        height: 300,
+                        child: Column(
+                          children: [
+                            const Divider(thickness: 1.5),
+                            Space.y(20),
+                            Row(
+                              children: <Widget>[
+                                const SizedBox(width: 22),
+                                Text('Projects', style: TextStyle(fontSize: 13, color: Colors.grey[700])),
+                              ],
+                            ),
+                            Space.y(20),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: projectList.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    dense: true,
+                                    leading: Text('${index + 1}. '),
+                                    title: Text(projectList[index].name),
+                                    onTap: () {
+                                      //TODO - add action for project listtile
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
               ),
             ),
           },

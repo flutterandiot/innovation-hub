@@ -22,9 +22,9 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app_routing.dart';
-import 'package:innovation_hub/utils/space.dart';
 
 import '../project/provider/project_provider.dart';
+import '../project/widgets/project_list_navi_rail.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -144,34 +144,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ? null
                     : SizedBox(
                         height: 300,
-                        child: Column(
-                          children: [
-                            const Divider(thickness: 1.5),
-                            Space.y(20),
-                            Row(
-                              children: <Widget>[
-                                const SizedBox(width: 22),
-                                Text('Projects', style: TextStyle(fontSize: 13, color: Colors.grey[700])),
-                              ],
-                            ),
-                            Space.y(20),
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: projectList.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    dense: true,
-                                    leading: Text('${index + 1}. '),
-                                    title: Text(projectList[index].name),
-                                    onTap: () {
-                                      //TODO - add action for project listtile
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: ProjectListNaviRail(projectList: projectList),
                       ),
               ),
             ),
@@ -183,42 +156,18 @@ class _HomePageState extends ConsumerState<HomePage> {
               key: const Key('Small Body'),
               builder: (_) {
                 return widget.body;
-                // switch (selectedIndex) {
-                //   case 0:
-                //     return const DashboardPageBody();
-                //   case 1:
-                //     return const ExplorePageBody();
-                //   default:
-                //     return const DashboardPageBody();
-                // }
               },
             ),
             Breakpoints.medium: SlotLayout.from(
               key: const Key('medium-body'),
               builder: (_) {
                 return widget.body;
-                // switch (selectedIndex) {
-                //   case 0:
-                //     return const DashboardPageBody();
-                //   case 1:
-                //     return const ExplorePageBody();
-                //   default:
-                //     return const DashboardPageBody();
-                // }
               },
             ),
             Breakpoints.large: SlotLayout.from(
               key: const Key('large-body'),
               builder: (_) {
                 return widget.body;
-                // switch (selectedIndex) {
-                //   case 0:
-                //     return const DashboardPageBody();
-                //   case 1:
-                //     return const ExplorePageBody();
-                //   default:
-                //     return const DashboardPageBody();
-                // }
               },
             ),
           },

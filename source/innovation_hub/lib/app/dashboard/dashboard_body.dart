@@ -26,9 +26,6 @@ class DashboardPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final isSmallScreen = Breakpoints.small.isActive(context);
-    final isLight = Theme.of(context).brightness == Brightness.light;
-    final project = Project(id: '', name: '', description: '');
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(

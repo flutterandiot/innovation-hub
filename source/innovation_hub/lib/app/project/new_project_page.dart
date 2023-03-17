@@ -49,23 +49,10 @@ class NewProjectPage extends StatelessWidget {
             child: Column(
               children: [
                 Space.y(40),
-                Form(
-                  child: Column(
-                    children: [
-                      // TextFormField(
-                      //   decoration: const InputDecoration(
-                      //     labelText: 'Project name',
-                      //     hintText: 'Enter project name',
-                      //   ),
-                      // ),
-                      Space.y(20),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Project description',
-                          hintText: 'Describe current situation, problem,...',
-                        ),
-                      ),
-                    ],
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Project description',
+                    hintText: 'Describe current situation, problem,...',
                   ),
                 ),
                 Space.y(20),

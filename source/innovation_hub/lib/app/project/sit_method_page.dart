@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app_routing.dart';
 
 import 'model/project_model.dart';
 
-class SITMethodPage extends StatelessWidget {
+class SITMethodPage extends ConsumerStatefulWidget {
   const SITMethodPage({
     Key? key,
     required this.project,
@@ -13,29 +14,70 @@ class SITMethodPage extends StatelessWidget {
 
   final Project project;
   @override
+  ConsumerState<SITMethodPage> createState() => _SITMethodPageState();
+}
+
+class _SITMethodPageState extends ConsumerState<SITMethodPage> with TickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Apply SIT for ${project.name}'),
-          leading: IconButton(
-            onPressed: () {
-              context.goNamed(
-                AppRoute.projectPage.name,
-                params: {'id': project.id},
-                extra: project,
-              );
-            },
-            tooltip: 'Go back to project page',
-            icon: const Icon(Icons.arrow_back),
+      child: DefaultTabController(
+        length: 3,
+        initialIndex: 0,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Apply SIT for ${widget.project.name}'),
+            leading: IconButton(
+              onPressed: () {
+                context.goNamed(
+                  AppRoute.projectPage.name,
+                  params: {'id': widget.project.id},
+                  extra: widget.project,
+                );
+              },
+              tooltip: 'Go back to project page',
+              icon: const Icon(Icons.arrow_back),
+            ),
+            bottom: TabBar(
+              controller: _tabController,
+              tabs: const [
+                Tab(
+                  text: 'Components',
+                  icon: Icon(Icons.compost),
+                ),
+                Tab(
+                  text: 'Select',
+                  icon: Icon(Icons.hdr_on_select),
+                ),
+                Tab(
+                  text: 'Idea',
+                  icon: Icon(Icons.light),
+                ),
+              ],
+            ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: const [Text('Select tool')],
+          body: const TabBarView(
+            children: [
+              Center(
+                child: Text('List all compoments'),
+              ),
+              Center(
+                child: Text('Select a compoment'),
+              ),
+              Center(
+                child: Text('Ideas'),
+              ),
+            ],
           ),
         ),
       ),

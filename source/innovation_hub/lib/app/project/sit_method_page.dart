@@ -52,8 +52,12 @@ class _SITMethodPageState extends ConsumerState<SITMethodPage> with TickerProvid
             bottom: TabBar(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               controller: _tabController,
-              indicatorSize: TabBarIndicatorSize.label,
+              // indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 3,
+              // indicator: BoxDecoration(
+              //   borderRadius: BorderRadius.circular(8),
+              //   color: Colors.amberAccent,
+              // ),
               tabs: const [
                 Tab(
                   text: 'Components',

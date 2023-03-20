@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app_routing.dart';
+import 'package:innovation_hub/utils/padding.dart';
 
 import 'model/project_model.dart';
 
@@ -49,7 +50,10 @@ class _SITMethodPageState extends ConsumerState<SITMethodPage> with TickerProvid
               icon: const Icon(Icons.arrow_back),
             ),
             bottom: TabBar(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               controller: _tabController,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorWeight: 3,
               tabs: const [
                 Tab(
                   text: 'Components',
@@ -66,8 +70,9 @@ class _SITMethodPageState extends ConsumerState<SITMethodPage> with TickerProvid
               ],
             ),
           ),
-          body: const TabBarView(
-            children: [
+          body: TabBarView(
+            controller: _tabController,
+            children: const [
               Center(
                 child: Text('List all compoments'),
               ),

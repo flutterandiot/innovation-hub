@@ -1,10 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:innovation_hub/theme.dart';
-import 'app/home_page.dart';
+import 'package:url_strategy/url_strategy.dart';
+import 'app_routing.dart';
+
+class ProviderLogger extends ProviderObserver {
+  @override
+  void didAddProvider(ProviderBase<Object?> provider, Object? value, ProviderContainer container) {
+    // TODO: implement didAddProvider
+    super.didAddProvider(provider, value, container);
+    debugPrint('''
+A provider is initialized:
+"name": ${provider.name ?? provider.runtimeType}, 
+"value": $value,
+    ''');
+  }
+
+  @override
+  void didUpdateProvider(ProviderBase<Object?> provider, Object? previousValue, Object? newValue, ProviderContainer container) {
+    debugPrint('''
+"Provider": ${provider.name ?? provider.runtimeType}, 
+" Previous value": $previousValue,
+" New value" : $newValue
+    ''');
+    super.didUpdateProvider(provider, previousValue, newValue, container);
+  }
+}
 
 void main() {
-  runApp(const MainApp());
+  setPathUrlStrategy();
+  runApp(
+    ProviderScope(
+      observers: [
+        ProviderLogger(),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -12,8 +45,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      routerConfig: router,
       // Made for FlexColorScheme version 7.0.0-dev.2 (beta). Make sure
 // you use same or higher version, but still same major version. If
 // you use a lower version, some properties may not be supported. In
@@ -54,7 +88,7 @@ class MainApp extends StatelessWidget {
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,
-      home: const HomePage(),
+      // home: const HomePage(),
     );
   }
 }

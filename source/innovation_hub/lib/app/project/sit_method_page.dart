@@ -6,6 +6,7 @@ import 'package:innovation_hub/app_routing.dart';
 import 'package:innovation_hub/utils/padding.dart';
 
 import 'model/project_model.dart';
+import 'provider/project_provider.dart';
 
 class SITMethodPage extends ConsumerStatefulWidget {
   const SITMethodPage({
@@ -28,6 +29,8 @@ class _SITMethodPageState extends ConsumerState<SITMethodPage> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
+    final currentProject = ref.watch(projectsProvider.notifier).currentProject!;
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -37,7 +40,7 @@ class _SITMethodPageState extends ConsumerState<SITMethodPage> with TickerProvid
         initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Apply SIT for ${widget.project.name}'),
+            title: Text('Apply SIT for ${currentProject.name}'),
             leading: IconButton(
               onPressed: () {
                 context.goNamed(

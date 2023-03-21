@@ -16,11 +16,16 @@ import '../model/project_model.dart';
 part 'project_provider.g.dart';
 
 @riverpod
-@riverpod
 class Projects extends _$Projects {
   @override
   List<Project> build() {
     return [];
+  }
+
+  Project? currentProject;
+
+  void setCurrentProject(Project project) {
+    currentProject = project;
   }
 
   void addProject(Project project) {

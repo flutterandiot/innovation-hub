@@ -13,8 +13,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/method_card.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
+import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/app/project/widgets/tool_button.dart';
 import 'package:innovation_hub/app_routing.dart';
 import 'package:innovation_hub/constants.dart';
@@ -22,14 +24,14 @@ import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class NewProjectPage extends HookWidget {
+class NewProjectPage extends HookConsumerWidget {
   const NewProjectPage({
     Key? key,
     required this.project,
   }) : super(key: key);
   final Project project;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Method selection, 0 = SIT, 1 = SIT,
     final methodSelected = useState<int>(0);
 
@@ -79,11 +81,6 @@ class NewProjectPage extends HookWidget {
                       tooltip: sitTooltip,
                       elevation: methodSelected.value == sitMethodIndex ? defaultPadding : 0.0,
                       onTap: () {
-                        // context.goNamed(
-                        //   AppRoute.sitMethod.name,
-                        //   params: {'id': project.id},
-                        //   extra: project,
-                        // );
                         methodSelected.value = sitMethodIndex;
                       },
                     ),
@@ -117,7 +114,7 @@ class NewProjectPage extends HookWidget {
                         icon: const FaIcon(FontAwesomeIcons.plus),
                         title: 'Unification',
                         onTap: () {
-                          //TODO -  add action
+                          _goToTechnique(context, ref);
                         },
                       ),
                       SitToolButton(
@@ -170,6 +167,14 @@ class NewProjectPage extends HookWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _goToTechnique(BuildContext context, WidgetRef ref) {
+    context.goNamed(
+      AppRoute.sitMethod.name,
+      params: {'id': project.id},
+      extra: project,
     );
   }
 }

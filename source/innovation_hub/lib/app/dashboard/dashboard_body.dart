@@ -155,8 +155,11 @@ class DashboardPageBody extends ConsumerWidget {
       final project = Project();
       project.name = results.first;
       project.id = UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
-      //Save project
+      //Save project to project list
       ref.read(projectsProvider).add(project);
+      //NOTE: Save this new created project as a current ont
+      ref.read(projectsProvider.notifier).setCurrentProject(project);
+
       context.goNamed(
         AppRoute.addProject.name,
         extra: project,

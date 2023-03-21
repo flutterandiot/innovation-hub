@@ -9,3 +9,7 @@ const trizTooltip = """
  It involves observing the commonalities in solutions discovered in the past, recognizing that certain patterns emerge whenever inventions are made.
  TRIZ is based on empirical data, patents, and documentation of how inventive people solved inventive problems.
 """;
+
+const sitMethodIndex = 0;
+
+const trizMethodIndex = 1;

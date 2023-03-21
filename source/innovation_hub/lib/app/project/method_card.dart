@@ -14,6 +14,7 @@ class MethodCard extends HookWidget {
     this.width,
     this.height,
     this.tooltip,
+    this.elevation,
   }) : super(key: key);
 
   final String title;
@@ -24,12 +25,14 @@ class MethodCard extends HookWidget {
   final double? width;
   final double? height;
   final String? tooltip;
+  final double? elevation;
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final isShowTooltip = useState<bool>(false);
     return Material(
       color: backgroundColor,
+      elevation: elevation ?? 0.0,
       borderRadius: BorderRadius.circular(8),
       child: Tooltip(
         message: isShowTooltip.value ? tooltip : 'Select eye icon to show/hide short explaination',

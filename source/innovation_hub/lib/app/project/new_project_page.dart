@@ -11,15 +11,18 @@
 * Description: show new project page
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/project/method_card.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
+import 'package:innovation_hub/app/project/widgets/tool_button.dart';
 import 'package:innovation_hub/app_routing.dart';
 import 'package:innovation_hub/constants.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class NewProjectPage extends StatelessWidget {
+class NewProjectPage extends HookWidget {
   const NewProjectPage({
     Key? key,
     required this.project,
@@ -27,6 +30,9 @@ class NewProjectPage extends StatelessWidget {
   final Project project;
   @override
   Widget build(BuildContext context) {
+    // Method selection, 0 = SIT, 1 = SIT,
+    final methodSelected = useState<int>(0);
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -69,14 +75,16 @@ class NewProjectPage extends StatelessWidget {
                       title: 'SIT',
                       subtitle: 'Systematic Inventive Thinking',
                       useCase: 'Best for generate inventive ideas',
-                      backgroundColor: Colors.amber,
+                      backgroundColor: methodSelected.value == sitMethodIndex ? Colors.amber : Theme.of(context).unselectedWidgetColor,
                       tooltip: sitTooltip,
+                      elevation: methodSelected.value == sitMethodIndex ? defaultPadding : 0.0,
                       onTap: () {
-                        context.goNamed(
-                          AppRoute.sitMethod.name,
-                          params: {'id': project.id},
-                          extra: project,
-                        );
+                        // context.goNamed(
+                        //   AppRoute.sitMethod.name,
+                        //   params: {'id': project.id},
+                        //   extra: project,
+                        // );
+                        methodSelected.value = sitMethodIndex;
                       },
                     ),
                     Space.x(defaultPadding),
@@ -84,14 +92,79 @@ class NewProjectPage extends StatelessWidget {
                       title: 'TRIZ',
                       subtitle: 'Theory of Inventive Problem Solving',
                       useCase: 'Best for problem solving',
-                      backgroundColor: Colors.blue,
+                      backgroundColor: methodSelected.value == trizMethodIndex ? Colors.blue : Theme.of(context).unselectedWidgetColor,
                       tooltip: trizTooltip,
+                      elevation: methodSelected.value == trizMethodIndex ? defaultPadding : 0.0,
                       onTap: () {
-                        //TODO - add action for TRIZ method
+                        methodSelected.value = trizMethodIndex;
                       },
                     ),
                   ],
-                )
+                ),
+                //SIT Tools
+                if (methodSelected.value == sitMethodIndex)
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Divider(),
+                  ),
+                if (methodSelected.value == sitMethodIndex)
+                  Wrap(
+                    spacing: defaultPadding,
+                    runSpacing: defaultPadding,
+                    children: [
+                      SitToolButton(
+                        backgroundColor: Colors.amber,
+                        icon: const FaIcon(FontAwesomeIcons.plus),
+                        title: 'Unification',
+                        onTap: () {
+                          //TODO -  add action
+                        },
+                      ),
+                      SitToolButton(
+                        backgroundColor: Colors.orange,
+                        icon: const FaIcon(FontAwesomeIcons.minus),
+                        title: 'Substraction',
+                        onTap: () {
+                          //TODO -  add action
+                        },
+                      ),
+                      SitToolButton(
+                        backgroundColor: Colors.blue,
+                        icon: const FaIcon(FontAwesomeIcons.xmark),
+                        title: 'Multiplication',
+                        onTap: () {
+                          //TODO -  add action
+                        },
+                      ),
+                      SitToolButton(
+                        backgroundColor: Colors.teal,
+                        icon: const FaIcon(FontAwesomeIcons.divide),
+                        title: 'Division',
+                        onTap: () {
+                          //TODO -  add action
+                        },
+                      ),
+                      SitToolButton(
+                        backgroundColor: Colors.green,
+                        icon: const FaIcon(FontAwesomeIcons.link),
+                        title: 'Attribute Dependency',
+                        onTap: () {
+                          //TODO -  add action
+                        },
+                      ),
+                    ],
+                  ),
+
+                if (methodSelected.value == trizMethodIndex)
+                  SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Text(
+                        'TRIZ method will be updated in next version',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                  )
               ],
             ),
           ),

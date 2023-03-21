@@ -3,6 +3,7 @@ import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/project/widgets/list_components.dart';
+import 'package:innovation_hub/app/project/widgets/task_unification_view.dart';
 import 'package:innovation_hub/utils/space.dart';
 
 import '../../app_routing.dart';
@@ -23,7 +24,6 @@ class SitTechniquePage extends ConsumerStatefulWidget {
 
 class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerProviderStateMixin {
   int activeStep = 0;
-  late List<Widget> stepViews;
   late List<EasyStep> steps;
   @override
   void initState() {
@@ -53,14 +53,6 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
         icon: Icon(Icons.done_all),
         title: 'Save',
       ),
-    ];
-    stepViews = [
-      const CurrentSituation(),
-      const ListComponents(),
-      const CurrentSituation(),
-      const ListComponents(),
-      const CurrentSituation(),
-      const ListComponents(),
     ];
   }
 
@@ -173,3 +165,12 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
     );
   }
 }
+
+const stepViews = [
+  CurrentSituation(),
+  ListComponents(),
+  TaskUnificationView(),
+  ListComponents(),
+  CurrentSituation(),
+  ListComponents(),
+];

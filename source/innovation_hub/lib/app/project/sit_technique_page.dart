@@ -8,18 +8,18 @@ import 'package:innovation_hub/utils/padding.dart';
 import 'model/project_model.dart';
 import 'provider/project_provider.dart';
 
-class SITMethodPage extends ConsumerStatefulWidget {
-  const SITMethodPage({
+class SitTechniquePage extends ConsumerStatefulWidget {
+  const SitTechniquePage({
     Key? key,
     required this.project,
   }) : super(key: key);
 
   final Project project;
   @override
-  ConsumerState<SITMethodPage> createState() => _SITMethodPageState();
+  ConsumerState<SitTechniquePage> createState() => _SITMethodPageState();
 }
 
-class _SITMethodPageState extends ConsumerState<SITMethodPage> with TickerProviderStateMixin {
+class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerProviderStateMixin {
   late TabController _tabController;
   @override
   void initState() {

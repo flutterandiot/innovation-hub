@@ -98,6 +98,7 @@ final router = GoRouter(
                 );
               },
             ),
+            //NOTE: Go to project page
             GoRoute(
               path: ':id',
               name: AppRoute.projectPage.name,

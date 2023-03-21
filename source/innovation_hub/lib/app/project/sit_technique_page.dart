@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
+import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:innovation_hub/app_routing.dart';
-import 'package:innovation_hub/utils/padding.dart';
 
+import '../../app_routing.dart';
 import 'model/project_model.dart';
 import 'provider/project_provider.dart';
 
@@ -21,6 +20,8 @@ class SitTechniquePage extends ConsumerStatefulWidget {
 
 class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerProviderStateMixin {
   late TabController _tabController;
+  int activeStep = 0;
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +36,76 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
       onWillPop: () async {
         return false;
       },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Apply SIT for ${currentProject.name}'),
+          leading: IconButton(
+            onPressed: () {
+              context.goNamed(
+                AppRoute.projectPage.name,
+                params: {'id': currentProject.id},
+                extra: currentProject,
+              );
+            },
+            tooltip: 'Go back to project page',
+            icon: const Icon(Icons.arrow_back),
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                EasyStepper(
+                    activeStep: activeStep,
+                    lineLength: 70,
+                    lineType: LineType.normal,
+                    stepShape: StepShape.rRectangle,
+                    stepBorderRadius: 15,
+                    borderThickness: 2,
+                    padding: 20,
+                    stepRadius: 32,
+                    finishedStepBorderColor: Colors.deepOrange,
+                    finishedStepTextColor: Colors.black,
+                    finishedStepBackgroundColor: Colors.deepOrange,
+                    activeStepIconColor: Colors.green,
+                    // loadingAnimation: 'assets/loading_circle.json',
+                    steps: const [
+                      EasyStep(
+                        icon: Icon(Icons.start),
+                        title: 'Current situation',
+                      ),
+                      EasyStep(
+                        icon: Icon(Icons.category_rounded),
+                        title: 'List Components',
+                      ),
+                      EasyStep(
+                        icon: Icon(Icons.add_task),
+                        title: 'Assign a job',
+                      ),
+                      EasyStep(
+                        icon: Icon(Icons.filter_frames),
+                        title: 'Visualize a product',
+                      ),
+                      EasyStep(
+                        icon: Icon(Icons.question_mark),
+                        title: 'Ask',
+                      ),
+                      EasyStep(
+                        icon: Icon(Icons.done_all),
+                        title: 'Save',
+                      ),
+                    ],
+                    onStepReached: (index) {
+                      setState(() => activeStep = index);
+                      // debugPrint('Step: $index');
+                    }),
+                const SizedBox(height: 50),
+              ],
+            ),
+          ),
+        ),
+      ),
+/*
       child: DefaultTabController(
         length: 3,
         initialIndex: 0,
@@ -93,6 +164,7 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
           ),
         ),
       ),
+   */
     );
   }
 }

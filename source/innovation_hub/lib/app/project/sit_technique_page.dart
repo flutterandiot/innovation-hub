@@ -128,32 +128,38 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
                     child: Row(
                       children: [
                         const Spacer(),
-                        TextButton.icon(
-                          onPressed: activeStep == 0
-                              ? null
-                              : () {
-                                  setState(() {
-                                    if (activeStep > 0) {
-                                      activeStep -= 1;
-                                    }
-                                  });
-                                },
-                          icon: const Icon(Icons.arrow_back),
-                          label: const Text('Previous'),
+                        Tooltip(
+                          message: 'Previous step',
+                          child: TextButton.icon(
+                            onPressed: activeStep == 0
+                                ? null
+                                : () {
+                                    setState(() {
+                                      if (activeStep > 0) {
+                                        activeStep -= 1;
+                                      }
+                                    });
+                                  },
+                            icon: const Icon(Icons.arrow_back),
+                            label: const Text(''),
+                          ),
                         ),
                         Space.x(12),
-                        TextButton.icon(
-                          onPressed: activeStep == steps.length - 1
-                              ? null
-                              : () {
-                                  setState(() {
-                                    if (activeStep < steps.length - 1) {
-                                      activeStep += 1;
-                                    }
-                                  });
-                                },
-                          icon: const Icon(Icons.arrow_forward),
-                          label: const Text('Next'),
+                        Tooltip(
+                          message: 'Next step',
+                          child: TextButton.icon(
+                            onPressed: activeStep == steps.length - 1
+                                ? null
+                                : () {
+                                    setState(() {
+                                      if (activeStep < steps.length - 1) {
+                                        activeStep += 1;
+                                      }
+                                    });
+                                  },
+                            icon: const Icon(Icons.arrow_forward),
+                            label: const Text(''),
+                          ),
                         ),
                       ],
                     ),

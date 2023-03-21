@@ -2,10 +2,13 @@
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:innovation_hub/app/project/widgets/list_components.dart';
+import 'package:innovation_hub/utils/space.dart';
 
 import '../../app_routing.dart';
 import 'model/project_model.dart';
 import 'provider/project_provider.dart';
+import 'widgets/current_situation.dart';
 
 class SitTechniquePage extends ConsumerStatefulWidget {
   const SitTechniquePage({
@@ -19,13 +22,46 @@ class SitTechniquePage extends ConsumerStatefulWidget {
 }
 
 class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerProviderStateMixin {
-  late TabController _tabController;
   int activeStep = 0;
-
+  late List<Widget> stepViews;
+  late List<EasyStep> steps;
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    steps = [
+      const EasyStep(
+        icon: Icon(Icons.start),
+        title: 'Current situation',
+      ),
+      const EasyStep(
+        icon: Icon(Icons.category_rounded),
+        title: 'List Components',
+      ),
+      const EasyStep(
+        icon: Icon(Icons.add_task),
+        title: 'Assign a job',
+      ),
+      const EasyStep(
+        icon: Icon(Icons.filter_frames),
+        title: 'Visualize a product',
+      ),
+      const EasyStep(
+        icon: Icon(Icons.question_mark),
+        title: 'Ask',
+      ),
+      const EasyStep(
+        icon: Icon(Icons.done_all),
+        title: 'Save',
+      ),
+    ];
+    stepViews = [
+      const CurrentSituation(),
+      const ListComponents(),
+      const CurrentSituation(),
+      const ListComponents(),
+      const CurrentSituation(),
+      const ListComponents(),
+    ];
   }
 
   @override
@@ -36,135 +72,98 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
       onWillPop: () async {
         return false;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Apply SIT for ${currentProject.name}'),
-          leading: IconButton(
-            onPressed: () {
-              context.goNamed(
-                AppRoute.projectPage.name,
-                params: {'id': currentProject.id},
-                extra: currentProject,
-              );
-            },
-            tooltip: 'Go back to project page',
-            icon: const Icon(Icons.arrow_back),
-          ),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                EasyStepper(
-                    activeStep: activeStep,
-                    lineLength: 70,
-                    lineType: LineType.normal,
-                    stepShape: StepShape.rRectangle,
-                    stepBorderRadius: 15,
-                    borderThickness: 2,
-                    padding: 20,
-                    stepRadius: 32,
-                    finishedStepBorderColor: Colors.deepOrange,
-                    finishedStepTextColor: Colors.black,
-                    finishedStepBackgroundColor: Colors.deepOrange,
-                    activeStepIconColor: Colors.green,
-                    // loadingAnimation: 'assets/loading_circle.json',
-                    steps: const [
-                      EasyStep(
-                        icon: Icon(Icons.start),
-                        title: 'Current situation',
-                      ),
-                      EasyStep(
-                        icon: Icon(Icons.category_rounded),
-                        title: 'List Components',
-                      ),
-                      EasyStep(
-                        icon: Icon(Icons.add_task),
-                        title: 'Assign a job',
-                      ),
-                      EasyStep(
-                        icon: Icon(Icons.filter_frames),
-                        title: 'Visualize a product',
-                      ),
-                      EasyStep(
-                        icon: Icon(Icons.question_mark),
-                        title: 'Ask',
-                      ),
-                      EasyStep(
-                        icon: Icon(Icons.done_all),
-                        title: 'Save',
-                      ),
-                    ],
-                    onStepReached: (index) {
-                      setState(() => activeStep = index);
-                      // debugPrint('Step: $index');
-                    }),
-                const SizedBox(height: 50),
-              ],
-            ),
-          ),
-        ),
-      ),
-/*
-      child: DefaultTabController(
-        length: 3,
-        initialIndex: 0,
-        child: Scaffold(
+      child: LayoutBuilder(builder: (context, constraints) {
+        final height = constraints.maxHeight;
+        final width = constraints.maxWidth;
+        return Scaffold(
           appBar: AppBar(
             title: Text('Apply SIT for ${currentProject.name}'),
             leading: IconButton(
               onPressed: () {
                 context.goNamed(
                   AppRoute.projectPage.name,
-                  params: {'id': widget.project.id},
-                  extra: widget.project,
+                  params: {'id': currentProject.id},
+                  extra: currentProject,
                 );
               },
               tooltip: 'Go back to project page',
               icon: const Icon(Icons.arrow_back),
             ),
-            bottom: TabBar(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              controller: _tabController,
-              // indicatorSize: TabBarIndicatorSize.label,
-              indicatorWeight: 3,
-              // indicator: BoxDecoration(
-              //   borderRadius: BorderRadius.circular(8),
-              //   color: Colors.amberAccent,
-              // ),
-              tabs: const [
-                Tab(
-                  text: 'Components',
-                  icon: Icon(Icons.compost),
-                ),
-                Tab(
-                  text: 'Select',
-                  icon: Icon(Icons.hdr_on_select),
-                ),
-                Tab(
-                  text: 'Idea',
-                  icon: Icon(Icons.light),
-                ),
-              ],
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  EasyStepper(
+                      activeStep: activeStep,
+                      lineLength: 70,
+                      lineType: LineType.normal,
+                      stepShape: StepShape.rRectangle,
+                      stepBorderRadius: 15,
+                      borderThickness: 2,
+                      padding: 20,
+                      stepRadius: 32,
+                      finishedStepBorderColor: Colors.deepOrange,
+                      finishedStepTextColor: Colors.black,
+                      finishedStepBackgroundColor: Colors.deepOrange,
+                      activeStepIconColor: Colors.green,
+                      // loadingAnimation: 'assets/loading_circle.json',
+                      steps: steps,
+                      onStepReached: (index) {
+                        setState(() => activeStep = index);
+                        // debugPrint('Step: $index');
+                      }),
+                  const SizedBox(height: 50),
+                  const Divider(
+                    indent: 40,
+                    endIndent: 40,
+                  ),
+                  SizedBox(
+                    height: height * 0.5,
+                    width: width,
+                    child: stepViews[activeStep],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                    child: Row(
+                      children: [
+                        const Spacer(),
+                        TextButton.icon(
+                          onPressed: activeStep == 0
+                              ? null
+                              : () {
+                                  setState(() {
+                                    if (activeStep > 0) {
+                                      activeStep -= 1;
+                                    }
+                                  });
+                                },
+                          icon: const Icon(Icons.arrow_back),
+                          label: const Text('Previous'),
+                        ),
+                        Space.x(12),
+                        TextButton.icon(
+                          onPressed: activeStep == steps.length - 1
+                              ? null
+                              : () {
+                                  setState(() {
+                                    if (activeStep < steps.length - 1) {
+                                      activeStep += 1;
+                                    }
+                                  });
+                                },
+                          icon: const Icon(Icons.arrow_forward),
+                          label: const Text('Next'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          body: TabBarView(
-            controller: _tabController,
-            children: const [
-              Center(
-                child: Text('List all compoments'),
-              ),
-              Center(
-                child: Text('Select a compoment'),
-              ),
-              Center(
-                child: Text('Ideas'),
-              ),
-            ],
-          ),
-        ),
-      ),
-   */
+        );
+      }),
     );
   }
 }

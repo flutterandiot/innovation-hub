@@ -16,7 +16,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/method_card.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
-import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/app/project/widgets/tool_button.dart';
 import 'package:innovation_hub/app_routing.dart';
 import 'package:innovation_hub/constants.dart';
@@ -112,9 +111,10 @@ class NewProjectPage extends HookConsumerWidget {
                       SitToolButton(
                         backgroundColor: Colors.amber,
                         icon: const FaIcon(FontAwesomeIcons.plus),
-                        title: 'Unification',
+                        title: 'Task Unification',
                         onTap: () {
-                          _goToTechnique(context, ref);
+                          final technique = AppRoute.sitTaskUnification.name.replaceAll('sit', '');
+                          _goToTechnique(context, ref, technique);
                         },
                       ),
                       SitToolButton(
@@ -122,7 +122,8 @@ class NewProjectPage extends HookConsumerWidget {
                         icon: const FaIcon(FontAwesomeIcons.minus),
                         title: 'Substraction',
                         onTap: () {
-                          //TODO -  add action
+                          final technique = AppRoute.sitSubstraction.name.replaceAll('sit', '');
+                          _goToTechnique(context, ref, technique);
                         },
                       ),
                       SitToolButton(
@@ -130,7 +131,8 @@ class NewProjectPage extends HookConsumerWidget {
                         icon: const FaIcon(FontAwesomeIcons.xmark),
                         title: 'Multiplication',
                         onTap: () {
-                          //TODO -  add action
+                          final technique = AppRoute.sitMultiplication.name.replaceAll('sit', '');
+                          _goToTechnique(context, ref, technique);
                         },
                       ),
                       SitToolButton(
@@ -138,7 +140,8 @@ class NewProjectPage extends HookConsumerWidget {
                         icon: const FaIcon(FontAwesomeIcons.divide),
                         title: 'Division',
                         onTap: () {
-                          //TODO -  add action
+                          final technique = AppRoute.sitDivision.name.replaceAll('sit', '');
+                          _goToTechnique(context, ref, technique);
                         },
                       ),
                       SitToolButton(
@@ -146,7 +149,8 @@ class NewProjectPage extends HookConsumerWidget {
                         icon: const FaIcon(FontAwesomeIcons.link),
                         title: 'Attribute Dependency',
                         onTap: () {
-                          //TODO -  add action
+                          final technique = AppRoute.sitAttributeDependency.name.replaceAll('sit', '');
+                          _goToTechnique(context, ref, technique);
                         },
                       ),
                     ],
@@ -170,10 +174,13 @@ class NewProjectPage extends HookConsumerWidget {
     );
   }
 
-  void _goToTechnique(BuildContext context, WidgetRef ref) {
+  void _goToTechnique(BuildContext context, WidgetRef ref, String technique) {
     context.goNamed(
-      AppRoute.sitMethod.name,
-      params: {'id': project.id},
+      AppRoute.sitTechnique.name,
+      params: {
+        'id': project.id,
+        'technique': technique,
+      },
       extra: project,
     );
   }

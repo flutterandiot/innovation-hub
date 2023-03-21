@@ -21,7 +21,12 @@ enum AppRoute {
   settings,
   addProject,
   learnSIT,
-  sitMethod,
+  sitTechnique,
+  sitTaskUnification,
+  sitSubstraction,
+  sitMultiplication,
+  sitDivision,
+  sitAttributeDependency,
   trizMethod,
   projectPage,
 }
@@ -122,8 +127,11 @@ final router = GoRouter(
               },
             ),
             GoRoute(
-              path: ':id/sit-method',
-              name: AppRoute.sitMethod.name,
+              // Go to a SIT technique with 2 params
+              // [id]: project Id
+              // [technique]: technique name
+              path: ':id/:technique',
+              name: AppRoute.sitTechnique.name,
               pageBuilder: (context, state) {
                 final project = state.extra as Project;
                 return CustomTransitionPage(

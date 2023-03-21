@@ -5,11 +5,37 @@ import 'package:innovation_hub/theme.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'app_routing.dart';
 
+class ProviderLogger extends ProviderObserver {
+  @override
+  void didAddProvider(ProviderBase<Object?> provider, Object? value, ProviderContainer container) {
+    // TODO: implement didAddProvider
+    super.didAddProvider(provider, value, container);
+    debugPrint('''
+A provider is initialized:
+"name": ${provider.name ?? provider.runtimeType}, 
+"value": $value,
+    ''');
+  }
+
+  @override
+  void didUpdateProvider(ProviderBase<Object?> provider, Object? previousValue, Object? newValue, ProviderContainer container) {
+    debugPrint('''
+"Provider": ${provider.name ?? provider.runtimeType}, 
+" Previous value": $previousValue,
+" New value" : $newValue
+    ''');
+    super.didUpdateProvider(provider, previousValue, newValue, container);
+  }
+}
+
 void main() {
   setPathUrlStrategy();
   runApp(
-    const ProviderScope(
-      child: MainApp(),
+    ProviderScope(
+      observers: [
+        ProviderLogger(),
+      ],
+      child: const MainApp(),
     ),
   );
 }

@@ -19,7 +19,7 @@ class NewProjectDialog extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         width: constraints.maxWidth / 2,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).canvasColor,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
@@ -129,6 +129,7 @@ class NewProjectDialog extends HookConsumerWidget {
   }
 
   Project _saveNewProject(WidgetRef ref, String name, String description, ProjectType type) {
+    //NOTE - Create new project
     final project = Project(
       id: UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', ''),
       name: name,

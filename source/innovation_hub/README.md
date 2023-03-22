@@ -12,3 +12,9 @@ Innovation HUB is a platform that help user to:
 The project is currently developed and maintained by FlutterAndIoT.
 All contributiona are welcome.
 
+
+
+## Note for building project:
+
+ - To generate the g file: run `dart run build_runner build`
+ - 

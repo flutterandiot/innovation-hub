@@ -2,7 +2,9 @@
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:innovation_hub/app/project/provider/step_provider.dart';
 import 'package:innovation_hub/app/project/widgets/list_components.dart';
+import 'package:innovation_hub/app/project/widgets/task_unification_steps.dart';
 import 'package:innovation_hub/app/project/widgets/task_unification_view.dart';
 import 'package:innovation_hub/utils/space.dart';
 
@@ -11,55 +13,19 @@ import 'model/project_model.dart';
 import 'provider/project_provider.dart';
 import 'widgets/current_situation.dart';
 
-class SitTechniquePage extends ConsumerStatefulWidget {
+class SitTechniquePage extends ConsumerWidget {
   const SitTechniquePage({
     Key? key,
     required this.project,
   }) : super(key: key);
 
   final Project project;
-  @override
-  ConsumerState<SitTechniquePage> createState() => _SITMethodPageState();
-}
-
-class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerProviderStateMixin {
-  int activeStep = 0;
-  late List<EasyStep> steps;
-  @override
-  void initState() {
-    super.initState();
-    steps = [
-      const EasyStep(
-        icon: Icon(Icons.start),
-        title: 'Current situation',
-      ),
-      const EasyStep(
-        icon: Icon(Icons.category_rounded),
-        title: 'List Components',
-      ),
-      const EasyStep(
-        icon: Icon(Icons.add_task),
-        title: 'Assign a job',
-      ),
-      const EasyStep(
-        icon: Icon(Icons.filter_frames),
-        title: 'Visualize a product',
-      ),
-      const EasyStep(
-        icon: Icon(Icons.question_mark),
-        title: 'Ask',
-      ),
-      const EasyStep(
-        icon: Icon(Icons.done_all),
-        title: 'Save',
-      ),
-    ];
-  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentProject = ref.watch(projectsProvider.notifier).currentProject!;
-
+    final activeStep = ref.watch(currentStepProvider);
+    final maxSteps = stepViews.length;
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -86,25 +52,7 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  EasyStepper(
-                      activeStep: activeStep,
-                      lineLength: 70,
-                      lineType: LineType.normal,
-                      stepShape: StepShape.rRectangle,
-                      stepBorderRadius: 15,
-                      borderThickness: 2,
-                      padding: 20,
-                      stepRadius: 32,
-                      finishedStepBorderColor: Colors.deepOrange,
-                      finishedStepTextColor: Colors.black,
-                      finishedStepBackgroundColor: Colors.deepOrange,
-                      activeStepIconColor: Colors.green,
-                      // loadingAnimation: 'assets/loading_circle.json',
-                      steps: steps,
-                      onStepReached: (index) {
-                        setState(() => activeStep = index);
-                        // debugPrint('Step: $index');
-                      }),
+                  const TaskUnificationSteps(),
                   const SizedBox(height: 50),
                   const Divider(
                     indent: 40,
@@ -126,11 +74,7 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
                             onPressed: activeStep == 0
                                 ? null
                                 : () {
-                                    setState(() {
-                                      if (activeStep > 0) {
-                                        activeStep -= 1;
-                                      }
-                                    });
+                                    ref.read(currentStepProvider.notifier).descrease();
                                   },
                             icon: const Icon(Icons.arrow_back),
                             label: const Text(''),
@@ -140,14 +84,10 @@ class _SITMethodPageState extends ConsumerState<SitTechniquePage> with TickerPro
                         Tooltip(
                           message: 'Next step',
                           child: TextButton.icon(
-                            onPressed: activeStep == steps.length - 1
+                            onPressed: activeStep == maxSteps - 1
                                 ? null
                                 : () {
-                                    setState(() {
-                                      if (activeStep < steps.length - 1) {
-                                        activeStep += 1;
-                                      }
-                                    });
+                                    ref.read(currentStepProvider.notifier).increase();
                                   },
                             icon: const Icon(Icons.arrow_forward),
                             label: const Text(''),

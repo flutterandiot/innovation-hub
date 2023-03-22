@@ -91,7 +91,10 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
                                   onTagSelect: (mTag) {
                                     debugPrint('Tag selected: $mTag');
                                   },
-                                  onTagDelete: onTagDelete,
+                                  onTagDelete: (mTag) {
+                                    onTagDelete(mTag);
+                                    currentProject.internalComponents!.remove(mTag);
+                                  },
                                 );
                               }).toList()),
                             )
@@ -147,6 +150,11 @@ class TagView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Material(
         color: const Color.fromARGB(255, 252, 0, 143),
+        // shape: const RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.all(
+        //     Radius.circular(20.0),
+        //   ),
+        // ),
         borderRadius: const BorderRadius.all(
           Radius.circular(20.0),
         ),

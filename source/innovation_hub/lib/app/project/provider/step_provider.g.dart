@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'project_provider.dart';
+part of 'step_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$projectsHash() => r'd0c756475633b605504cbdbf08d8a4dae75822cb';
+String _$currentStepHash() => r'8f07857f96dcbcfa6f14717ef038dff24242968b';
 
-/// See also [Projects].
-@ProviderFor(Projects)
-final projectsProvider =
-    AutoDisposeNotifierProvider<Projects, List<Project>>.internal(
-  Projects.new,
-  name: r'projectsProvider',
+/// See also [CurrentStep].
+@ProviderFor(CurrentStep)
+final currentStepProvider =
+    AutoDisposeNotifierProvider<CurrentStep, int>.internal(
+  CurrentStep.new,
+  name: r'currentStepProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$projectsHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentStepHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Projects = AutoDisposeNotifier<List<Project>>;
+typedef _$CurrentStep = AutoDisposeNotifier<int>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -74,20 +74,6 @@ class _HomePageState extends ConsumerState<HomePage> {
       } else if (index == 2) {
         context.goNamed(AppRoute.settings.name);
       }
-      // switch (index) {
-      //   case 0:
-      //     context.goNamed(AppRoute.dashboard.name);
-      //     break;
-      //   case 1:
-      //     context.goNamed(AppRoute.explore.name);
-      //     break;
-      //   case 2:
-      //     context.goNamed(AppRoute.settings.name);
-      //     break;
-      //   default:
-      //      context.goNamed(AppRoute.dashboard.name);
-      //     break;
-      // }
     }
 
     final projectList = ref.watch(projectsProvider);

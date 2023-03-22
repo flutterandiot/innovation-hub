@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 
 import 'package:innovation_hub/app/project/model/component_model.dart';
 
+import '../../shared/user.dart';
+
 enum ProjectType {
   product,
   service,
@@ -21,14 +23,21 @@ class Project {
   String id;
   String name;
   String description;
-  ProjectType type;
+  String createdAt;
+  User createdBy;
+  List<User> team;
+
+  String type;
   List<Component> internalComponents;
   List<Component> externalComponents;
   Project({
     required this.id,
     required this.name,
-    this.type = ProjectType.product,
     required this.description,
+    required this.createdAt,
+    required this.createdBy,
+    required this.team,
+    required this.type,
     required this.internalComponents,
     required this.externalComponents,
   });
@@ -37,6 +46,10 @@ class Project {
     String? id,
     String? name,
     String? description,
+    String? createdAt,
+    User? createdBy,
+    List<User>? team,
+    String? type,
     List<Component>? internalComponents,
     List<Component>? externalComponents,
   }) {
@@ -44,6 +57,10 @@ class Project {
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      team: team ?? this.team,
+      type: type ?? this.type,
       internalComponents: internalComponents ?? this.internalComponents,
       externalComponents: externalComponents ?? this.externalComponents,
     );
@@ -54,6 +71,10 @@ class Project {
       'id': id,
       'name': name,
       'description': description,
+      'createdAt': createdAt,
+      'createdBy': createdBy.toMap(),
+      'team': team.map((x) => x.toMap()).toList(),
+      'type': type,
       'internalComponents': internalComponents.map((x) => x.toMap()).toList(),
       'externalComponents': externalComponents.map((x) => x.toMap()).toList(),
     };
@@ -64,6 +85,14 @@ class Project {
       id: map['id'] as String,
       name: map['name'] as String,
       description: map['description'] as String,
+      createdAt: map['createdAt'] as String,
+      createdBy: User.fromMap(map['createdBy'] as Map<String, dynamic>),
+      team: List<User>.from(
+        (map['team'] as List<int>).map<User>(
+          (x) => User.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      type: map['type'] as String,
       internalComponents: List<Component>.from(
         (map['internalComponents'] as List<int>).map<Component>(
           (x) => Component.fromMap(x as Map<String, dynamic>),
@@ -83,7 +112,7 @@ class Project {
 
   @override
   String toString() {
-    return 'Project(id: $id, name: $name, description: $description, internalComponents: $internalComponents, externalComponents: $externalComponents)';
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, createdBy: $createdBy, team: $team, type: $type, internalComponents: $internalComponents, externalComponents: $externalComponents)';
   }
 
   @override
@@ -93,12 +122,16 @@ class Project {
     return other.id == id &&
         other.name == name &&
         other.description == description &&
+        other.createdAt == createdAt &&
+        other.createdBy == createdBy &&
+        listEquals(other.team, team) &&
+        other.type == type &&
         listEquals(other.internalComponents, internalComponents) &&
         listEquals(other.externalComponents, externalComponents);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ description.hashCode ^ internalComponents.hashCode ^ externalComponents.hashCode;
+    return id.hashCode ^ name.hashCode ^ description.hashCode ^ createdAt.hashCode ^ createdBy.hashCode ^ team.hashCode ^ type.hashCode ^ internalComponents.hashCode ^ externalComponents.hashCode;
   }
 }

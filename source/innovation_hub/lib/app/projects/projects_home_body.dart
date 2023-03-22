@@ -138,51 +138,6 @@ class ProjectsHomePageBody extends ConsumerWidget {
     );
   }
 
-/*
-  Future<String?> _showNewProjectDialog(BuildContext context, WidgetRef ref) async {
-    final results = await showTextInputDialog(
-      context: context,
-      title: 'New project',
-      message: 'Please enter project name and description to continue',
-      textFields: [
-        DialogTextField(
-          initialText: 'ProjectA',
-          hintText: 'Input your project name',
-          validator: (value) => value!.isEmpty ? 'Input more than one character' : null,
-        ),
-        DialogTextField(
-          initialText: 'This project is',
-          hintText: 'Input description of your new project',
-          validator: (value) => value!.isEmpty ? 'Input more than one character' : null,
-        ),
-      ],
-      okLabel: 'Create a New Project',
-      cancelLabel: 'Cancel',
-    );
-    if (results != null && results.isNotEmpty) {
-      debugPrint('Results: ${results[0]}');
-      //NOTE - Create project if the project name is not empty
-      final project = Project();
-      project.name = results.first;
-      project.description = results.last;
-      project.id = UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
-      project.internalComponents = [];
-      project.externalComponents = [];
-      //Save project to project list
-      ref.read(projectsProvider).add(project);
-      //NOTE: Save this new created project as a current ont
-      ref.read(projectsProvider.notifier).setCurrentProject(project);
-
-      context.goNamed(
-        AppRoute.addProject.name,
-        extra: project,
-      );
-      return results.first;
-    } else {
-      return null;
-    }
-  }
-*/
   void _showNewProjectDialog(BuildContext context) {
     showDialog(
       context: context,

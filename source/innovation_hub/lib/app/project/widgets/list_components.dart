@@ -133,7 +133,7 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
               ),
             ),
             const Text(
-              'external components (those in the immediate vicinity - within the closed world); separate component by a comma',
+              _externalComponentHelperText,
               textAlign: TextAlign.start,
             ),
           ],
@@ -144,3 +144,5 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
 }
 
 const _internalComponentHelperText = 'Make a list of the internal components (generally, the things attached or directly part of the product, process, or service); separate component by a comma';
+
+const _externalComponentHelperText = 'external components (those in the immediate vicinity - within the closed world); separate component by a comma';

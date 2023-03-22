@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:innovation_hub/app/project/model/project_models.dart';
 import 'package:innovation_hub/app/shared/user.dart';
-import 'package:innovation_hub/utils/date_time_utils.dart';
+import 'package:innovation_hub/utils/app_utils.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -24,15 +24,15 @@ void main() {
   });
 
   test('Test Datetime Utilities', () {
-    final epoch = DateTimeUtilities.getTimeStampFromNow();
+    final epoch = AppUtilities.getTimeStampFromNow();
 
-    final dateTime = DateTimeUtilities.getTimeFromEpoch(int.tryParse(epoch) ?? 1234);
+    final dateTime = AppUtilities.getTimeFromEpoch(int.tryParse(epoch) ?? 1234);
 
     print('Epoch: $epoch');
 
     print('Date time: $dateTime');
 
-    final formatedDate = DateTimeUtilities.getDateTimeFormatted(dateTime);
+    final formatedDate = AppUtilities.getDateTimeFormatted(dateTime);
     print(formatedDate);
   });
 }

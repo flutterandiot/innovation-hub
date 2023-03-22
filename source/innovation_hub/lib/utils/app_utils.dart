@@ -1,7 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-class DateTimeUtilities {
-  DateTimeUtilities._();
+class AppUtilities {
+  AppUtilities._();
 
   /// Get Timestamp from now
   /// @return: timestamp in epoch, seconds
@@ -21,5 +22,11 @@ class DateTimeUtilities {
   /// @return: a formated string
   static String getDateTimeFormatted(String dateTime) {
     return DateFormat('E, dd MMM yyyy').format(DateTime.parse(dateTime));
+  }
+
+  /// Get a uid from UniqueKey(), remove the #, [, ]
+  /// return the uid
+  static String getUid() {
+    return UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
   }
 }

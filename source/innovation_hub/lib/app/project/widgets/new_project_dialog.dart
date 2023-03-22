@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/app/shared/user.dart';
-import 'package:innovation_hub/utils/date_time_utils.dart';
 
 import '../../../app_routing.dart';
+import '../../../utils/app_utils.dart';
 import '../model/project_model.dart';
 
 class NewProjectDialog extends HookConsumerWidget {
@@ -133,13 +133,13 @@ class NewProjectDialog extends HookConsumerWidget {
   Project _saveNewProject(WidgetRef ref, String name, String description, ProjectType type) {
     //NOTE - Create new project
     final project = Project(
-      id: UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', ''),
+      id: AppUtilities.getUid(),
       name: name,
       description: description,
       type: type.name,
       externalComponents: [],
       internalComponents: [],
-      createdAt: DateTimeUtilities.getTimeStampFromNow(),
+      createdAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.dummyUser,
       team: [
         User.dummyUser,

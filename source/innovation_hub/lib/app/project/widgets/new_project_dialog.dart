@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
+import 'package:innovation_hub/app/shared/user.dart';
+import 'package:innovation_hub/utils/date_time_utils.dart';
 
 import '../../../app_routing.dart';
 import '../model/project_model.dart';
@@ -134,10 +136,16 @@ class NewProjectDialog extends HookConsumerWidget {
       id: UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', ''),
       name: name,
       description: description,
-      type: type,
+      type: type.name,
       externalComponents: [],
       internalComponents: [],
+      createdAt: DateTimeUtilities.getTimeStampFromNow(),
+      createdBy: User.dummyUser,
+      team: [
+        User.dummyUser,
+      ],
     );
+    debugPrint(project.toString());
 
     //Save project to project list
     ref.read(projectsProvider).add(project);

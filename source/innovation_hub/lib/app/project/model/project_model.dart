@@ -1,7 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+
+import 'package:innovation_hub/app/project/model/component_model.dart';
+
+enum ProjectType {
+  product,
+  service,
+  other,
+}
 
 enum InnoMethod {
   sit,
@@ -12,22 +21,24 @@ class Project {
   String id;
   String name;
   String description;
-  List<String>? internalComponents;
-  List<String>? externalComponents;
+  ProjectType type;
+  List<Component> internalComponents;
+  List<Component> externalComponents;
   Project({
-    this.id = '',
-    this.name = '',
-    this.description = '',
-    this.internalComponents,
-    this.externalComponents,
+    required this.id,
+    required this.name,
+    this.type = ProjectType.product,
+    required this.description,
+    required this.internalComponents,
+    required this.externalComponents,
   });
 
   Project copyWith({
     String? id,
     String? name,
     String? description,
-    List<String>? internalComponents,
-    List<String>? externalComponents,
+    List<Component>? internalComponents,
+    List<Component>? externalComponents,
   }) {
     return Project(
       id: id ?? this.id,
@@ -43,8 +54,8 @@ class Project {
       'id': id,
       'name': name,
       'description': description,
-      'internalComponents': internalComponents,
-      'externalComponents': externalComponents,
+      'internalComponents': internalComponents.map((x) => x.toMap()).toList(),
+      'externalComponents': externalComponents.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -53,8 +64,16 @@ class Project {
       id: map['id'] as String,
       name: map['name'] as String,
       description: map['description'] as String,
-      internalComponents: map['internalComponents'] as List<String>,
-      externalComponents: map['externalComponents'] as List<String>,
+      internalComponents: List<Component>.from(
+        (map['internalComponents'] as List<int>).map<Component>(
+          (x) => Component.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      externalComponents: List<Component>.from(
+        (map['externalComponents'] as List<int>).map<Component>(
+          (x) => Component.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 

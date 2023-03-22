@@ -49,7 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       NavigationDestination(
         icon: Icon(Icons.dashboard_outlined, color: iconColor),
         selectedIcon: const Icon(Icons.dashboard),
-        label: 'Dashboard',
+        label: 'Projects',
       ),
       NavigationDestination(
         icon: Icon(Icons.explore_outlined, color: iconColor),
@@ -68,7 +68,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     void _selectedNavi(BuildContext context, int index) {
       if (index == 0) {
-        context.goNamed(AppRoute.dashboard.name);
+        context.goNamed(AppRoute.projects.name);
       } else if (index == 1) {
         context.goNamed(AppRoute.explore.name);
       } else if (index == 2) {

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:innovation_hub/app/project/widgets/new_component_dialog.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
@@ -41,6 +42,21 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
         ),
         child: Column(
           children: [
+            SizedBox(
+              height: 100,
+              child: Row(
+                children: [
+                  const Text('Components'),
+                  Space.x(12),
+                  IconButton(
+                    onPressed: () {
+                      _showAddNewComponentDialog(context);
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+            ),
             InputComponentTextField(
               tagController: _internalTagController,
               components: currentProject.internalComponents ?? [],
@@ -62,5 +78,18 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
         ),
       );
     });
+  }
+
+  void _showAddNewComponentDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: const NewComponentDialog(),
+        );
+      },
+    );
   }
 }

@@ -13,6 +13,7 @@
  */
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
@@ -27,6 +28,7 @@ class DashboardPageBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isSmallActivie = Breakpoints.small.isActive(context);
     final projects = ref.watch(projectsProvider);
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -51,32 +53,34 @@ class DashboardPageBody extends ConsumerWidget {
                         fontStyle: FontStyle.italic,
                       ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: constraints.maxWidth * 0.6,
-                      height: constraints.maxHeight * 0.5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Lottie.asset(
-                          'assets/animations/118991-idea-innovation.json',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                if (projects.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 2 * defaultPadding,
-                    ),
-                    child: Text(
-                      'Recent projects',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 24,
+                    right: 24,
+                    top: 32,
+                    bottom: 24,
                   ),
+                  child: Row(
+                    children: [
+                      Text(
+                        'My projects',
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                      const SizedBox(width: 12),
+                      ElevatedButton.icon(
+                        onPressed: () async {
+                          final _ = await _showNewProjectDialog(context, ref);
+                        },
+                        icon: const Icon(Icons.add),
+                        label: const Text('New project'),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  indent: 24,
+                  endIndent: 24,
+                ),
                 if (projects.isNotEmpty)
                   SizedBox(
                     width: double.infinity,
@@ -111,21 +115,23 @@ class DashboardPageBody extends ConsumerWidget {
                       },
                     ),
                   ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () async {
-                        final _ = await _showNewProjectDialog(context, ref);
-                      },
-                      icon: const Icon(Icons.add),
-                      label: const Text('New project'),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(128, 64),
+                if (projects.isEmpty)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: constraints.maxWidth * 0.3,
+                        height: constraints.maxHeight * 0.3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Lottie.asset(
+                            'assets/animations/118991-idea-innovation.json',
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
               ],
             ),
           ),

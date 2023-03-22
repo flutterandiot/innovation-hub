@@ -45,7 +45,7 @@ class NewProjectPage extends HookConsumerWidget {
           ),
           leading: IconButton(
             onPressed: () {
-              context.goNamed(AppRoute.dashboard.name);
+              context.goNamed(AppRoute.projects.name);
             },
             tooltip: 'Go back to project dashboard',
             icon: const Icon(Icons.arrow_back),

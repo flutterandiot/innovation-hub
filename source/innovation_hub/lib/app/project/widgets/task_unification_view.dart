@@ -12,8 +12,8 @@ class TaskUnificationView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = useState<int>(0);
-    final currentProject = ref.watch(projectsProvider.notifier).currentProject;
-    final internalComponents = currentProject!.internalComponents!;
+    final currentProject = ref.watch(projectsProvider.notifier).currentProject!;
+    final internalComponents = currentProject.internalComponents;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -28,7 +28,7 @@ class TaskUnificationView extends HookConsumerWidget {
                 children: List.generate(
                   internalComponents.length,
                   (index) => ChoiceChip(
-                    label: Text(internalComponents[index]),
+                    label: Text(internalComponents[index].name),
                     selected: selected.value == index,
                     onSelected: (value) {
                       if (value) {

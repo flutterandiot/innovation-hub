@@ -59,7 +59,7 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
             ),
             InputComponentTextField(
               tagController: _internalTagController,
-              components: currentProject.internalComponents ?? [],
+              components: [],
             ),
             Text(
               _internalComponentHelperText,
@@ -68,7 +68,7 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
             Space.y(32),
             InputComponentTextField(
               tagController: _externalTagController,
-              components: currentProject.externalComponents ?? [],
+              components: [],
             ),
             Text(
               _externalComponentHelperText,

@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:innovation_hub/app/project/provider/project_provider.dart';
 
-class NewProjectDialog extends StatelessWidget {
+import '../../../app_routing.dart';
+import '../model/project_model.dart';
+
+class NewProjectDialog extends HookConsumerWidget {
   const NewProjectDialog({super.key});
 
-  dialogContent(BuildContext context) {
+  dialogContent(BuildContext context, WidgetRef ref) {
+    final selected = useState<ProjectType>(ProjectType.product);
+    final nameTextController = useTextEditingController(text: '');
+    final descriptionTextController = useTextEditingController(text: '');
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -32,24 +42,51 @@ class NewProjectDialog extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16.0),
-            const TextField(
-              decoration: InputDecoration(
+            TextFormField(
+              controller: nameTextController,
+              decoration: const InputDecoration(
                 label: Text('Name'),
               ),
+              validator: (value) {
+                value!.isEmpty ? 'Please enter name' : null;
+                return null;
+              },
             ),
             const SizedBox(height: 16.0),
-            const TextField(
-              decoration: InputDecoration(
+            TextFormField(
+              controller: descriptionTextController,
+              decoration: const InputDecoration(
                 label: Text('Description'),
               ),
+              validator: (value) {
+                value!.isEmpty ? 'Please enter description' : null;
+                return null;
+              },
             ),
             const SizedBox(height: 24.0),
             const Text('Project type:'),
-            CheckboxListTile(
+            RadioListTile(
+              groupValue: selected.value,
               title: const Text('Product'),
-              value: false,
+              value: ProjectType.product,
               onChanged: (value) {
-                //
+                selected.value = value!;
+              },
+            ),
+            RadioListTile(
+              groupValue: selected.value,
+              title: const Text('Service'),
+              value: ProjectType.service,
+              onChanged: (value) {
+                selected.value = value!;
+              },
+            ),
+            RadioListTile(
+              groupValue: selected.value,
+              title: const Text('Other'),
+              value: ProjectType.other,
+              onChanged: (value) {
+                selected.value = value!;
               },
             ),
             Row(
@@ -65,7 +102,17 @@ class NewProjectDialog extends StatelessWidget {
                 const SizedBox(width: 20),
                 ElevatedButton.icon(
                   onPressed: () {
+                    final project = _saveNewProject(
+                      ref,
+                      nameTextController.text,
+                      descriptionTextController.text,
+                      selected.value,
+                    );
                     Navigator.of(context).pop();
+                    context.goNamed(
+                      AppRoute.addProject.name,
+                      extra: project,
+                    );
                   },
                   icon: const Icon(Icons.check),
                   label: const Text('Create a New Project'),
@@ -81,15 +128,32 @@ class NewProjectDialog extends StatelessWidget {
     });
   }
 
+  Project _saveNewProject(WidgetRef ref, String name, String description, ProjectType type) {
+    final project = Project(
+      id: UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', ''),
+      name: name,
+      description: description,
+      type: type,
+      externalComponents: [],
+      internalComponents: [],
+    );
+
+    //Save project to project list
+    ref.read(projectsProvider).add(project);
+    //NOTE: Save this new created project as a current ont
+    ref.read(projectsProvider.notifier).setCurrentProject(project);
+    return project;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
-      child: dialogContent(context),
+      child: dialogContent(context, ref),
     );
   }
 }

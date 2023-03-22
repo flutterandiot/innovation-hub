@@ -11,12 +11,11 @@
 *
 * Description: This file is the home page of the app, show all projects
  */
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
+import 'package:innovation_hub/app/project/widgets/new_project_dialog.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:lottie/lottie.dart';
 
@@ -67,8 +66,8 @@ class ProjectsHomePageBody extends ConsumerWidget {
                       ),
                       const SizedBox(width: 12),
                       ElevatedButton.icon(
-                        onPressed: () async {
-                          final _ = await _showNewProjectDialog(context, ref);
+                        onPressed: () {
+                          _showNewProjectDialog(context);
                         },
                         icon: const Icon(Icons.add),
                         label: const Text('New project'),
@@ -139,6 +138,7 @@ class ProjectsHomePageBody extends ConsumerWidget {
     );
   }
 
+/*
   Future<String?> _showNewProjectDialog(BuildContext context, WidgetRef ref) async {
     final results = await showTextInputDialog(
       context: context,
@@ -181,5 +181,17 @@ class ProjectsHomePageBody extends ConsumerWidget {
     } else {
       return null;
     }
+  }
+*/
+  void _showNewProjectDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: const NewProjectDialog(),
+        );
+      },
+    );
   }
 }

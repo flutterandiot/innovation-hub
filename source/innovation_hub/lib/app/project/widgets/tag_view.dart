@@ -38,7 +38,7 @@ class TagView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '#$tag',
+                  tag,
                   style: const TextStyle(color: Colors.white),
                 ),
                 const SizedBox(width: 4.0),

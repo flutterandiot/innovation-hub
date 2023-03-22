@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/provider/step_provider.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
+import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
+import 'package:innovation_hub/app/project/provider/step_provider.dart';
 import 'package:innovation_hub/utils/space.dart';
 
 import 'tag_view.dart';
@@ -94,22 +95,11 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
                       errorText: error,
                       prefixIconConstraints: BoxConstraints(maxWidth: width * 0.4),
                       prefixIcon: tags.isNotEmpty
-                          ? SingleChildScrollView(
-                              controller: src,
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                  children: tags.map((String tag) {
-                                return TagView(
-                                  tag: tag,
-                                  onTagSelect: (mTag) {
-                                    debugPrint('Tag selected: $mTag');
-                                  },
-                                  onTagDelete: (mTag) {
-                                    onTagDelete(mTag);
-                                    currentProject.internalComponents!.remove(mTag);
-                                  },
-                                );
-                              }).toList()),
+                          ? _TagListView(
+                              currentProject: currentProject,
+                              src: src,
+                              tags: tags,
+                              onTagDelete: onTagDelete,
                             )
                           : null,
                     ),
@@ -140,6 +130,42 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
         ),
       );
     });
+  }
+}
+
+class _TagListView extends StatelessWidget {
+  const _TagListView({
+    Key? key,
+    required this.currentProject,
+    required this.src,
+    required this.tags,
+    required this.onTagDelete,
+  }) : super(key: key);
+
+  final Project? currentProject;
+  final ScrollController src;
+  final List<String> tags;
+  final Function(String) onTagDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      controller: src,
+      scrollDirection: Axis.horizontal,
+      child: Row(
+          children: tags.map((String tag) {
+        return TagView(
+          tag: tag,
+          onTagSelect: (mTag) {
+            debugPrint('Tag selected: $mTag');
+          },
+          onTagDelete: (mTag) {
+            onTagDelete(mTag);
+            currentProject!.internalComponents!.remove(mTag);
+          },
+        );
+      }).toList()),
+    );
   }
 }
 

@@ -16,7 +16,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 enum AppRoute {
-  dashboard,
+  projects,
   explore,
   settings,
   addProject,
@@ -33,7 +33,7 @@ enum AppRoute {
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/dashboard',
+  initialLocation: '/home',
   //NOTE - Show debug info of routing
   debugLogDiagnostics: true,
   routes: [
@@ -58,8 +58,8 @@ final router = GoRouter(
       routes: [
         // Dashboard
         GoRoute(
-          path: '/dashboard',
-          name: AppRoute.dashboard.name,
+          path: '/home',
+          name: AppRoute.projects.name,
           //NOTE - this builder will use default animation, which cause unintended animation when switching between destinations, we we don't use this builder
           // builder: (context, state) => const DashboardPageBody(),
           //!Use NoTransitionPage

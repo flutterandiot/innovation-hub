@@ -116,7 +116,7 @@ class DashboardPageBody extends ConsumerWidget {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () async {
-                        final _ = await _showEnterProjectNameDialog(context, ref);
+                        final _ = await _showNewProjectDialog(context, ref);
                       },
                       icon: const Icon(Icons.add),
                       label: const Text('New project'),
@@ -134,19 +134,24 @@ class DashboardPageBody extends ConsumerWidget {
     );
   }
 
-  Future<String?> _showEnterProjectNameDialog(BuildContext context, WidgetRef ref) async {
+  Future<String?> _showNewProjectDialog(BuildContext context, WidgetRef ref) async {
     final results = await showTextInputDialog(
       context: context,
-      title: 'Enter project name',
-      message: 'Please enter project name to continue',
+      title: 'New project',
+      message: 'Please enter project name and description to continue',
       textFields: [
         DialogTextField(
           initialText: 'ProjectA',
           hintText: 'Input your project name',
           validator: (value) => value!.isEmpty ? 'Input more than one character' : null,
         ),
+        DialogTextField(
+          initialText: 'This project is',
+          hintText: 'Input description of your new project',
+          validator: (value) => value!.isEmpty ? 'Input more than one character' : null,
+        ),
       ],
-      okLabel: 'Continue',
+      okLabel: 'Create a New Project',
       cancelLabel: 'Cancel',
     );
     if (results != null && results.isNotEmpty) {
@@ -154,6 +159,7 @@ class DashboardPageBody extends ConsumerWidget {
       //NOTE - Create project if the project name is not empty
       final project = Project();
       project.name = results.first;
+      project.description = results.last;
       project.id = UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
       project.internalComponents = [];
       project.externalComponents = [];

@@ -39,6 +39,10 @@ class NewProjectPage extends HookConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(project.name),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(48),
+            child: Text(project.description),
+          ),
           leading: IconButton(
             onPressed: () {
               context.goNamed(AppRoute.dashboard.name);
@@ -54,13 +58,7 @@ class NewProjectPage extends HookConsumerWidget {
             child: Column(
               children: [
                 Space.y(40),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Project description',
-                    hintText: 'Describe current situation, problem,...',
-                  ),
-                ),
-                Space.y(20),
+
                 const Divider(),
                 Padding(
                   padding: const EdgeInsets.only(top: 2 * defaultPadding, bottom: defaultPadding),

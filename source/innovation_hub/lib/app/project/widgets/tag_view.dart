@@ -1,7 +1,7 @@
 import 'package:easy_stepper/easy_stepper.dart';
 
-class TagView extends StatelessWidget {
-  const TagView({
+class TagItemView extends StatelessWidget {
+  const TagItemView({
     Key? key,
     required this.tag,
     required this.onTagSelect,

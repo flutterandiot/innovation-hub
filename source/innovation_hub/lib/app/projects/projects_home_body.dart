@@ -6,14 +6,13 @@
 * Created on: Mon Mar 13 2023
 * Author:     Tong Vu Than Dan
 *
-* Copyright (c) 2023 ${Dantopia}
+* Copyright (c) 2023 Dantopia
 * Website:     dantopia.vn
 *
-* Description: This file is shown when there is not any project in database
+* Description: This file is the home page of the app, show all projects
  */
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
@@ -23,12 +22,12 @@ import 'package:lottie/lottie.dart';
 
 import '../../app_routing.dart';
 
-class DashboardPageBody extends ConsumerWidget {
-  const DashboardPageBody({super.key});
+class ProjectsHomePageBody extends ConsumerWidget {
+  const ProjectsHomePageBody({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSmallActivie = Breakpoints.small.isActive(context);
+    // final isSmallActivie = Breakpoints.small.isActive(context);
     final projects = ref.watch(projectsProvider);
     return LayoutBuilder(
       builder: (context, constraints) {

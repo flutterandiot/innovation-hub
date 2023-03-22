@@ -12,7 +12,8 @@ class AppUtilities {
 
   ///Get time from [epochTime] in seconds
   ///@return: A String of Date time
-  static String getTimeFromEpoch(int epochTime) {
+  static String getTimeFromEpoch(int? epochTime) {
+    if (epochTime == null) return '';
     return DateTime.fromMillisecondsSinceEpoch(epochTime * 1000).toString();
   }
 

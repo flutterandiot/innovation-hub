@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:innovation_hub/app/project/provider/step_provider.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
@@ -30,7 +31,18 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
   @override
   Widget build(BuildContext context) {
     final currentProject = ref.watch(projectsProvider.notifier).currentProject;
-
+    ref.listen<int>(
+      currentStepProvider,
+      (previous, next) {
+        // If the go from list component, then save all component
+        if (previous == 1 && _tagController.hasTags) {
+          //Clear
+          currentProject!.internalComponents!.clear();
+          //Then copy all tags
+          currentProject.internalComponents!.addAll([...?_tagController.getTags]);
+        }
+      },
+    );
     return LayoutBuilder(builder: (context, constraints) {
       final width = constraints.maxWidth;
       return Padding(
@@ -46,7 +58,6 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
               letterCase: LetterCase.normal,
               validator: (String tag) {
                 return null;
-
                 // if (tag == 'php') {
                 //   return 'No, please just no';
                 // } else if (_controller.getTags.contains(tag)) {

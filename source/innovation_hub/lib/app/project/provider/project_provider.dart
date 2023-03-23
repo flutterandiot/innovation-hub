@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../model/project_model.dart';
+import '../model/project_models.dart';
 
 part 'project_provider.g.dart';
 
@@ -70,5 +70,20 @@ class ActiveProject extends _$ActiveProject {
 
   void setProject(Project project) {
     state = project;
+  }
+
+  void addComponentList(Component component) {
+    var prj = state;
+    if (component.isInternal) {
+      prj.internalComponents.add(component);
+      state = state.copyWith(
+        internalComponents: prj.internalComponents,
+      );
+    } else {
+      prj.externalComponents.add(component);
+      state = state.copyWith(
+        externalComponents: prj.externalComponents,
+      );
+    }
   }
 }

@@ -18,11 +18,13 @@ class Attribute {
   String name;
   String description;
   int importance;
+  bool enabled;
   Attribute({
     required this.id,
     required this.name,
     required this.description,
     required this.importance,
+    this.enabled = true,
   });
 
   Attribute copyWith({
@@ -30,12 +32,14 @@ class Attribute {
     String? name,
     String? description,
     int? importance,
+    bool? enabled,
   }) {
     return Attribute(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
       importance: importance ?? this.importance,
+      enabled: enabled ?? this.enabled,
     );
   }
 
@@ -45,6 +49,7 @@ class Attribute {
       'name': name,
       'description': description,
       'importance': importance,
+      'enabled': enabled,
     };
   }
 
@@ -54,6 +59,7 @@ class Attribute {
       name: map['name'] as String,
       description: map['description'] as String,
       importance: map['importance'] as int,
+      enabled: map['enabled'] as bool,
     );
   }
 
@@ -63,18 +69,18 @@ class Attribute {
 
   @override
   String toString() {
-    return 'Attribute(id: $id, name: $name, description: $description, importance: $importance)';
+    return 'Attribute(id: $id, name: $name, description: $description, importance: $importance, enabled: $enabled)';
   }
 
   @override
   bool operator ==(covariant Attribute other) {
     if (identical(this, other)) return true;
 
-    return other.id == id && other.name == name && other.description == description && other.importance == importance;
+    return other.id == id && other.name == name && other.description == description && other.importance == importance && other.enabled == enabled;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ description.hashCode ^ importance.hashCode;
+    return id.hashCode ^ name.hashCode ^ description.hashCode ^ importance.hashCode ^ enabled.hashCode;
   }
 }

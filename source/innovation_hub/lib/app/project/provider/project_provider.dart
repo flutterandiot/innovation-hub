@@ -83,8 +83,9 @@ class ActiveProject extends _$ActiveProject {
     var prj = state;
     bool found = false;
     int i = 0;
+    final len = prj.components.length;
     //Check internal
-    while (!found) {
+    while (!found && i < len) {
       final comp = prj.components[i];
       if (comp.id == component.id) {
         //Remove old one
@@ -116,7 +117,8 @@ class ActiveProject extends _$ActiveProject {
     var prj = state;
     bool found = false;
     int i = 0;
-    while (!found) {
+    final len = prj.components.length;
+    while (!found && i < len) {
       final comp = prj.components[i];
       if (comp.id == component.id) {
         //Remove old one
@@ -135,7 +137,8 @@ class ActiveProject extends _$ActiveProject {
     var prj = state;
     bool found = false;
     int i = 0;
-    while (!found) {
+    final len = prj.components.length;
+    while (!found && i < len) {
       final comp = prj.components[i];
       if (comp.id == component.id) {
         //Remove old one
@@ -148,5 +151,31 @@ class ActiveProject extends _$ActiveProject {
       }
       i++;
     }
+  }
+
+  void updateAttribute(Component component, Attribute attribute) {
+    bool found = false;
+    int i = 0;
+    final attributeList = component.attributes;
+    final len = attributeList.length;
+    debugPrint('update attribute for total: $len');
+    // Find attribute to update
+    while (!found && i < len) {
+      final attr = attributeList[i];
+      debugPrint('Check attr ${attr.toString()}');
+      debugPrint('Attr to update: ${attribute.toString()}');
+      if (attr.id == attribute.id) {
+        // Remove
+        attributeList.removeAt(i);
+        //Insert
+        attributeList.insert(i, attribute);
+
+        found = true; // set to true to stop the loop
+        debugPrint('update attribute at $i');
+      }
+      i++;
+    }
+    //Update component
+    updateComponent(component);
   }
 }

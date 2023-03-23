@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../model/attribute_model.dart';
 import '../model/component_model.dart';
+import 'attribute_dialog.dart';
 import 'proj_constants.dart';
 
 class AttributeCard extends HookConsumerWidget {
@@ -43,8 +44,8 @@ class AttributeCard extends HookConsumerWidget {
                 return <PopupMenuEntry<MenuItems>>[
                   PopupMenuItem(
                     value: MenuItems.edit,
-                    onTap: () {
-                      _onEditAttribute(context, component.id, attr);
+                    onTap: () async {
+                      await _onEditAttribute(context, ref, component, attr);
                     },
                     child: const Text('Edit'),
                   ),
@@ -67,7 +68,22 @@ class AttributeCard extends HookConsumerWidget {
     );
   }
 
-  void _onEditAttribute(BuildContext context, String componentId, Attribute attribute) {}
+  Future<void> _onEditAttribute(BuildContext context, WidgetRef ref, Component component, Attribute attribute) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return WillPopScope(
+            child: AttributeDialog(
+              component: component,
+              attribute: attribute,
+            ),
+            onWillPop: () async => false,
+          );
+        });
+    // ref.read(activeProjectProvider.notifier).updateAttribute(component, attribute);
+  }
+
   void _onEnableToggle(BuildContext context, String componentId, Attribute attribute) {}
   void _onDelete(BuildContext context, String componentId, Attribute attribute) {}
 }

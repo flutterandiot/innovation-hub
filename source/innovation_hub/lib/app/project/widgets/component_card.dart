@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/widgets/new_attribute.dart';
+import 'package:innovation_hub/app/project/widgets/attribute_dialog.dart';
 
 import '../model/component_model.dart';
 import '../provider/project_provider.dart';
@@ -163,7 +163,7 @@ class ComponentCard extends HookConsumerWidget {
         barrierDismissible: true,
         builder: (context) {
           return WillPopScope(
-            child: NewAttributeDialog(component: component),
+            child: AttributeDialog(component: component),
             onWillPop: () async => false,
           );
         });

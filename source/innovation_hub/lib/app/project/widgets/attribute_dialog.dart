@@ -17,19 +17,25 @@ import 'package:innovation_hub/app/project/model/project_models.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 
-class NewAttributeDialog extends HookConsumerWidget {
-  const NewAttributeDialog({
+class AttributeDialog extends HookConsumerWidget {
+  const AttributeDialog({
     super.key,
     required this.component,
+    this.attribute,
   });
+
+  /// [component] to add/edit attribute to/from
   final Component component;
+
+  /// if [attribute] not null, mean edit the attribute, else create new
+  final Attribute? attribute;
 
   dialogContent(BuildContext context, WidgetRef ref) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-    final importanceLevel = useState<int>(1);
-    final nameTextController = useTextEditingController(text: '');
-    final descriptionTextController = useTextEditingController(text: '');
+    final importanceLevel = useState<int>(attribute?.importance ?? 1);
+    final nameTextController = useTextEditingController(text: attribute?.name ?? '');
+    final descriptionTextController = useTextEditingController(text: attribute?.description ?? '');
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -113,13 +119,19 @@ class NewAttributeDialog extends HookConsumerWidget {
                     ElevatedButton.icon(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          final attribute = Attribute(
-                            id: AppUtilities.getUid(),
+                          final mAttr = Attribute(
+                            id: attribute?.id ?? AppUtilities.getUid(),
                             name: nameTextController.text,
                             importance: importanceLevel.value,
                             description: descriptionTextController.text,
                           );
-                          _saveAttribute(context, ref, component, attribute);
+                          _saveAttribute(
+                            context,
+                            ref,
+                            component,
+                            mAttr,
+                            attribute == null ? false : true,
+                          );
                           Navigator.of(context).pop();
                         }
                       },
@@ -144,8 +156,13 @@ class NewAttributeDialog extends HookConsumerWidget {
     WidgetRef ref,
     Component component,
     Attribute attribute,
+    bool isEdit,
   ) {
-    ref.read(activeProjectProvider.notifier).addAttribute(component, attribute);
+    if (isEdit) {
+      ref.read(activeProjectProvider.notifier).updateAttribute(component, attribute);
+    } else {
+      ref.read(activeProjectProvider.notifier).addAttribute(component, attribute);
+    }
   }
 
   @override

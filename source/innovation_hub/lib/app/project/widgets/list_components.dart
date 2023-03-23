@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/widgets/new_component_dialog.dart';
+import 'package:innovation_hub/app/project/widgets/component_dialog.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
@@ -59,7 +59,7 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
             ),
             InputComponentTextField(
               tagController: _internalTagController,
-              components: [],
+              components: const [],
             ),
             Text(
               _internalComponentHelperText,
@@ -68,7 +68,7 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
             Space.y(32),
             InputComponentTextField(
               tagController: _externalTagController,
-              components: [],
+              components: const [],
             ),
             Text(
               _externalComponentHelperText,
@@ -87,7 +87,7 @@ class _ListComponentsState extends ConsumerState<ListComponents> {
       builder: (BuildContext context) {
         return WillPopScope(
           onWillPop: () async => false,
-          child: const NewComponentDialog(),
+          child: const ComponentDialog(),
         );
       },
     );

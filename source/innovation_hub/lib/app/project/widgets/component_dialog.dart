@@ -1,20 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:innovation_hub/app/project/model/project_models.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 
-class NewComponentDialog extends HookConsumerWidget {
-  const NewComponentDialog({super.key});
+class ComponentDialog extends HookConsumerWidget {
+  const ComponentDialog({
+    super.key,
+    this.component,
+  });
+  final Component? component;
 
   dialogContent(BuildContext context, WidgetRef ref) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-    final importanceLevel = useState<int>(1);
-    final isInternal = useState(true);
-    final nameTextController = useTextEditingController(text: '');
-    final descriptionTextController = useTextEditingController(text: '');
+    final importanceLevel = useState<int>(component?.importance ?? 1);
+    final isInternal = useState(component?.isInternal ?? true);
+    final nameTextController = useTextEditingController(text: component?.name ?? '');
+    final descriptionTextController = useTextEditingController(text: component?.description ?? '');
 
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
@@ -61,9 +67,9 @@ class NewComponentDialog extends HookConsumerWidget {
                 decoration: const InputDecoration(
                   label: Text('Description'),
                 ),
-                validator: (value) {
-                  return value!.isEmpty ? 'Please enter description' : null;
-                },
+                // validator: (value) {
+                //   return value!.isEmpty ? 'Please enter description' : null;
+                // },
               ),
               const SizedBox(height: 24.0),
               Row(
@@ -109,15 +115,40 @@ class NewComponentDialog extends HookConsumerWidget {
                   ElevatedButton.icon(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        final component = Component(
-                          id: AppUtilities.getUid(),
+                        // if (component == null) {
+                        //   final mComp = Component(
+                        //     id: AppUtilities.getUid(),
+                        //     name: nameTextController.text,
+                        //     importance: importanceLevel.value,
+                        //     isInternal: isInternal.value,
+                        //     description: descriptionTextController.text,
+                        //     attributes: [],
+                        //   );
+                        //   _saveComponent(context, ref, mComp);
+                        // } else {
+                        //   final mComp = component!.copyWith(
+                        //     name: nameTextController.text,
+                        //     importance: importanceLevel.value,
+                        //     isInternal: isInternal.value,
+                        //     description: descriptionTextController.text,
+                        //   );
+                        //   _saveComponent(context, ref, mComp);
+                        // }
+                        final mComp = Component(
+                          id: component?.id ?? AppUtilities.getUid(),
                           name: nameTextController.text,
                           importance: importanceLevel.value,
                           isInternal: isInternal.value,
                           description: descriptionTextController.text,
-                          attributes: [],
+                          attributes: component?.attributes ?? [],
                         );
-                        _saveComponent(context, ref, component);
+                        _saveComponent(
+                          context,
+                          ref,
+                          mComp,
+                          component == null ? false : true,
+                        );
+
                         Navigator.of(context).pop();
                       }
                     },
@@ -136,8 +167,17 @@ class NewComponentDialog extends HookConsumerWidget {
     });
   }
 
-  void _saveComponent(BuildContext context, WidgetRef ref, Component component) {
-    ref.read(activeProjectProvider.notifier).addComponent(component);
+  void _saveComponent(
+    BuildContext context,
+    WidgetRef ref,
+    Component component,
+    bool isEdit,
+  ) {
+    if (isEdit) {
+      ref.read(activeProjectProvider.notifier).updateComponent(component);
+    } else {
+      ref.read(activeProjectProvider.notifier).addComponent(component);
+    }
   }
 
   @override

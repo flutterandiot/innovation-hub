@@ -6,8 +6,8 @@ import 'package:innovation_hub/app/project/widgets/attribute_dialog.dart';
 import '../model/component_model.dart';
 import '../provider/project_provider.dart';
 import 'attribute_card.dart';
+import 'component_dialog.dart';
 import 'delete_comp_confirm_dialog.dart';
-import 'edit_component_dialog.dart';
 import 'proj_constants.dart';
 
 class ComponentCard extends HookConsumerWidget {
@@ -129,7 +129,7 @@ class ComponentCard extends HookConsumerWidget {
         builder: (context) {
           return WillPopScope(
             onWillPop: () async => false,
-            child: EditComponentDialog(
+            child: ComponentDialog(
               component: component,
             ),
           );

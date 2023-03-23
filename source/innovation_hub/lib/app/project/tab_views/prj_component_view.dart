@@ -13,7 +13,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
-import 'package:innovation_hub/app/project/widgets/new_component_dialog.dart';
+import 'package:innovation_hub/app/project/widgets/component_dialog.dart';
 
 import '../widgets/component_card.dart';
 
@@ -106,7 +106,7 @@ class ProjectComponentView extends ConsumerWidget {
         builder: (context) {
           return WillPopScope(
             onWillPop: () async => false,
-            child: const NewComponentDialog(),
+            child: const ComponentDialog(),
           );
         });
   }

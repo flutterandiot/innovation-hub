@@ -1,18 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:innovation_hub/app/project/model/project_models.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
-import 'package:innovation_hub/utils/app_utils.dart';
 
-class NewComponentDialog extends HookConsumerWidget {
-  const NewComponentDialog({super.key});
+class EditComponentDialog extends HookConsumerWidget {
+  const EditComponentDialog({
+    super.key,
+    required this.component,
+  });
+  final Component component;
 
   dialogContent(BuildContext context, WidgetRef ref) {
-    final importanceLevel = useState<int>(1);
-    final isInternal = useState(true);
-    final nameTextController = useTextEditingController(text: 'Component');
-    final descriptionTextController = useTextEditingController(text: 'This component...');
+    final importanceLevel = useState<int>(component.importance);
+    final isInternal = useState(component.isInternal);
+    final nameTextController = useTextEditingController(text: component.name);
+    final descriptionTextController = useTextEditingController(text: component.description);
 
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
@@ -106,16 +111,14 @@ class NewComponentDialog extends HookConsumerWidget {
                 const SizedBox(width: 20),
                 ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.of(context).pop();
-                    final component = Component(
-                      id: AppUtilities.getUid(),
+                    final mComp = component.copyWith(
                       name: nameTextController.text,
                       importance: importanceLevel.value,
                       isInternal: isInternal.value,
                       description: descriptionTextController.text,
-                      attributes: [],
                     );
-                    _saveComponent(context, ref, component);
+                    _saveComponent(context, ref, mComp);
+                    Navigator.of(context).pop();
                   },
                   icon: const Icon(Icons.check),
                   label: const Text('Save'),
@@ -133,7 +136,7 @@ class NewComponentDialog extends HookConsumerWidget {
 
   void _saveComponent(BuildContext context, WidgetRef ref, Component component) {
     final activeProject = ref.watch(activeProjectProvider.notifier);
-    activeProject.addComponent(component);
+    activeProject.updateComponent(component);
   }
 
   @override

@@ -72,7 +72,7 @@ class ActiveProject extends _$ActiveProject {
     state = project;
   }
 
-  void addComponentList(Component component) {
+  void addComponent(Component component) {
     var prj = state;
     if (component.isInternal) {
       prj.internalComponents.add(component);
@@ -84,6 +84,98 @@ class ActiveProject extends _$ActiveProject {
       state = state.copyWith(
         externalComponents: prj.externalComponents,
       );
+    }
+  }
+
+  void updateComponent(Component component) {
+    var prj = state;
+    bool found = false;
+    int i = 0;
+    //Check internal
+    while (!found) {
+      final comp = prj.internalComponents[i];
+      if (comp.id == component.id) {
+        //Remove old one
+        prj.internalComponents.removeAt(i);
+        // insert update one
+        prj.internalComponents.insert(i, component);
+        state = state.copyWith(
+          internalComponents: prj.internalComponents,
+        );
+        found = true;
+      }
+      i++;
+    }
+    //Check external if not found in internal
+
+    while (!found) {
+      final comp = prj.externalComponents[i];
+      if (comp.id == component.id) {
+        //Remove old one
+        prj.externalComponents.removeAt(i);
+        // insert update one
+        prj.externalComponents.insert(i, component);
+        state = state.copyWith(
+          externalComponents: prj.externalComponents,
+        );
+        found = true;
+      }
+      i++;
+    }
+  }
+
+  void deleteComponent(Component component) {
+    var prj = state;
+    bool found = false;
+    found = prj.internalComponents.contains(component);
+    if (found) {
+      prj.internalComponents.removeWhere((element) => element.id == component.id);
+      state = state.copyWith(
+        internalComponents: prj.internalComponents,
+      );
+    } else {
+      found = prj.externalComponents.contains(component);
+      if (found) {
+        prj.externalComponents.removeWhere((element) => element.id == component.id);
+        state = state.copyWith(
+          externalComponents: prj.externalComponents,
+        );
+      }
+    }
+  }
+
+  void disableComponent(Component component) {
+    var prj = state;
+    bool found = false;
+    int i = 0;
+    //Check internal
+    while (!found) {
+      final comp = prj.internalComponents[i];
+      if (comp.id == component.id) {
+        //Remove old one
+        prj.internalComponents[i].enabled = false;
+        // insert update one
+        state = state.copyWith(
+          internalComponents: prj.internalComponents,
+        );
+        found = true;
+      }
+      i++;
+    }
+
+    //Check external if not found in internal
+    while (!found) {
+      final comp = prj.externalComponents[i];
+      if (comp.id == component.id) {
+        //Remove old one
+        prj.externalComponents[i].enabled = false;
+        // insert update one
+        state = state.copyWith(
+          externalComponents: prj.externalComponents,
+        );
+        found = true;
+      }
+      i++;
     }
   }
 }

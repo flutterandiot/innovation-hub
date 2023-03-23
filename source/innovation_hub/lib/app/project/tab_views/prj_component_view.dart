@@ -15,6 +15,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/model/component_model.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
+import 'package:innovation_hub/app/project/widgets/edit_component_dialog.dart';
 import 'package:innovation_hub/app/project/widgets/new_component_dialog.dart';
 
 class ProjectComponentView extends ConsumerWidget {
@@ -74,14 +75,16 @@ class ProjectComponentView extends ConsumerWidget {
                       .map(
                         (comp) => ComponentCard(
                           component: comp,
-                          onEdit: () {
-                            //Edit
+                          onEdit: () async {
+                            await _showEditComponent(context, comp);
                           },
                           onDelete: () {
                             //Deiete
+                            debugPrint('Delete the component');
                           },
                           onDisable: () {
                             // Disable
+                            debugPrint('Disable the component');
                           },
                         ),
                       )
@@ -128,6 +131,20 @@ class ProjectComponentView extends ConsumerWidget {
           return WillPopScope(
             onWillPop: () async => false,
             child: const NewComponentDialog(),
+          );
+        });
+  }
+
+  Future<void> _showEditComponent(BuildContext context, Component component) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: EditComponentDialog(
+              component: component,
+            ),
           );
         });
   }

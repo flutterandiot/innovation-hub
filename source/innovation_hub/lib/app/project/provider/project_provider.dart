@@ -144,7 +144,7 @@ class ActiveProject extends _$ActiveProject {
     }
   }
 
-  void disableComponent(Component component) {
+  void componentEnableToggle(Component component) {
     var prj = state;
     bool found = false;
     int i = 0;
@@ -153,7 +153,7 @@ class ActiveProject extends _$ActiveProject {
       final comp = prj.internalComponents[i];
       if (comp.id == component.id) {
         //Remove old one
-        prj.internalComponents[i].enabled = false;
+        prj.internalComponents[i].enabled = !prj.internalComponents[i].enabled;
         // insert update one
         state = state.copyWith(
           internalComponents: prj.internalComponents,
@@ -168,7 +168,7 @@ class ActiveProject extends _$ActiveProject {
       final comp = prj.externalComponents[i];
       if (comp.id == component.id) {
         //Remove old one
-        prj.externalComponents[i].enabled = false;
+        prj.externalComponents[i].enabled = !prj.externalComponents[i].enabled;
         // insert update one
         state = state.copyWith(
           externalComponents: prj.externalComponents,

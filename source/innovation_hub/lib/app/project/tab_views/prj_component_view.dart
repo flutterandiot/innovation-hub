@@ -84,7 +84,7 @@ class ProjectComponentView extends ConsumerWidget {
                             //Deiete
                             await _showDeleteComponentConfirmDialog(context, ref, comp);
                           },
-                          onDisable: () {
+                          onEnableToggle: () {
                             // Disable
                             _disableComponent(ref, comp);
                           },
@@ -111,7 +111,7 @@ class ProjectComponentView extends ConsumerWidget {
                             //Deiete
                             await _showDeleteComponentConfirmDialog(context, ref, comp);
                           },
-                          onDisable: () {
+                          onEnableToggle: () {
                             // Disable
                             _disableComponent(ref, comp);
                           },
@@ -171,6 +171,6 @@ class ProjectComponentView extends ConsumerWidget {
   }
 
   void _disableComponent(WidgetRef ref, Component component) {
-    ref.read(activeProjectProvider.notifier).disableComponent(component);
+    ref.read(activeProjectProvider.notifier).componentEnableToggle(component);
   }
 }

@@ -14,20 +14,20 @@ class ComponentCard extends HookWidget {
     Key? key,
     required this.component,
     this.onEdit,
-    this.onDisable,
+    this.onEnableToggle,
     this.onDelete,
   }) : super(key: key);
   final Component component;
   final VoidCallback? onEdit;
-  final VoidCallback? onDisable;
+  final VoidCallback? onEnableToggle;
   final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
     final selected = useState(MenuItems.edit);
     return Card(
-      elevation: component.enabled ? 4 : 0,
-      surfaceTintColor: component.enabled ? null : Theme.of(context).disabledColor,
+      elevation: component.enabled ? 4 : 1,
+      color: component.enabled ? Theme.of(context).cardColor : Theme.of(context).disabledColor,
       child: SizedBox(
         height: 300,
         width: 200,
@@ -43,6 +43,7 @@ class ComponentCard extends HookWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
+                  //!Popup menu
                   PopupMenuButton<MenuItems>(
                     initialValue: selected.value,
                     onSelected: (value) {
@@ -57,8 +58,8 @@ class ComponentCard extends HookWidget {
                         ),
                         PopupMenuItem(
                           value: MenuItems.disable,
-                          onTap: onDisable,
-                          child: const Text('Disable'),
+                          onTap: onEnableToggle,
+                          child: component.enabled ? const Text('Disable') : const Text('Enable'),
                         ),
                         PopupMenuItem(
                           value: MenuItems.delete,
@@ -92,9 +93,11 @@ class ComponentCard extends HookWidget {
               const Divider(),
               const Spacer(),
               ElevatedButton(
-                onPressed: () {
-                  //TODO - add code to add attribute for component
-                },
+                onPressed: component.enabled
+                    ? () {
+                        _addAttribute(context, component);
+                      }
+                    : null,
                 child: const Text('Add Attribute'),
               ),
             ],
@@ -102,5 +105,10 @@ class ComponentCard extends HookWidget {
         ),
       ),
     );
+  }
+
+  void _addAttribute(BuildContext context, Component component) {
+    //TODO -  add code to add attribute
+    debugPrint('Add attribute to ${component.name}');
   }
 }

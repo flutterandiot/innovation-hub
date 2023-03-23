@@ -28,8 +28,7 @@ class Project {
   List<User> team;
 
   String type;
-  List<Component> internalComponents;
-  List<Component> externalComponents;
+  List<Component> components;
   Project({
     required this.id,
     required this.name,
@@ -38,8 +37,7 @@ class Project {
     required this.createdBy,
     required this.team,
     required this.type,
-    required this.internalComponents,
-    required this.externalComponents,
+    required this.components,
   });
 
   Project copyWith({
@@ -50,8 +48,7 @@ class Project {
     User? createdBy,
     List<User>? team,
     String? type,
-    List<Component>? internalComponents,
-    List<Component>? externalComponents,
+    List<Component>? components,
   }) {
     return Project(
       id: id ?? this.id,
@@ -61,8 +58,7 @@ class Project {
       createdBy: createdBy ?? this.createdBy,
       team: team ?? this.team,
       type: type ?? this.type,
-      internalComponents: internalComponents ?? this.internalComponents,
-      externalComponents: externalComponents ?? this.externalComponents,
+      components: components ?? this.components,
     );
   }
 
@@ -75,8 +71,7 @@ class Project {
       'createdBy': createdBy.toMap(),
       'team': team.map((x) => x.toMap()).toList(),
       'type': type,
-      'internalComponents': internalComponents.map((x) => x.toMap()).toList(),
-      'externalComponents': externalComponents.map((x) => x.toMap()).toList(),
+      'components': components.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -93,13 +88,8 @@ class Project {
         ),
       ),
       type: map['type'] as String,
-      internalComponents: List<Component>.from(
-        (map['internalComponents'] as List<int>).map<Component>(
-          (x) => Component.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      externalComponents: List<Component>.from(
-        (map['externalComponents'] as List<int>).map<Component>(
+      components: List<Component>.from(
+        (map['components'] as List<int>).map<Component>(
           (x) => Component.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -112,7 +102,7 @@ class Project {
 
   @override
   String toString() {
-    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, createdBy: $createdBy, team: $team, type: $type, internalComponents: $internalComponents, externalComponents: $externalComponents)';
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, createdBy: $createdBy, team: $team, type: $type, components: $components)';
   }
 
   @override
@@ -126,12 +116,11 @@ class Project {
         other.createdBy == createdBy &&
         listEquals(other.team, team) &&
         other.type == type &&
-        listEquals(other.internalComponents, internalComponents) &&
-        listEquals(other.externalComponents, externalComponents);
+        listEquals(other.components, components);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ description.hashCode ^ createdAt.hashCode ^ createdBy.hashCode ^ team.hashCode ^ type.hashCode ^ internalComponents.hashCode ^ externalComponents.hashCode;
+    return id.hashCode ^ name.hashCode ^ description.hashCode ^ createdAt.hashCode ^ createdBy.hashCode ^ team.hashCode ^ type.hashCode ^ components.hashCode;
   }
 }

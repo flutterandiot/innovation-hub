@@ -64,8 +64,7 @@ class ActiveProject extends _$ActiveProject {
         createdBy: User.dummyUser,
         team: [],
         type: ProjectType.product.name,
-        internalComponents: [],
-        externalComponents: [],
+        components: [],
       );
 
   void setProject(Project project) {
@@ -74,17 +73,10 @@ class ActiveProject extends _$ActiveProject {
 
   void addComponent(Component component) {
     var prj = state;
-    if (component.isInternal) {
-      prj.internalComponents.add(component);
-      state = state.copyWith(
-        internalComponents: prj.internalComponents,
-      );
-    } else {
-      prj.externalComponents.add(component);
-      state = state.copyWith(
-        externalComponents: prj.externalComponents,
-      );
-    }
+    prj.components.add(component);
+    state = state.copyWith(
+      components: prj.components,
+    );
   }
 
   void updateComponent(Component component) {
@@ -93,30 +85,14 @@ class ActiveProject extends _$ActiveProject {
     int i = 0;
     //Check internal
     while (!found) {
-      final comp = prj.internalComponents[i];
+      final comp = prj.components[i];
       if (comp.id == component.id) {
         //Remove old one
-        prj.internalComponents.removeAt(i);
+        prj.components.removeAt(i);
         // insert update one
-        prj.internalComponents.insert(i, component);
+        prj.components.insert(i, component);
         state = state.copyWith(
-          internalComponents: prj.internalComponents,
-        );
-        found = true;
-      }
-      i++;
-    }
-    //Check external if not found in internal
-
-    while (!found) {
-      final comp = prj.externalComponents[i];
-      if (comp.id == component.id) {
-        //Remove old one
-        prj.externalComponents.removeAt(i);
-        // insert update one
-        prj.externalComponents.insert(i, component);
-        state = state.copyWith(
-          externalComponents: prj.externalComponents,
+          components: prj.components,
         );
         found = true;
       }
@@ -127,20 +103,12 @@ class ActiveProject extends _$ActiveProject {
   void deleteComponent(Component component) {
     var prj = state;
     bool found = false;
-    found = prj.internalComponents.contains(component);
+    found = prj.components.contains(component);
     if (found) {
-      prj.internalComponents.removeWhere((element) => element.id == component.id);
+      prj.components.removeWhere((element) => element.id == component.id);
       state = state.copyWith(
-        internalComponents: prj.internalComponents,
+        components: prj.components,
       );
-    } else {
-      found = prj.externalComponents.contains(component);
-      if (found) {
-        prj.externalComponents.removeWhere((element) => element.id == component.id);
-        state = state.copyWith(
-          externalComponents: prj.externalComponents,
-        );
-      }
     }
   }
 
@@ -150,28 +118,13 @@ class ActiveProject extends _$ActiveProject {
     int i = 0;
     //Check internal
     while (!found) {
-      final comp = prj.internalComponents[i];
+      final comp = prj.components[i];
       if (comp.id == component.id) {
         //Remove old one
-        prj.internalComponents[i].enabled = !prj.internalComponents[i].enabled;
+        prj.components[i].enabled = !prj.components[i].enabled;
         // insert update one
         state = state.copyWith(
-          internalComponents: prj.internalComponents,
-        );
-        found = true;
-      }
-      i++;
-    }
-
-    //Check external if not found in internal
-    while (!found) {
-      final comp = prj.externalComponents[i];
-      if (comp.id == component.id) {
-        //Remove old one
-        prj.externalComponents[i].enabled = !prj.externalComponents[i].enabled;
-        // insert update one
-        state = state.copyWith(
-          externalComponents: prj.externalComponents,
+          components: prj.components,
         );
         found = true;
       }

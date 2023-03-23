@@ -11,8 +11,7 @@ void main() {
       name: 'Test Project',
       description: 'This for testing',
       type: ProjectType.product.name,
-      externalComponents: [],
-      internalComponents: [],
+      components: [],
       createdAt: (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString(),
       createdBy: User.dummyUser,
       team: [

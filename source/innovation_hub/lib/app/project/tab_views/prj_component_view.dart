@@ -27,8 +27,7 @@ class ProjectComponentView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     final activeProject = ref.watch(activeProjectProvider);
-    final internalComp = activeProject.internalComponents;
-    final externalComp = activeProject.externalComponents;
+    final components = activeProject.components;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -80,34 +79,7 @@ class ProjectComponentView extends ConsumerWidget {
                     runAlignment: WrapAlignment.start,
                     spacing: 12,
                     runSpacing: 12,
-                    children: internalComp
-                        .map(
-                          (comp) => ComponentCard(
-                            component: comp,
-                            onEdit: () async {
-                              await _showEditComponent(context, comp);
-                            },
-                            onDelete: () async {
-                              //Deiete
-                              await _showDeleteComponentConfirmDialog(context, ref, comp);
-                            },
-                            onEnableToggle: () {
-                              // Disable
-                              _disableComponent(ref, comp);
-                            },
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-                SizedBox(
-                  width: double.infinity, // add this to make the wrap width as much as position
-                  child: Wrap(
-                    alignment: WrapAlignment.start,
-                    runAlignment: WrapAlignment.start,
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: externalComp
+                    children: components
                         .map(
                           (comp) => ComponentCard(
                             component: comp,

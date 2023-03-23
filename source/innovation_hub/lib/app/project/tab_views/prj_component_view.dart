@@ -11,12 +11,14 @@
 * Description: This is a component tabview for a project
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/model/component_model.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
+import 'package:innovation_hub/app/project/widgets/delete_comp_confirm_dialog.dart';
 import 'package:innovation_hub/app/project/widgets/edit_component_dialog.dart';
 import 'package:innovation_hub/app/project/widgets/new_component_dialog.dart';
+
+import '../widgets/component_card.dart';
 
 class ProjectComponentView extends ConsumerWidget {
   const ProjectComponentView({super.key});
@@ -78,13 +80,13 @@ class ProjectComponentView extends ConsumerWidget {
                           onEdit: () async {
                             await _showEditComponent(context, comp);
                           },
-                          onDelete: () {
+                          onDelete: () async {
                             //Deiete
-                            debugPrint('Delete the component');
+                            await _showDeleteComponentConfirmDialog(context, ref, comp);
                           },
                           onDisable: () {
                             // Disable
-                            debugPrint('Disable the component');
+                            _disableComponent(ref, comp);
                           },
                         ),
                       )
@@ -102,14 +104,16 @@ class ProjectComponentView extends ConsumerWidget {
                       .map(
                         (comp) => ComponentCard(
                           component: comp,
-                          onEdit: () {
-                            //Edit
+                          onEdit: () async {
+                            await _showEditComponent(context, comp);
                           },
-                          onDelete: () {
+                          onDelete: () async {
                             //Deiete
+                            await _showDeleteComponentConfirmDialog(context, ref, comp);
                           },
                           onDisable: () {
                             // Disable
+                            _disableComponent(ref, comp);
                           },
                         ),
                       )
@@ -148,104 +152,25 @@ class ProjectComponentView extends ConsumerWidget {
           );
         });
   }
-}
 
-enum MenuItems {
-  edit,
-  disable,
-  delete,
-}
-
-class ComponentCard extends HookWidget {
-  const ComponentCard({
-    Key? key,
-    required this.component,
-    this.onEdit,
-    this.onDisable,
-    this.onDelete,
-  }) : super(key: key);
-  final Component component;
-  final VoidCallback? onEdit;
-  final VoidCallback? onDisable;
-  final VoidCallback? onDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    final selected = useState(MenuItems.edit);
-    return Card(
-      elevation: 4,
-      child: SizedBox(
-        height: 300,
-        width: 200,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      component.name,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ),
-                  PopupMenuButton<MenuItems>(
-                    initialValue: selected.value,
-                    onSelected: (value) {
-                      selected.value = value;
-                    },
-                    itemBuilder: (context) {
-                      return <PopupMenuEntry<MenuItems>>[
-                        PopupMenuItem(
-                          value: MenuItems.edit,
-                          onTap: onEdit,
-                          child: const Text('Edit'),
-                        ),
-                        PopupMenuItem(
-                          value: MenuItems.disable,
-                          onTap: onDisable,
-                          child: const Text('Disable'),
-                        ),
-                        PopupMenuItem(
-                          value: MenuItems.delete,
-                          onTap: onDelete,
-                          child: const Text('Delete'),
-                        ),
-                      ];
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  if (component.isInternal)
-                    const Text(
-                      'Internal',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  if (!component.isInternal)
-                    const Text(
-                      'External',
-                      style: TextStyle(color: Colors.orange),
-                    ),
-                  const Spacer(),
-                  CircleAvatar(
-                    child: Text('${component.importance}'),
-                  ),
-                ],
-              ),
-              const Divider(),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: () {
-                  //TODO - add code to add attribute for component
-                },
-                child: const Text('Add Attribute'),
-              ),
-            ],
+  Future<void> _showDeleteComponentConfirmDialog(BuildContext context, WidgetRef ref, Component component) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: DeleteComponentCofirmDialog(
+            onDelete: () {
+              ref.read(activeProjectProvider.notifier).deleteComponent(component);
+            },
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  void _disableComponent(WidgetRef ref, Component component) {
+    ref.read(activeProjectProvider.notifier).disableComponent(component);
   }
 }

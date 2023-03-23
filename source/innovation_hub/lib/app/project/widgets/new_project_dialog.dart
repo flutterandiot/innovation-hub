@@ -15,7 +15,7 @@ class NewProjectDialog extends HookConsumerWidget {
 
     final selected = useState<ProjectType>(ProjectType.product);
     final nameTextController = useTextEditingController(text: 'Project');
-    final descriptionTextController = useTextEditingController(text: '');
+    final descriptionTextController = useTextEditingController(text: 'Demo');
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),

@@ -9,17 +9,19 @@ class NewComponentDialog extends HookConsumerWidget {
   const NewComponentDialog({super.key});
 
   dialogContent(BuildContext context, WidgetRef ref) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
     final importanceLevel = useState<int>(1);
     final isInternal = useState(true);
-    final nameTextController = useTextEditingController(text: 'Component');
-    final descriptionTextController = useTextEditingController(text: 'This component...');
+    final nameTextController = useTextEditingController(text: '');
+    final descriptionTextController = useTextEditingController(text: '');
 
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         width: constraints.maxWidth / 2,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).canvasColor,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
@@ -30,102 +32,105 @@ class NewComponentDialog extends HookConsumerWidget {
             ),
           ],
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min, // To make the card compact
-          children: <Widget>[
-            Row(
-              children: [
-                Text(
-                  'New Component',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ],
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: nameTextController,
-              decoration: const InputDecoration(
-                label: Text('Name'),
-              ),
-              validator: (value) {
-                value!.isEmpty ? 'Please enter name' : null;
-                return null;
-              },
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: descriptionTextController,
-              decoration: const InputDecoration(
-                label: Text('Description'),
-              ),
-              validator: (value) {
-                value!.isEmpty ? 'Please enter description' : null;
-                return null;
-              },
-            ),
-            const SizedBox(height: 24.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Importance: ${importanceLevel.value}'),
-                Slider(
-                  min: 1.0,
-                  max: 5.0,
-                  value: importanceLevel.value.toDouble(),
-                  onChanged: (value) {
-                    importanceLevel.value = value.toInt();
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('External'),
-                Switch.adaptive(
-                  value: isInternal.value,
-                  onChanged: (value) {
-                    isInternal.value = value;
-                  },
-                ),
-                const Text('Internal'),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.cancel),
-                  label: const Text('Cancel'),
-                ),
-                const SizedBox(width: 20),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    final component = Component(
-                      id: AppUtilities.getUid(),
-                      name: nameTextController.text,
-                      importance: importanceLevel.value,
-                      isInternal: isInternal.value,
-                      description: descriptionTextController.text,
-                      attributes: [],
-                    );
-                    _saveComponent(context, ref, component);
-                  },
-                  icon: const Icon(Icons.check),
-                  label: const Text('Save'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // To make the card compact
+            children: <Widget>[
+              Row(
+                children: [
+                  Text(
+                    'New Component',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: nameTextController,
+                decoration: const InputDecoration(
+                  label: Text('Name'),
                 ),
-              ],
-            ),
-          ],
+                validator: (value) {
+                  return value!.isEmpty ? 'Please enter name' : null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: descriptionTextController,
+                decoration: const InputDecoration(
+                  label: Text('Description'),
+                ),
+                validator: (value) {
+                  return value!.isEmpty ? 'Please enter description' : null;
+                },
+              ),
+              const SizedBox(height: 24.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Importance: ${importanceLevel.value}'),
+                  Slider(
+                    min: 1.0,
+                    max: 5.0,
+                    value: importanceLevel.value.toDouble(),
+                    onChanged: (value) {
+                      importanceLevel.value = value.toInt();
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('External'),
+                  Switch.adaptive(
+                    value: isInternal.value,
+                    onChanged: (value) {
+                      isInternal.value = value;
+                    },
+                  ),
+                  const Text('Internal'),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.cancel),
+                    label: const Text('Cancel'),
+                  ),
+                  const SizedBox(width: 20),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        final component = Component(
+                          id: AppUtilities.getUid(),
+                          name: nameTextController.text,
+                          importance: importanceLevel.value,
+                          isInternal: isInternal.value,
+                          description: descriptionTextController.text,
+                          attributes: [],
+                        );
+                        _saveComponent(context, ref, component);
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    icon: const Icon(Icons.check),
+                    label: const Text('Save'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       );
     });

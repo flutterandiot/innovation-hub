@@ -9,6 +9,7 @@
 *
 * Description: This file is ....
  */
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../model/project_model.dart';
@@ -25,6 +26,7 @@ class Projects extends _$Projects {
   Project? currentProject;
 
   void setCurrentProject(Project project) {
+    debugPrint('Set current project is ${project.id}-${project.name}');
     currentProject = project;
   }
 

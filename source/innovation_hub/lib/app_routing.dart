@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:innovation_hub/app/dashboard/dashboard_body.dart';
+import 'package:innovation_hub/app/projects/projects_home_body.dart';
 import 'package:innovation_hub/app/explore/explore_body.dart';
 import 'package:innovation_hub/app/explore/study_sit_page.dart';
 import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/project_page.dart';
-import 'package:innovation_hub/app/project/sit_method_page.dart';
+import 'package:innovation_hub/app/project/sit_technique_page.dart';
 import 'package:innovation_hub/app/settings/settings_body.dart';
 
 // GoRouter configuration
@@ -16,19 +16,24 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 enum AppRoute {
-  dashboard,
+  projects,
   explore,
   settings,
   addProject,
   learnSIT,
-  sitMethod,
+  sitTechnique,
+  sitTaskUnification,
+  sitSubstraction,
+  sitMultiplication,
+  sitDivision,
+  sitAttributeDependency,
   trizMethod,
   projectPage,
 }
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/dashboard',
+  initialLocation: '/home',
   //NOTE - Show debug info of routing
   debugLogDiagnostics: true,
   routes: [
@@ -53,8 +58,8 @@ final router = GoRouter(
       routes: [
         // Dashboard
         GoRoute(
-          path: '/dashboard',
-          name: AppRoute.dashboard.name,
+          path: '/home',
+          name: AppRoute.projects.name,
           //NOTE - this builder will use default animation, which cause unintended animation when switching between destinations, we we don't use this builder
           // builder: (context, state) => const DashboardPageBody(),
           //!Use NoTransitionPage
@@ -62,7 +67,7 @@ final router = GoRouter(
 
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const DashboardPageBody(),
+            child: const ProjectsHomePageBody(),
           ),
           routes: [
             GoRoute(
@@ -93,6 +98,7 @@ final router = GoRouter(
                 );
               },
             ),
+            //NOTE: Go to project page
             GoRoute(
               path: ':id',
               name: AppRoute.projectPage.name,
@@ -122,12 +128,15 @@ final router = GoRouter(
               },
             ),
             GoRoute(
-              path: ':id/sit-method',
-              name: AppRoute.sitMethod.name,
+              // Go to a SIT technique with 2 params
+              // [id]: project Id
+              // [technique]: technique name
+              path: ':id/:technique',
+              name: AppRoute.sitTechnique.name,
               pageBuilder: (context, state) {
                 final project = state.extra as Project;
                 return CustomTransitionPage(
-                  child: SITMethodPage(
+                  child: SitTechniquePage(
                     project: project,
                   ),
                   transitionsBuilder: (context, animation, secondAnimation, child) {

@@ -49,7 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       NavigationDestination(
         icon: Icon(Icons.dashboard_outlined, color: iconColor),
         selectedIcon: const Icon(Icons.dashboard),
-        label: 'Dashboard',
+        label: 'Projects',
       ),
       NavigationDestination(
         icon: Icon(Icons.explore_outlined, color: iconColor),
@@ -68,26 +68,12 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     void _selectedNavi(BuildContext context, int index) {
       if (index == 0) {
-        context.goNamed(AppRoute.dashboard.name);
+        context.goNamed(AppRoute.projects.name);
       } else if (index == 1) {
         context.goNamed(AppRoute.explore.name);
       } else if (index == 2) {
         context.goNamed(AppRoute.settings.name);
       }
-      // switch (index) {
-      //   case 0:
-      //     context.goNamed(AppRoute.dashboard.name);
-      //     break;
-      //   case 1:
-      //     context.goNamed(AppRoute.explore.name);
-      //     break;
-      //   case 2:
-      //     context.goNamed(AppRoute.settings.name);
-      //     break;
-      //   default:
-      //      context.goNamed(AppRoute.dashboard.name);
-      //     break;
-      // }
     }
 
     final projectList = ref.watch(projectsProvider);
@@ -152,24 +138,24 @@ class _HomePageState extends ConsumerState<HomePage> {
         ), // !primaryNavi
         body: SlotLayout(
           config: {
-            Breakpoints.small: SlotLayout.from(
+            Breakpoints.smallAndUp: SlotLayout.from(
               key: const Key('Small Body'),
               builder: (_) {
                 return widget.body;
               },
             ),
-            Breakpoints.medium: SlotLayout.from(
-              key: const Key('medium-body'),
-              builder: (_) {
-                return widget.body;
-              },
-            ),
-            Breakpoints.large: SlotLayout.from(
-              key: const Key('large-body'),
-              builder: (_) {
-                return widget.body;
-              },
-            ),
+            // Breakpoints.medium: SlotLayout.from(
+            //   key: const Key('medium-body'),
+            //   builder: (_) {
+            //     return widget.body;
+            //   },
+            // ),
+            // Breakpoints.large: SlotLayout.from(
+            //   key: const Key('large-body'),
+            //   builder: (_) {
+            //     return widget.body;
+            //   },
+            // ),
           },
         ),
         bottomNavigation: SlotLayout(

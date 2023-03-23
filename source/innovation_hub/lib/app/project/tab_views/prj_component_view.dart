@@ -11,6 +11,7 @@
 * Description: This is a component tabview for a project
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/model/component_model.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
@@ -110,7 +111,13 @@ class ProjectComponentView extends ConsumerWidget {
   }
 }
 
-class ComponentCard extends StatelessWidget {
+enum MenuItems {
+  edit,
+  disable,
+  delete,
+}
+
+class ComponentCard extends HookWidget {
   const ComponentCard({
     Key? key,
     required this.component,
@@ -118,6 +125,7 @@ class ComponentCard extends StatelessWidget {
   final Component component;
   @override
   Widget build(BuildContext context) {
+    final selected = useState(MenuItems.edit);
     return Card(
       elevation: 4,
       child: SizedBox(
@@ -127,9 +135,37 @@ class ComponentCard extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Text(
-                component.name,
-                style: Theme.of(context).textTheme.titleLarge,
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      component.name,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
+                  PopupMenuButton<MenuItems>(
+                    initialValue: selected.value,
+                    onSelected: (value) {
+                      selected.value = value;
+                    },
+                    itemBuilder: (context) {
+                      return <PopupMenuEntry<MenuItems>>[
+                        const PopupMenuItem(
+                          value: MenuItems.edit,
+                          child: Text('Edit'),
+                        ),
+                        const PopupMenuItem(
+                          value: MenuItems.disable,
+                          child: Text('Disable'),
+                        ),
+                        const PopupMenuItem(
+                          value: MenuItems.delete,
+                          child: Text('Delete'),
+                        ),
+                      ];
+                    },
+                  ),
+                ],
               ),
               Row(
                 children: [

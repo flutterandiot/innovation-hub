@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 
-import '../../../app_routing.dart';
 import '../../../utils/app_utils.dart';
 import '../model/project_model.dart';
 
@@ -104,17 +102,17 @@ class NewProjectDialog extends HookConsumerWidget {
                 const SizedBox(width: 20),
                 ElevatedButton.icon(
                   onPressed: () {
-                    final project = _saveNewProject(
+                    final _ = _saveNewProject(
                       ref,
                       nameTextController.text,
                       descriptionTextController.text,
                       selected.value,
                     );
                     Navigator.of(context).pop();
-                    context.goNamed(
-                      AppRoute.addProject.name,
-                      extra: project,
-                    );
+                    // context.goNamed(
+                    //   AppRoute.addProject.name,
+                    //   extra: project,
+                    // );
                   },
                   icon: const Icon(Icons.check),
                   label: const Text('Create a New Project'),
@@ -145,12 +143,13 @@ class NewProjectDialog extends HookConsumerWidget {
         User.dummyUser,
       ],
     );
-    debugPrint(project.toString());
 
     //Save project to project list
     ref.read(projectsProvider).add(project);
     //NOTE: Save this new created project as a current ont
     ref.read(projectsProvider.notifier).setCurrentProject(project);
+    debugPrint(project.toString());
+
     return project;
   }
 

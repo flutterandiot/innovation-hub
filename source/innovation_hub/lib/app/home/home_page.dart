@@ -138,24 +138,24 @@ class _HomePageState extends ConsumerState<HomePage> {
         ), // !primaryNavi
         body: SlotLayout(
           config: {
-            Breakpoints.small: SlotLayout.from(
+            Breakpoints.smallAndUp: SlotLayout.from(
               key: const Key('Small Body'),
               builder: (_) {
                 return widget.body;
               },
             ),
-            Breakpoints.medium: SlotLayout.from(
-              key: const Key('medium-body'),
-              builder: (_) {
-                return widget.body;
-              },
-            ),
-            Breakpoints.large: SlotLayout.from(
-              key: const Key('large-body'),
-              builder: (_) {
-                return widget.body;
-              },
-            ),
+            // Breakpoints.medium: SlotLayout.from(
+            //   key: const Key('medium-body'),
+            //   builder: (_) {
+            //     return widget.body;
+            //   },
+            // ),
+            // Breakpoints.large: SlotLayout.from(
+            //   key: const Key('large-body'),
+            //   builder: (_) {
+            //     return widget.body;
+            //   },
+            // ),
           },
         ),
         bottomNavigation: SlotLayout(

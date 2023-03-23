@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: use_build_context_synchronously
 
 /*
@@ -21,13 +22,11 @@ import 'package:lottie/lottie.dart';
 
 import '../../app_routing.dart';
 
-class ProjectsHomePageBody extends ConsumerWidget {
+class ProjectsHomePageBody extends StatelessWidget {
   const ProjectsHomePageBody({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // final isSmallActivie = Breakpoints.small.isActive(context);
-    final projects = ref.watch(projectsProvider);
+  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
@@ -66,8 +65,8 @@ class ProjectsHomePageBody extends ConsumerWidget {
                       ),
                       const SizedBox(width: 12),
                       ElevatedButton.icon(
-                        onPressed: () {
-                          _showNewProjectDialog(context);
+                        onPressed: () async {
+                          await _showNewProjectDialog(context);
                         },
                         icon: const Icon(Icons.add),
                         label: const Text('New project'),
@@ -79,57 +78,10 @@ class ProjectsHomePageBody extends ConsumerWidget {
                   indent: 24,
                   endIndent: 24,
                 ),
-                if (projects.isNotEmpty)
-                  SizedBox(
-                    width: double.infinity,
-                    height: 200,
-                    child: ListView.builder(
-                      itemExtent: 200,
-                      padding: const EdgeInsets.symmetric(horizontal: defaultPadding, vertical: defaultPadding),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: projects.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                          // width: 250,
-                          height: 180,
-                          child: Material(
-                            color: Colors.amberAccent,
-                            borderRadius: BorderRadius.circular(defaultPadding),
-                            child: InkWell(
-                              onTap: () {
-                                context.goNamed(
-                                  AppRoute.projectPage.name,
-                                  params: {'id': projects[index].id},
-                                  extra: projects[index],
-                                );
-                              },
-                              child: Center(
-                                child: Text(projects[index].name),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                if (projects.isEmpty)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.3,
-                        height: constraints.maxHeight * 0.3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Lottie.asset(
-                            'assets/animations/118991-idea-innovation.json',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                _ProjectsContainer(
+                  width: constraints.maxWidth * 0.3,
+                  height: constraints.maxHeight * 0.25,
+                ),
               ],
             ),
           ),
@@ -138,8 +90,8 @@ class ProjectsHomePageBody extends ConsumerWidget {
     );
   }
 
-  void _showNewProjectDialog(BuildContext context) {
-    showDialog(
+  Future<void> _showNewProjectDialog(BuildContext context) async {
+    await showDialog(
       context: context,
       builder: (context) {
         return WillPopScope(
@@ -147,6 +99,73 @@ class ProjectsHomePageBody extends ConsumerWidget {
           child: const NewProjectDialog(),
         );
       },
+    );
+  }
+}
+
+class _ProjectsContainer extends ConsumerWidget {
+  const _ProjectsContainer({
+    Key? key,
+    this.width,
+    this.height,
+  }) : super(key: key);
+  final double? width;
+  final double? height;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final projects = ref.watch(projectsProvider);
+
+    if (projects.isEmpty) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: width ?? 240,
+            height: height ?? 200,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Lottie.asset(
+                'assets/animations/118991-idea-innovation.json',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return SizedBox(
+      width: double.infinity,
+      height: 200,
+      child: ListView.builder(
+        itemExtent: 200,
+        padding: const EdgeInsets.symmetric(horizontal: defaultPadding, vertical: defaultPadding),
+        scrollDirection: Axis.horizontal,
+        itemCount: projects.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            // width: 250,
+            height: 180,
+            child: Material(
+              color: Colors.amberAccent,
+              borderRadius: BorderRadius.circular(defaultPadding),
+              child: InkWell(
+                onTap: () {
+                  context.goNamed(
+                    AppRoute.projectPage.name,
+                    params: {'id': projects[index].id},
+                    extra: projects[index],
+                  );
+                },
+                child: Center(
+                  child: Text(projects[index].name),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

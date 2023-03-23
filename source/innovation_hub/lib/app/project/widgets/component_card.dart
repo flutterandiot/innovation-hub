@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/widgets/new_attribute.dart';
 
 import '../model/component_model.dart';
@@ -10,7 +11,7 @@ enum MenuItems {
   delete,
 }
 
-class ComponentCard extends HookWidget {
+class ComponentCard extends HookConsumerWidget {
   const ComponentCard({
     Key? key,
     required this.component,
@@ -24,85 +25,108 @@ class ComponentCard extends HookWidget {
   final VoidCallback? onDelete;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final selected = useState(MenuItems.edit);
+
+    final attributesList = component.attributes;
     return Card(
       elevation: component.enabled ? 4 : 1,
       color: component.enabled ? Theme.of(context).cardColor : Theme.of(context).disabledColor,
-      child: SizedBox(
-        height: 300,
-        width: 200,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      component.name,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    component.name,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  //!Popup menu
-                  PopupMenuButton<MenuItems>(
-                    initialValue: selected.value,
-                    onSelected: (value) {
-                      selected.value = value;
-                    },
-                    itemBuilder: (context) {
-                      return <PopupMenuEntry<MenuItems>>[
-                        PopupMenuItem(
-                          value: MenuItems.edit,
-                          onTap: onEdit,
-                          child: const Text('Edit'),
-                        ),
-                        PopupMenuItem(
-                          value: MenuItems.disable,
-                          onTap: onEnableToggle,
-                          child: component.enabled ? const Text('Disable') : const Text('Enable'),
-                        ),
-                        PopupMenuItem(
-                          value: MenuItems.delete,
-                          onTap: onDelete,
-                          child: const Text('Delete'),
-                        ),
-                      ];
-                    },
+                ),
+                //!Popup menu
+                PopupMenuButton<MenuItems>(
+                  initialValue: selected.value,
+                  onSelected: (value) {
+                    selected.value = value;
+                  },
+                  itemBuilder: (context) {
+                    return <PopupMenuEntry<MenuItems>>[
+                      PopupMenuItem(
+                        value: MenuItems.edit,
+                        onTap: onEdit,
+                        child: const Text('Edit'),
+                      ),
+                      PopupMenuItem(
+                        value: MenuItems.disable,
+                        onTap: onEnableToggle,
+                        child: component.enabled ? const Text('Disable') : const Text('Enable'),
+                      ),
+                      PopupMenuItem(
+                        value: MenuItems.delete,
+                        onTap: onDelete,
+                        child: const Text('Delete'),
+                      ),
+                    ];
+                  },
+                ),
+              ],
+            ),
+            if (!component.enabled) const Text('Disable'),
+            Row(
+              children: [
+                if (component.isInternal)
+                  const Text(
+                    'Internal',
+                    style: TextStyle(color: Colors.blue),
                   ),
-                ],
-              ),
-              if (!component.enabled) const Text('Disable'),
-              Row(
-                children: [
-                  if (component.isInternal)
-                    const Text(
-                      'Internal',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  if (!component.isInternal)
-                    const Text(
-                      'External',
-                      style: TextStyle(color: Colors.orange),
-                    ),
-                  const Spacer(),
-                  CircleAvatar(
-                    child: Text('${component.importance}'),
+                if (!component.isInternal)
+                  const Text(
+                    'External',
+                    style: TextStyle(color: Colors.orange),
                   ),
-                ],
+                const Spacer(),
+                CircleAvatar(
+                  child: Text('${component.importance}'),
+                ),
+              ],
+            ),
+            const Divider(),
+            //NOTE - show Atttribute list
+            if (attributesList.isNotEmpty)
+              Expanded(
+                child: ListView.separated(
+                  clipBehavior: Clip.antiAlias,
+                  itemCount: attributesList.length,
+                  itemBuilder: (context, index) {
+                    final attr = attributesList[index];
+                    return Card(
+                      child: ListTile(
+                        enableFeedback: true,
+                        dense: true,
+                        tileColor: Theme.of(context).canvasColor,
+                        title: Text(attr.name),
+                        subtitle: Text(attr.description),
+                        trailing: Text(
+                          '${attr.importance}',
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) => const Divider(),
+                ),
               ),
-              const Divider(),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: component.enabled
-                    ? () async {
-                        await _addAttribute(context, component);
-                      }
-                    : null,
-                child: const Text('Add Attribute'),
-              ),
-            ],
-          ),
+            if (attributesList.isEmpty) const Spacer(),
+            ElevatedButton(
+              onPressed: component.enabled
+                  ? () async {
+                      await _addAttribute(context, component);
+                    }
+                  : null,
+              child: const Text('Add Attribute'),
+            ),
+          ],
         ),
       ),
     );

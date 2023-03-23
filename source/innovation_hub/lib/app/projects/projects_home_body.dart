@@ -93,6 +93,7 @@ class ProjectsHomePageBody extends StatelessWidget {
   Future<void> _showNewProjectDialog(BuildContext context) async {
     await showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return WillPopScope(
           onWillPop: () async => false,

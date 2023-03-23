@@ -22,9 +22,9 @@ class ProjectComponentView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
-    // final activeProject = ref.watch(activeProjectProvider);
-    List<Component> internalComp = ref.watch(activeProjectProvider.select((prj) => prj.internalComponents));
-    List<Component> externalComp = ref.watch(activeProjectProvider.select((prj) => prj.externalComponents));
+    final activeProject = ref.watch(activeProjectProvider);
+    List<Component> internalComp = activeProject.internalComponents;
+    List<Component> externalComp = activeProject.externalComponents;
 
     return LayoutBuilder(builder: (context, constraints) {
       return SingleChildScrollView(

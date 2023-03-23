@@ -132,13 +132,8 @@ class NewComponentDialog extends HookConsumerWidget {
   }
 
   void _saveComponent(BuildContext context, WidgetRef ref, Component component) {
-    final activeProject = ref.watch(activeProjectProvider);
-    if (component.isInternal) {
-      activeProject.internalComponents.add(component);
-    } else {
-      activeProject.externalComponents.add(component);
-    }
-    debugPrint(activeProject.toString());
+    final activeProject = ref.watch(activeProjectProvider.notifier);
+    activeProject.addComponentList(component);
   }
 
   @override

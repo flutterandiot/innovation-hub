@@ -137,8 +137,7 @@ class NewComponentDialog extends HookConsumerWidget {
   }
 
   void _saveComponent(BuildContext context, WidgetRef ref, Component component) {
-    final activeProject = ref.watch(activeProjectProvider.notifier);
-    activeProject.addComponent(component);
+    ref.read(activeProjectProvider.notifier).addComponent(component);
   }
 
   @override

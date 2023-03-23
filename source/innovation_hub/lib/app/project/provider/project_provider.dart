@@ -116,12 +116,30 @@ class ActiveProject extends _$ActiveProject {
     var prj = state;
     bool found = false;
     int i = 0;
-    //Check internal
     while (!found) {
       final comp = prj.components[i];
       if (comp.id == component.id) {
         //Remove old one
         prj.components[i].enabled = !prj.components[i].enabled;
+        // insert update one
+        state = state.copyWith(
+          components: prj.components,
+        );
+        found = true;
+      }
+      i++;
+    }
+  }
+
+  void addAttribute(Component component, Attribute attribute) {
+    var prj = state;
+    bool found = false;
+    int i = 0;
+    while (!found) {
+      final comp = prj.components[i];
+      if (comp.id == component.id) {
+        //Remove old one
+        prj.components[i].attributes.add(attribute);
         // insert update one
         state = state.copyWith(
           components: prj.components,

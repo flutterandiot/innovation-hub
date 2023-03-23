@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:innovation_hub/app/project/widgets/new_attribute.dart';
 
 import '../model/component_model.dart';
 
@@ -94,8 +95,8 @@ class ComponentCard extends HookWidget {
               const Spacer(),
               ElevatedButton(
                 onPressed: component.enabled
-                    ? () {
-                        _addAttribute(context, component);
+                    ? () async {
+                        await _addAttribute(context, component);
                       }
                     : null,
                 child: const Text('Add Attribute'),
@@ -107,8 +108,15 @@ class ComponentCard extends HookWidget {
     );
   }
 
-  void _addAttribute(BuildContext context, Component component) {
-    //TODO -  add code to add attribute
-    debugPrint('Add attribute to ${component.name}');
+  Future<void> _addAttribute(BuildContext context, Component component) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return WillPopScope(
+            child: NewAttributeDialog(component: component),
+            onWillPop: () async => false,
+          );
+        });
   }
 }

@@ -72,7 +72,18 @@ class ProjectComponentView extends ConsumerWidget {
                   runSpacing: 12,
                   children: internalComp
                       .map(
-                        (comp) => ComponentCard(component: comp),
+                        (comp) => ComponentCard(
+                          component: comp,
+                          onEdit: () {
+                            //Edit
+                          },
+                          onDelete: () {
+                            //Deiete
+                          },
+                          onDisable: () {
+                            // Disable
+                          },
+                        ),
                       )
                       .toList(),
                 ),
@@ -86,7 +97,18 @@ class ProjectComponentView extends ConsumerWidget {
                   runSpacing: 12,
                   children: externalComp
                       .map(
-                        (comp) => ComponentCard(component: comp),
+                        (comp) => ComponentCard(
+                          component: comp,
+                          onEdit: () {
+                            //Edit
+                          },
+                          onDelete: () {
+                            //Deiete
+                          },
+                          onDisable: () {
+                            // Disable
+                          },
+                        ),
                       )
                       .toList(),
                 ),
@@ -121,8 +143,15 @@ class ComponentCard extends HookWidget {
   const ComponentCard({
     Key? key,
     required this.component,
+    this.onEdit,
+    this.onDisable,
+    this.onDelete,
   }) : super(key: key);
   final Component component;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDisable;
+  final VoidCallback? onDelete;
+
   @override
   Widget build(BuildContext context) {
     final selected = useState(MenuItems.edit);
@@ -150,17 +179,20 @@ class ComponentCard extends HookWidget {
                     },
                     itemBuilder: (context) {
                       return <PopupMenuEntry<MenuItems>>[
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: MenuItems.edit,
-                          child: Text('Edit'),
+                          onTap: onEdit,
+                          child: const Text('Edit'),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: MenuItems.disable,
-                          child: Text('Disable'),
+                          onTap: onDisable,
+                          child: const Text('Disable'),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: MenuItems.delete,
-                          child: Text('Delete'),
+                          onTap: onDelete,
+                          child: const Text('Delete'),
                         ),
                       ];
                     },

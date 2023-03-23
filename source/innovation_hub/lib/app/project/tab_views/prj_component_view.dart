@@ -23,8 +23,8 @@ class ProjectComponentView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     final activeProject = ref.watch(activeProjectProvider);
-    List<Component> internalComp = activeProject.internalComponents;
-    List<Component> externalComp = activeProject.externalComponents;
+    final internalComp = activeProject.internalComponents;
+    final externalComp = activeProject.externalComponents;
 
     return LayoutBuilder(builder: (context, constraints) {
       return SingleChildScrollView(
@@ -131,16 +131,24 @@ class ComponentCard extends StatelessWidget {
                 component.name,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              if (component.isInternal)
-                const Text(
-                  'Internal',
-                  style: TextStyle(color: Colors.blue),
-                ),
-              if (!component.isInternal)
-                const Text(
-                  'External',
-                  style: TextStyle(color: Colors.orange),
-                ),
+              Row(
+                children: [
+                  if (component.isInternal)
+                    const Text(
+                      'Internal',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  if (!component.isInternal)
+                    const Text(
+                      'External',
+                      style: TextStyle(color: Colors.orange),
+                    ),
+                  const Spacer(),
+                  CircleAvatar(
+                    child: Text('${component.importance}'),
+                  ),
+                ],
+              ),
               const Divider(),
               const Spacer(),
               ElevatedButton(

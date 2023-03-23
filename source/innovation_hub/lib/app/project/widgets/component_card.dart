@@ -4,25 +4,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/widgets/new_attribute.dart';
 
 import '../model/component_model.dart';
-
-enum MenuItems {
-  edit,
-  disable,
-  delete,
-}
+import '../provider/project_provider.dart';
+import 'attribute_card.dart';
+import 'delete_comp_confirm_dialog.dart';
+import 'edit_component_dialog.dart';
+import 'proj_constants.dart';
 
 class ComponentCard extends HookConsumerWidget {
   const ComponentCard({
     Key? key,
     required this.component,
-    this.onEdit,
-    this.onEnableToggle,
-    this.onDelete,
   }) : super(key: key);
   final Component component;
-  final VoidCallback? onEdit;
-  final VoidCallback? onEnableToggle;
-  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,17 +47,23 @@ class ComponentCard extends HookConsumerWidget {
                     return <PopupMenuEntry<MenuItems>>[
                       PopupMenuItem(
                         value: MenuItems.edit,
-                        onTap: onEdit,
+                        onTap: () async {
+                          await _showEditComponent(context, component);
+                        },
                         child: const Text('Edit'),
                       ),
                       PopupMenuItem(
                         value: MenuItems.disable,
-                        onTap: onEnableToggle,
+                        onTap: () {
+                          _enableToggle(ref, component);
+                        },
                         child: component.enabled ? const Text('Disable') : const Text('Enable'),
                       ),
                       PopupMenuItem(
                         value: MenuItems.delete,
-                        onTap: onDelete,
+                        onTap: () async {
+                          await _showDeleteComponentConfirmDialog(context, ref, component);
+                        },
                         child: const Text('Delete'),
                       ),
                     ];
@@ -100,18 +99,9 @@ class ComponentCard extends HookConsumerWidget {
                   itemCount: attributesList.length,
                   itemBuilder: (context, index) {
                     final attr = attributesList[index];
-                    return Card(
-                      child: ListTile(
-                        enableFeedback: true,
-                        dense: true,
-                        tileColor: Theme.of(context).canvasColor,
-                        title: Text(attr.name),
-                        subtitle: Text(attr.description),
-                        trailing: Text(
-                          '${attr.importance}',
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      ),
+                    return AttributeCard(
+                      attr: attr,
+                      component: component,
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) => const Divider(),
@@ -130,6 +120,41 @@ class ComponentCard extends HookConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _showEditComponent(BuildContext context, Component component) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: EditComponentDialog(
+              component: component,
+            ),
+          );
+        });
+  }
+
+  Future<void> _showDeleteComponentConfirmDialog(BuildContext context, WidgetRef ref, Component component) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: DeleteComponentCofirmDialog(
+            onDelete: () {
+              ref.read(activeProjectProvider.notifier).deleteComponent(component);
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void _enableToggle(WidgetRef ref, Component component) {
+    ref.read(activeProjectProvider.notifier).componentEnableToggle(component);
   }
 
   Future<void> _addAttribute(BuildContext context, Component component) async {

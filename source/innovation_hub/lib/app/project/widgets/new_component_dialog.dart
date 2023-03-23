@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:innovation_hub/app/project/model/project_models.dart';
+import 'package:innovation_hub/app/project/provider/project_provider.dart';
+import 'package:innovation_hub/utils/app_utils.dart';
 
-class NewComponentDialog extends StatelessWidget {
+class NewComponentDialog extends HookConsumerWidget {
   const NewComponentDialog({super.key});
 
-  dialogContent(BuildContext context) {
+  dialogContent(BuildContext context, WidgetRef ref) {
+    final importanceLevel = useState<int>(1);
+    final isInternal = useState(true);
+    final nameTextController = useTextEditingController(text: 'Component');
+    final descriptionTextController = useTextEditingController(text: 'This component...');
+
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -32,42 +42,57 @@ class NewComponentDialog extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16.0),
-            const TextField(
-              decoration: InputDecoration(
+            TextFormField(
+              controller: nameTextController,
+              decoration: const InputDecoration(
                 label: Text('Name'),
               ),
+              validator: (value) {
+                value!.isEmpty ? 'Please enter name' : null;
+                return null;
+              },
             ),
             const SizedBox(height: 16.0),
-            const TextField(
-              decoration: InputDecoration(
+            TextFormField(
+              controller: descriptionTextController,
+              decoration: const InputDecoration(
                 label: Text('Description'),
               ),
+              validator: (value) {
+                value!.isEmpty ? 'Please enter description' : null;
+                return null;
+              },
             ),
             const SizedBox(height: 24.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Importance:'),
+                Text('Importance: ${importanceLevel.value}'),
                 Slider(
                   min: 1.0,
                   max: 5.0,
-                  value: 1.0,
+                  value: importanceLevel.value.toDouble(),
                   onChanged: (value) {
-                    //
+                    importanceLevel.value = value.toInt();
                   },
                 ),
               ],
             ),
+            const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Internal / External'),
+                const Text('External'),
                 Switch.adaptive(
-                  value: true,
-                  onChanged: (value) {},
+                  value: isInternal.value,
+                  onChanged: (value) {
+                    isInternal.value = value;
+                  },
                 ),
+                const Text('Internal'),
               ],
             ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -82,6 +107,15 @@ class NewComponentDialog extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: () {
                     Navigator.of(context).pop();
+                    final component = Component(
+                      id: AppUtilities.getUid(),
+                      name: nameTextController.text,
+                      importance: importanceLevel.value,
+                      isInternal: isInternal.value,
+                      description: descriptionTextController.text,
+                      attributes: [],
+                    );
+                    _saveComponent(context, ref, component);
                   },
                   icon: const Icon(Icons.check),
                   label: const Text('Save'),
@@ -97,15 +131,25 @@ class NewComponentDialog extends StatelessWidget {
     });
   }
 
+  void _saveComponent(BuildContext context, WidgetRef ref, Component component) {
+    final activeProject = ref.watch(activeProjectProvider);
+    if (component.isInternal) {
+      activeProject.internalComponents.add(component);
+    } else {
+      activeProject.externalComponents.add(component);
+    }
+    debugPrint(activeProject.toString());
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
-      child: dialogContent(context),
+      child: dialogContent(context, ref),
     );
   }
 }

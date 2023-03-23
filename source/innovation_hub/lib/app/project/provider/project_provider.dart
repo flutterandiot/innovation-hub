@@ -10,6 +10,7 @@
 * Description: This file is ....
  */
 import 'package:flutter/material.dart';
+import 'package:innovation_hub/app/shared/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../model/project_model.dart';
@@ -48,5 +49,26 @@ class Projects extends _$Projects {
       for (final prj in state)
         if (prj.id != projectId) prj
     ];
+  }
+}
+
+//NOTE -  This active project must be set keepAlive = true in order to keep its value
+@Riverpod(keepAlive: true)
+class ActiveProject extends _$ActiveProject {
+  @override
+  Project build() => Project(
+        id: '',
+        name: '',
+        description: '',
+        createdAt: '',
+        createdBy: User.dummyUser,
+        team: [],
+        type: ProjectType.product.name,
+        internalComponents: [],
+        externalComponents: [],
+      );
+
+  void setProject(Project project) {
+    state = project;
   }
 }

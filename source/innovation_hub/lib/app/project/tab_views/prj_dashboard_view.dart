@@ -115,8 +115,8 @@ class _ProjectGeneralInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentProject = ref.watch(projectsProvider.notifier).currentProject!;
-
+    // final currentProject = ref.watch(projectsProvider.notifier).currentProject!;
+    final currentProject = ref.watch(activeProjectProvider);
     return Wrap(
       runSpacing: 24,
       spacing: 24,

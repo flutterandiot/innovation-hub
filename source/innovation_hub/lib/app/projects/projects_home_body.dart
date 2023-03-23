@@ -153,6 +153,7 @@ class _ProjectsContainer extends ConsumerWidget {
               borderRadius: BorderRadius.circular(defaultPadding),
               child: InkWell(
                 onTap: () {
+                  ref.read(activeProjectProvider.notifier).setProject(projects[index]);
                   context.goNamed(
                     AppRoute.projectPage.name,
                     params: {'id': projects[index].id},

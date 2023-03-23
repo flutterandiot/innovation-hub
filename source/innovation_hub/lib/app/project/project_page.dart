@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:innovation_hub/app/project/tab_views/prj_component_view.dart';
 import 'package:innovation_hub/app/project/tab_views/prj_dashboard_view.dart';
+import 'package:innovation_hub/app/project/tab_views/prj_techniques_view.dart';
 
 import '../../app_routing.dart';
 import 'model/project_model.dart';
@@ -50,12 +52,8 @@ class ProjectPage extends StatelessWidget {
             child: const TabBarView(
               children: [
                 ProjectDashboardView(),
-                Center(
-                  child: Text('Components'),
-                ),
-                Center(
-                  child: Text('Techniques'),
-                ),
+                ProjectComponentView(),
+                ProjectTechniquesView(),
               ],
             ),
           ),

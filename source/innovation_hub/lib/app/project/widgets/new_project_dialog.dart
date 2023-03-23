@@ -146,9 +146,10 @@ class NewProjectDialog extends HookConsumerWidget {
 
     //Save project to project list
     ref.read(projectsProvider.notifier).addProject(project);
-    //NOTE: Save this new created project as a current ont
-    ref.read(projectsProvider.notifier).setCurrentProject(project);
-    debugPrint(project.toString());
+    //NOTE: update active project as the latest one
+    ref.read(activeProjectProvider.notifier).setProject(project);
+    // ref.read(projectsProvider.notifier).setCurrentProject(project);
+    // debugPrint(project.toString());
 
     return project;
   }

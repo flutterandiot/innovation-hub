@@ -81,19 +81,25 @@ class ProjectComponentView extends ConsumerWidget {
                     runSpacing: 12,
                     children: components
                         .map(
-                          (comp) => ComponentCard(
-                            component: comp,
-                            onEdit: () async {
-                              await _showEditComponent(context, comp);
-                            },
-                            onDelete: () async {
-                              //Deiete
-                              await _showDeleteComponentConfirmDialog(context, ref, comp);
-                            },
-                            onEnableToggle: () {
-                              // Disable
-                              _disableComponent(ref, comp);
-                            },
+                          (comp) => SizedBox(
+                            width: 300,
+                            child: AspectRatio(
+                              aspectRatio: 9 / 16,
+                              child: ComponentCard(
+                                component: comp,
+                                onEdit: () async {
+                                  await _showEditComponent(context, comp);
+                                },
+                                onDelete: () async {
+                                  //Deiete
+                                  await _showDeleteComponentConfirmDialog(context, ref, comp);
+                                },
+                                onEnableToggle: () {
+                                  // Disable
+                                  _disableComponent(ref, comp);
+                                },
+                              ),
+                            ),
                           ),
                         )
                         .toList(),

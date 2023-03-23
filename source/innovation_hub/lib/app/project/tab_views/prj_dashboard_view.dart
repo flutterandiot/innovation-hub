@@ -11,9 +11,9 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/provider/project_provider.dart';
-import 'package:innovation_hub/utils/app_utils.dart';
+import 'package:innovation_hub/app/project/tab_views/dashboard/component_container.dart';
+
+import 'dashboard/proj_general_info.dart';
 
 class ProjectDashboardView extends StatelessWidget {
   const ProjectDashboardView({super.key});
@@ -35,7 +35,7 @@ class ProjectDashboardView extends StatelessWidget {
               SizedBox(
                 height: constraints.maxHeight * 0.3,
                 // width: constraints.maxWidth * 0.85,
-                child: const _ProjectGeneralInfo(),
+                child: const ProjectGeneralInfo(),
               ),
               SizedBox(
                 height: constraints.maxHeight * 0.3,
@@ -79,7 +79,7 @@ class ProjectDashboardView extends StatelessWidget {
             SizedBox(
               height: constraints.maxHeight * 0.3,
               // width: constraints.maxWidth * 0.85,
-              child: const _ProjectGeneralInfo(),
+              child: const ProjectGeneralInfo(),
             ),
             SizedBox(
               height: constraints.maxHeight * 0.3,
@@ -92,9 +92,7 @@ class ProjectDashboardView extends StatelessWidget {
             SizedBox(
               height: constraints.maxHeight * 0.3,
               // width: constraints.maxWidth * 0.85,
-              child: const Placeholder(
-                child: Text('Project components'),
-              ),
+              child: const ProjectComponentsContainer(),
             ),
             SizedBox(
               height: constraints.maxHeight * 0.3,
@@ -106,74 +104,6 @@ class ProjectDashboardView extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class _ProjectGeneralInfo extends ConsumerWidget {
-  const _ProjectGeneralInfo();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // final currentProject = ref.watch(projectsProvider.notifier).currentProject!;
-    final currentProject = ref.watch(activeProjectProvider);
-    return Wrap(
-      runSpacing: 24,
-      spacing: 24,
-      children: [
-        SizedBox(
-          width: 200,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Date created',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                AppUtilities.getDateTimeFormatted(
-                  AppUtilities.getTimeFromEpoch(
-                    int.tryParse(currentProject.createdAt),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: 200,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Description',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                currentProject.description,
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: 200,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Created by',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                currentProject.createdBy.name,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

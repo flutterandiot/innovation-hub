@@ -149,7 +149,7 @@ class _ProjectsContainer extends ConsumerWidget {
             // width: 250,
             height: 180,
             child: Material(
-              color: Colors.amberAccent,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(defaultPadding),
               child: InkWell(
                 onTap: () {

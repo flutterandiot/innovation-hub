@@ -26,19 +26,14 @@ class _ProjectPageState extends ConsumerState<ProjectPage> with TickerProviderSt
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.index = 0;
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+    debugPrint('@Init: Tab selected = ${_tabController.index}');
   }
 
   @override
   Widget build(BuildContext context) {
     final activeProject = ref.watch(activeProjectProvider);
     final projTabSelected = ref.watch(projectTabSelectProvider);
-    debugPrint('Tab selected = $projTabSelected');
+    debugPrint('@Build - Tab selected = ${_tabController.index} vs $projTabSelected');
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -55,6 +50,7 @@ class _ProjectPageState extends ConsumerState<ProjectPage> with TickerProviderSt
             controller: _tabController,
             onTap: (index) {
               ref.read(projectTabSelectProvider.notifier).setValue(_tabController.index);
+              debugPrint('Tab selected = ${_tabController.index} vs $projTabSelected');
             },
             tabs: const [
               Tab(

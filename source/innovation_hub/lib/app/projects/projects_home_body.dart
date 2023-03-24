@@ -154,6 +154,8 @@ class _ProjectsContainer extends ConsumerWidget {
               child: InkWell(
                 onTap: () {
                   ref.read(activeProjectProvider.notifier).setProject(projects[index]);
+                  ref.read(projectTabSelectProvider.notifier).setValue(0);
+
                   context.goNamed(
                     AppRoute.projectPage.name,
                     params: {'id': projects[index].id},

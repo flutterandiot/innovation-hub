@@ -32,8 +32,6 @@ class _ProjectPageState extends ConsumerState<ProjectPage> with TickerProviderSt
   @override
   Widget build(BuildContext context) {
     final activeProject = ref.watch(activeProjectProvider);
-    final projTabSelected = ref.watch(projectTabSelectProvider);
-    debugPrint('@Build - Tab selected = ${_tabController.index} vs $projTabSelected');
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -48,10 +46,7 @@ class _ProjectPageState extends ConsumerState<ProjectPage> with TickerProviderSt
           title: Text(activeProject.name),
           bottom: TabBar(
             controller: _tabController,
-            onTap: (index) {
-              ref.read(projectTabSelectProvider.notifier).setValue(_tabController.index);
-              debugPrint('Tab selected = ${_tabController.index} vs $projTabSelected');
-            },
+            onTap: (index) {},
             tabs: const [
               Tab(
                 text: 'Dashboard',

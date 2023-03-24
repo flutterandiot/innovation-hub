@@ -182,15 +182,15 @@ class ActiveProject extends _$ActiveProject {
 
 @Riverpod(keepAlive: true)
 
-/// A provider to manage the tab selected in project view
-class ProjectTabSelect extends _$ProjectTabSelect {
+/// A provider to manage show/hide secondbody  view
+class ShowSecondaryBody extends _$ShowSecondaryBody {
   @override
-  int build() {
-    return -1;
+  bool build() {
+    return false;
   }
 
-  /// Set new value by [index]
-  void setValue(int index) {
-    state = index;
+  /// Set new value by [isShow]
+  void enableShowSecondaryBody(bool isShow) {
+    state = isShow;
   }
 }

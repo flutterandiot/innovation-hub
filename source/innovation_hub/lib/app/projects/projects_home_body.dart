@@ -149,12 +149,12 @@ class _ProjectsContainer extends ConsumerWidget {
             // width: 250,
             height: 180,
             child: Material(
-              color: Theme.of(context).cardColor,
+              color: Theme.of(context).highlightColor,
               borderRadius: BorderRadius.circular(defaultPadding),
               child: InkWell(
                 onTap: () {
                   ref.read(activeProjectProvider.notifier).setProject(projects[index]);
-                  ref.read(projectTabSelectProvider.notifier).setValue(0);
+                  ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(true);
 
                   context.goNamed(
                     AppRoute.projectDashboard.name,

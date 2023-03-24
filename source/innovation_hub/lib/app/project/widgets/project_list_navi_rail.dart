@@ -56,6 +56,8 @@ class ProjectListNaviRail extends ConsumerWidget {
                   ProjectItemListTile(
                     title: 'Dashboard',
                     onTap: () {
+                      ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(true);
+
                       context.goNamed(
                         AppRoute.projectDashboard.name,
                         params: {'id': projectList[index].id},
@@ -65,6 +67,8 @@ class ProjectListNaviRail extends ConsumerWidget {
                   ProjectItemListTile(
                     title: 'Components',
                     onTap: () {
+                      ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(true);
+
                       context.goNamed(
                         AppRoute.projectComponent.name,
                         params: {'id': projectList[index].id},

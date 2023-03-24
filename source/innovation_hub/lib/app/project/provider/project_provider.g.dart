@@ -36,20 +36,22 @@ final activeProjectProvider = NotifierProvider<ActiveProject, Project>.internal(
 );
 
 typedef _$ActiveProject = Notifier<Project>;
-String _$projectTabSelectHash() => r'c214ed259f191a03434dcd45f65836e45a660abf';
+String _$showSecondaryBodyHash() => r'2de912c1b34a45e1c76b5edb5ef790064ed1e87d';
 
-/// See also [ProjectTabSelect].
-@ProviderFor(ProjectTabSelect)
-final projectTabSelectProvider =
-    NotifierProvider<ProjectTabSelect, int>.internal(
-  ProjectTabSelect.new,
-  name: r'projectTabSelectProvider',
+/// A provider to manage show/hide secondbody  view
+///
+/// Copied from [ShowSecondaryBody].
+@ProviderFor(ShowSecondaryBody)
+final showSecondaryBodyProvider =
+    NotifierProvider<ShowSecondaryBody, bool>.internal(
+  ShowSecondaryBody.new,
+  name: r'showSecondaryBodyProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$projectTabSelectHash,
+      : _$showSecondaryBodyHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ProjectTabSelect = Notifier<int>;
+typedef _$ShowSecondaryBody = Notifier<bool>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

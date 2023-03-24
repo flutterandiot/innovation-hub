@@ -10,59 +10,67 @@ class ProjectGeneralInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeProject = ref.watch(activeProjectProvider);
-    return Wrap(
-      runSpacing: 24,
-      spacing: 24,
+    return GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 12,
+      childAspectRatio: 16 / 6,
       children: [
         SizedBox(
-          width: 200,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Date created',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                AppUtilities.getDateTimeFormatted(
-                  AppUtilities.getTimeFromEpoch(
-                    int.tryParse(activeProject.createdAt),
+          child: ListTile(
+            title: const Text(
+              'Date created',
+              style: TextStyle(color: Colors.grey, fontSize: 14),
+            ),
+            subtitle: Row(
+              children: [
+                const Icon(
+                  Icons.calendar_today,
+                  size: 20,
+                ),
+                const SizedBox(
+                  width: 4,
+                ),
+                Expanded(
+                  child: Text(
+                    AppUtilities.getDateTimeFormatted(
+                      AppUtilities.getTimeFromEpoch(
+                        int.tryParse(activeProject.createdAt),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-        SizedBox(
-          width: 200,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Description',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                activeProject.description,
-              ),
-            ],
+        ListTile(
+          title: const Text(
+            'Description',
+            style: TextStyle(color: Colors.grey, fontSize: 14),
+          ),
+          subtitle: Text(
+            activeProject.description,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-        SizedBox(
-          width: 200,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+        ListTile(
+          title: const Text(
+            'Created by',
+            style: TextStyle(color: Colors.grey, fontSize: 14),
+          ),
+          subtitle: Text(
+            activeProject.createdBy.name,
+          ),
+        ),
+        ListTile(
+          title: const Text(
+            'Team',
+            style: TextStyle(color: Colors.grey),
+          ),
+          subtitle: Row(
             children: [
-              const Text(
-                'Created by',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                activeProject.createdBy.name,
-              ),
+              const Icon(Icons.people),
+              Text('${activeProject.team.length}'),
             ],
           ),
         ),

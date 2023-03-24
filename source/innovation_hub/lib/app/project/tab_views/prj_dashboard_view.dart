@@ -24,66 +24,21 @@ class ProjectDashboardView extends StatelessWidget {
     final isMedium = Breakpoints.medium.isActive(context);
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (isSmall || isMedium) {
-          return ListView(
-            padding: const EdgeInsets.only(
-              top: 48,
-              left: 32,
-              right: 32,
-            ),
-            children: [
-              SizedBox(
-                height: constraints.maxHeight * 0.3,
-                // width: constraints.maxWidth * 0.85,
-                child: const ProjectGeneralInfo(),
-              ),
-              SizedBox(
-                height: constraints.maxHeight * 0.3,
-                // width: constraints.maxWidth * 0.85,
-                child: Image.asset(
-                  'assets/images/chair-indoor-green-lifestyle-wo-bg.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: constraints.maxHeight * 0.3,
-                // width: constraints.maxWidth * 0.85,
-                child: const Placeholder(
-                  child: Text('Project components'),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: constraints.maxHeight * 0.3,
-                // width: constraints.maxWidth * 0.85,
-                child: const Placeholder(
-                  child: Text('component attributes'),
-                ),
-              ),
-            ],
-          );
-        }
         return GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: (isSmall || isMedium) ? 1 : 2,
           padding: const EdgeInsets.only(
             top: 48,
             left: 32,
             right: 32,
           ),
           children: [
-            SizedBox(
-              height: constraints.maxHeight * 0.3,
-              // width: constraints.maxWidth * 0.85,
-              child: const ProjectGeneralInfo(),
+            const SizedBox(
+              // height: 100,
+              child: ProjectGeneralInfo(),
             ),
             SizedBox(
-              height: constraints.maxHeight * 0.3,
-              // width: constraints.maxWidth * 0.85,
+              height: 200,
+              width: 200,
               child: Image.asset(
                 'assets/images/chair-indoor-green-lifestyle-wo-bg.png',
                 fit: BoxFit.contain,

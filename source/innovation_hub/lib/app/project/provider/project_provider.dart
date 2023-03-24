@@ -179,3 +179,13 @@ class ActiveProject extends _$ActiveProject {
     updateComponent(component);
   }
 }
+
+@Riverpod(keepAlive: true)
+
+/// A provider to manage the tab selected in project view
+class ProjectTabSelect extends _$ProjectTabSelect {
+  @override
+  int build() {
+    return 0;
+  }
+}

@@ -21,7 +21,7 @@ final projectsProvider =
 );
 
 typedef _$Projects = AutoDisposeNotifier<List<Project>>;
-String _$activeProjectHash() => r'6189cf20299ab5c43cf352ac272093d7b13cecf3';
+String _$activeProjectHash() => r'90501e59ce8154698162aa65f436d308ea91b127';
 
 /// See also [ActiveProject].
 @ProviderFor(ActiveProject)
@@ -36,4 +36,20 @@ final activeProjectProvider = NotifierProvider<ActiveProject, Project>.internal(
 );
 
 typedef _$ActiveProject = Notifier<Project>;
+String _$projectTabSelectHash() => r'c214ed259f191a03434dcd45f65836e45a660abf';
+
+/// See also [ProjectTabSelect].
+@ProviderFor(ProjectTabSelect)
+final projectTabSelectProvider =
+    NotifierProvider<ProjectTabSelect, int>.internal(
+  ProjectTabSelect.new,
+  name: r'projectTabSelectProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$projectTabSelectHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ProjectTabSelect = Notifier<int>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

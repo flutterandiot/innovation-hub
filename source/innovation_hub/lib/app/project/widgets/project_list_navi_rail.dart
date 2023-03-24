@@ -47,7 +47,7 @@ class ProjectListNaviRail extends ConsumerWidget {
                 onExpansionChanged: (_) {
                   ref.read(activeProjectProvider.notifier).setProject(projectList[index]);
                   context.goNamed(
-                    AppRoute.projectPage.name,
+                    AppRoute.projectDashboard.name,
                     params: {'id': projectList[index].id},
                     extra: projectList[index],
                   );
@@ -55,11 +55,22 @@ class ProjectListNaviRail extends ConsumerWidget {
                 children: [
                   ProjectItemListTile(
                     title: 'Dashboard',
-                    onTap: () {},
+                    onTap: () {
+                      context.goNamed(
+                        AppRoute.projectDashboard.name,
+                        params: {'id': projectList[index].id},
+                      );
+                    },
                   ),
                   ProjectItemListTile(
                     title: 'Components',
-                    onTap: () {},
+                    onTap: () {
+                      context.goNamed(
+                        AppRoute.projectComponent.name,
+                        params: {'id': projectList[index].id},
+                        extra: projectList[index],
+                      );
+                    },
                   ),
                   ProjectItemListTile(
                     title: 'Task Unification',

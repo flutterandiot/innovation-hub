@@ -157,7 +157,7 @@ class _ProjectsContainer extends ConsumerWidget {
                   ref.read(projectTabSelectProvider.notifier).setValue(0);
 
                   context.goNamed(
-                    AppRoute.projectPage.name,
+                    AppRoute.projectDashboard.name,
                     params: {'id': projects[index].id},
                     extra: projects[index],
                   );

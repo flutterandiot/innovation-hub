@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:innovation_hub/app/project/tab_views/prj_component_view.dart';
+import 'package:innovation_hub/app/project/tab_views/prj_dashboard_view.dart';
 import 'package:innovation_hub/app/projects/projects_home_body.dart';
 import 'package:innovation_hub/app/explore/explore_body.dart';
 import 'package:innovation_hub/app/explore/study_sit_page.dart';
 import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
-import 'package:innovation_hub/app/project/project_page.dart';
 import 'package:innovation_hub/app/project/sit_technique_page.dart';
 import 'package:innovation_hub/app/settings/settings_body.dart';
 
@@ -29,6 +30,9 @@ enum AppRoute {
   sitAttributeDependency,
   trizMethod,
   projectPage,
+  projectDashboard,
+  projectComponent,
+  projectTechnique,
 }
 
 final router = GoRouter(
@@ -101,13 +105,13 @@ final router = GoRouter(
             //NOTE: Go to project page
             GoRoute(
               path: ':id',
-              name: AppRoute.projectPage.name,
+              name: AppRoute.projectDashboard.name,
               pageBuilder: (context, state) {
-                final project = state.extra as Project;
+                // final project = state.extra as Project;
                 return CustomTransitionPage(
-                  child: ProjectPage(
-                    project: project,
-                  ),
+                  child: const ProjectDashboardView(
+                      // project: project,
+                      ),
                   transitionsBuilder: (context, animation, secondAnimation, child) {
                     const begin = Offset(1.0, 0.0);
                     const end = Offset.zero;
@@ -126,6 +130,34 @@ final router = GoRouter(
                   },
                 );
               },
+              routes: [
+                GoRoute(
+                  path: 'component',
+                  name: AppRoute.projectComponent.name,
+                  pageBuilder: (context, state) {
+                    // final project = state.extra as Project;
+                    return CustomTransitionPage(
+                      child: const ProjectComponentView(),
+                      transitionsBuilder: (context, animation, secondAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.ease;
+                        final tween = Tween(begin: begin, end: end).chain(
+                          CurveTween(curve: curve),
+                        );
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          // child: child,
+                          child: FadeTransition(
+                            opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                            child: child,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
             GoRoute(
               // Go to a SIT technique with 2 params

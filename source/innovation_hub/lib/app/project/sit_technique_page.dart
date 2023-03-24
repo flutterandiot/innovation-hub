@@ -39,7 +39,7 @@ class SitTechniquePage extends ConsumerWidget {
             leading: IconButton(
               onPressed: () {
                 context.goNamed(
-                  AppRoute.projectPage.name,
+                  AppRoute.projectDashboard.name,
                   params: {'id': currentProject.id},
                   extra: currentProject,
                 );

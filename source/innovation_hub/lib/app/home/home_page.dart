@@ -77,7 +77,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
 
     final projectList = ref.watch(projectsProvider);
-
+    final projTabSelect = ref.watch(projectTabSelectProvider);
     return Scaffold(
       body: AdaptiveLayout(
         primaryNavigation: SlotLayout(
@@ -158,6 +158,22 @@ class _HomePageState extends ConsumerState<HomePage> {
             // ),
           },
         ),
+        secondaryBody: (projTabSelect == 0)
+            ? SlotLayout(
+                config: {
+                  Breakpoints.smallAndUp: SlotLayout.from(
+                    key: const Key('second-body-small-n-up'),
+                    builder: (context) {
+                      return const Placeholder(
+                        child: Center(
+                          child: Text('Second body'),
+                        ),
+                      );
+                    },
+                  ),
+                },
+              )
+            : null,
         bottomNavigation: SlotLayout(
           config: {
             Breakpoints.small: SlotLayout.from(

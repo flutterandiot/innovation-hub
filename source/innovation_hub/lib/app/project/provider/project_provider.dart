@@ -186,6 +186,11 @@ class ActiveProject extends _$ActiveProject {
 class ProjectTabSelect extends _$ProjectTabSelect {
   @override
   int build() {
-    return 0;
+    return -1;
+  }
+
+  /// Set new value by [index]
+  void setValue(int index) {
+    state = index;
   }
 }

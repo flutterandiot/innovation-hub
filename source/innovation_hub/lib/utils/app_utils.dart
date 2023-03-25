@@ -49,16 +49,16 @@ class AppUtilities {
   /// 8PM to 11:59 PM
   /// (20 to 22:59) in 24 hour format
   ///
-  static String getGreetingMessage() {
+  static Map<int, String> getGreetingMessage() {
     final hour = DateTime.now().hour; // always return hour in 24 hour format, [0..23]
     if (hour < 12) {
-      return 'Good Morning';
+      return {1: '☀️ Good morning'};
     } else if (hour >= 12 && hour <= 16) {
-      return "Good Afternoon";
+      return {2: '😎 Good afternoon'};
     } else if (hour > 16 && hour < 20) {
-      return 'Good Evening';
+      return {3: '🌝 Good evening'};
     } else {
-      return 'Good Night';
+      return {4: '🌜 Good night'};
     }
   }
 }

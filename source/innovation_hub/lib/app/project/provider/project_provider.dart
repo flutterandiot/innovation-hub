@@ -21,7 +21,11 @@ part 'project_provider.g.dart';
 class Projects extends _$Projects {
   @override
   List<Project> build() {
-    return [];
+    return [
+      Project.dummyProject,
+      Project.dummyProject,
+      Project.dummyProject,
+    ];
   }
 
   Project? currentProject;

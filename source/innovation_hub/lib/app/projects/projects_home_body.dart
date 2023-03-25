@@ -13,14 +13,10 @@
 * Description: This file is the home page of the app, show all projects
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/app/project/widgets/new_project_dialog.dart';
 import 'package:innovation_hub/utils/padding.dart';
-import 'package:lottie/lottie.dart';
 
-import '../../app_routing.dart';
+import '../project/widgets/project_container.dart';
 
 class ProjectsHomePageBody extends StatelessWidget {
   const ProjectsHomePageBody({super.key});
@@ -78,9 +74,10 @@ class ProjectsHomePageBody extends StatelessWidget {
                   indent: 24,
                   endIndent: 24,
                 ),
-                _ProjectsContainer(
+                ProjectsContainer(
                   width: constraints.maxWidth * 0.3,
                   height: constraints.maxHeight * 0.25,
+                  gridView: false,
                 ),
               ],
             ),
@@ -100,76 +97,6 @@ class ProjectsHomePageBody extends StatelessWidget {
           child: const NewProjectDialog(),
         );
       },
-    );
-  }
-}
-
-class _ProjectsContainer extends ConsumerWidget {
-  const _ProjectsContainer({
-    Key? key,
-    this.width,
-    this.height,
-  }) : super(key: key);
-  final double? width;
-  final double? height;
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final projects = ref.watch(projectsProvider);
-
-    if (projects.isEmpty) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: width ?? 240,
-            height: height ?? 200,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Lottie.asset(
-                'assets/animations/118991-idea-innovation.json',
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-        ],
-      );
-    }
-
-    return SizedBox(
-      width: double.infinity,
-      height: 200,
-      child: ListView.builder(
-        itemExtent: 200,
-        padding: const EdgeInsets.symmetric(horizontal: defaultPadding, vertical: defaultPadding),
-        scrollDirection: Axis.horizontal,
-        itemCount: projects.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
-            // width: 250,
-            height: 180,
-            child: Material(
-              color: Theme.of(context).highlightColor,
-              borderRadius: BorderRadius.circular(defaultPadding),
-              child: InkWell(
-                onTap: () {
-                  ref.read(activeProjectProvider.notifier).setProject(projects[index]);
-                  ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(true);
-
-                  context.goNamed(
-                    AppRoute.projectDashboard.name,
-                    params: {'id': projects[index].id},
-                    extra: projects[index],
-                  );
-                },
-                child: Center(
-                  child: Text(projects[index].name),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 }

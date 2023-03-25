@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:innovation_hub/app/project/model/component_model.dart';
+import 'package:innovation_hub/utils/app_utils.dart';
 
 import '../../shared/user.dart';
 
@@ -123,4 +124,15 @@ class Project {
   int get hashCode {
     return id.hashCode ^ name.hashCode ^ description.hashCode ^ createdAt.hashCode ^ createdBy.hashCode ^ team.hashCode ^ type.hashCode ^ components.hashCode;
   }
+
+  static Project dummyProject = Project(
+    id: '123',
+    name: 'Demo',
+    description: 'Demo project',
+    createdAt: AppUtilities.getTimeStampFromNow(),
+    createdBy: User.dummyUser,
+    team: [User.dummyUser],
+    type: ProjectType.product.name,
+    components: [],
+  );
 }

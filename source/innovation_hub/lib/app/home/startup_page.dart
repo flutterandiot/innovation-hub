@@ -11,11 +11,17 @@
  */
 import 'package:flutter/material.dart';
 
+import 'widgets/header.dart';
+
 class StartUpPage extends StatelessWidget {
   const StartUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const StartupPageHeader(),
+      ),
+    );
   }
 }

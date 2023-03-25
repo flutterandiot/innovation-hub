@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:innovation_hub/app/home/startup_page.dart';
 import 'package:innovation_hub/app/project/tab_views/prj_component_view.dart';
 import 'package:innovation_hub/app/project/tab_views/prj_dashboard_view.dart';
 import 'package:innovation_hub/app/projects/projects_home_body.dart';
@@ -55,7 +56,8 @@ final router = GoRouter(
       navigatorKey: _shellNavigatorKey,
       pageBuilder: (context, state, child) {
         return NoTransitionPage(
-          child: HomePage(body: child),
+          child: const StartUpPage(),
+          // child: HomePage(body: child),
           key: state.pageKey,
         );
       },

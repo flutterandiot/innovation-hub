@@ -142,6 +142,7 @@ class NewProjectDialog extends HookConsumerWidget {
       name: name,
       description: description,
       type: type.name,
+      favorite: false,
       components: [],
       createdAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.dummyUser,

@@ -15,14 +15,21 @@ class ProjectsContainer extends ConsumerWidget {
     this.width,
     this.height,
     required this.gridView,
+    required this.isFavarite,
   }) : super(key: key);
   final double? width;
   final double? height;
   final bool gridView;
+  final bool isFavarite;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final projects = ref.watch(projectsProvider);
-
+    final projectList = ref.watch(projectsProvider);
+    List<Project> projects = [];
+    if (isFavarite) {
+      projects = projectList.where((element) => element.favorite == true).toList();
+    } else {
+      projects = [...projectList];
+    }
     if (projects.isEmpty) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,

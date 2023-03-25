@@ -107,7 +107,19 @@ class StartUpPage extends HookWidget {
               SizedBox(
                 height: screenSize.height * 0.8,
                 width: screenSize.width * 0.75,
-                child: ProjectsContainer(gridView: showGrid.value),
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    ProjectsContainer(
+                      gridView: showGrid.value,
+                      isFavarite: false,
+                    ),
+                    ProjectsContainer(
+                      gridView: showGrid.value,
+                      isFavarite: true,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

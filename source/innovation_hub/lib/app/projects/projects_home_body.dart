@@ -78,6 +78,7 @@ class ProjectsHomePageBody extends StatelessWidget {
                   width: constraints.maxWidth * 0.3,
                   height: constraints.maxHeight * 0.25,
                   gridView: false,
+                  isFavarite: false,
                 ),
               ],
             ),

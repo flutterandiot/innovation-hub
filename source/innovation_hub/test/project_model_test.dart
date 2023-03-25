@@ -17,6 +17,7 @@ void main() {
       team: [
         User.dummyUser,
       ],
+      favorite: false,
     );
 
     print(project.toString());

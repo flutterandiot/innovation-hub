@@ -13,7 +13,7 @@ class TaskUnificationView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = useState<int>(0);
     final currentProject = ref.watch(projectsProvider.notifier).currentProject!;
-    final internalComponents = currentProject.internalComponents;
+    final internalComponents = currentProject.components;
 
     return LayoutBuilder(
       builder: (context, constraints) {

@@ -68,18 +68,25 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     void _selectedNavi(BuildContext context, int index) {
       if (index == 0) {
+        ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(false);
+
         context.goNamed(AppRoute.projects.name);
       } else if (index == 1) {
+        ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(false);
+
         context.goNamed(AppRoute.explore.name);
       } else if (index == 2) {
+        ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(false);
+
         context.goNamed(AppRoute.settings.name);
       }
     }
 
     final projectList = ref.watch(projectsProvider);
-
+    final showSecondaryBody = ref.watch(showSecondaryBodyProvider);
     return Scaffold(
       body: AdaptiveLayout(
+        bodyRatio: 0.6,
         primaryNavigation: SlotLayout(
           config: {
             Breakpoints.medium: SlotLayout.from(
@@ -158,6 +165,22 @@ class _HomePageState extends ConsumerState<HomePage> {
             // ),
           },
         ),
+        secondaryBody: (showSecondaryBody)
+            ? SlotLayout(
+                config: {
+                  Breakpoints.smallAndUp: SlotLayout.from(
+                    key: const Key('second-body-small-n-up'),
+                    builder: (context) {
+                      return const Placeholder(
+                        child: Center(
+                          child: Text('Second body'),
+                        ),
+                      );
+                    },
+                  ),
+                },
+              )
+            : null,
         bottomNavigation: SlotLayout(
           config: {
             Breakpoints.small: SlotLayout.from(

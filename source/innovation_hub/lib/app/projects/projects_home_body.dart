@@ -93,6 +93,7 @@ class ProjectsHomePageBody extends StatelessWidget {
   Future<void> _showNewProjectDialog(BuildContext context) async {
     await showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return WillPopScope(
           onWillPop: () async => false,
@@ -148,12 +149,15 @@ class _ProjectsContainer extends ConsumerWidget {
             // width: 250,
             height: 180,
             child: Material(
-              color: Colors.amberAccent,
+              color: Theme.of(context).highlightColor,
               borderRadius: BorderRadius.circular(defaultPadding),
               child: InkWell(
                 onTap: () {
+                  ref.read(activeProjectProvider.notifier).setProject(projects[index]);
+                  ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(true);
+
                   context.goNamed(
-                    AppRoute.projectPage.name,
+                    AppRoute.projectDashboard.name,
                     params: {'id': projects[index].id},
                     extra: projects[index],
                   );

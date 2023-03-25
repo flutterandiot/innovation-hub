@@ -11,9 +11,11 @@ class NewProjectDialog extends HookConsumerWidget {
   const NewProjectDialog({super.key});
 
   dialogContent(BuildContext context, WidgetRef ref) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
     final selected = useState<ProjectType>(ProjectType.product);
     final nameTextController = useTextEditingController(text: 'Project');
-    final descriptionTextController = useTextEditingController(text: 'This project ...');
+    final descriptionTextController = useTextEditingController(text: 'Demo');
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -30,99 +32,104 @@ class NewProjectDialog extends HookConsumerWidget {
             ),
           ],
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min, // To make the card compact
-          children: <Widget>[
-            Row(
-              children: [
-                Text(
-                  'New Project',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ],
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: nameTextController,
-              decoration: const InputDecoration(
-                label: Text('Name'),
-              ),
-              validator: (value) {
-                value!.isEmpty ? 'Please enter name' : null;
-                return null;
-              },
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: descriptionTextController,
-              decoration: const InputDecoration(
-                label: Text('Description'),
-              ),
-              validator: (value) {
-                value!.isEmpty ? 'Please enter description' : null;
-                return null;
-              },
-            ),
-            const SizedBox(height: 24.0),
-            const Text('Project type:'),
-            RadioListTile(
-              groupValue: selected.value,
-              title: const Text('Product'),
-              value: ProjectType.product,
-              onChanged: (value) {
-                selected.value = value!;
-              },
-            ),
-            RadioListTile(
-              groupValue: selected.value,
-              title: const Text('Service'),
-              value: ProjectType.service,
-              onChanged: (value) {
-                selected.value = value!;
-              },
-            ),
-            RadioListTile(
-              groupValue: selected.value,
-              title: const Text('Other'),
-              value: ProjectType.other,
-              onChanged: (value) {
-                selected.value = value!;
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.cancel),
-                  label: const Text('Cancel'),
-                ),
-                const SizedBox(width: 20),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    final _ = _saveNewProject(
-                      ref,
-                      nameTextController.text,
-                      descriptionTextController.text,
-                      selected.value,
-                    );
-                    Navigator.of(context).pop();
-                    // context.goNamed(
-                    //   AppRoute.addProject.name,
-                    //   extra: project,
-                    // );
-                  },
-                  icon: const Icon(Icons.check),
-                  label: const Text('Create a New Project'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+        child: Form(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.always,
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // To make the card compact
+            children: <Widget>[
+              Row(
+                children: [
+                  Text(
+                    'New Project',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: nameTextController,
+                decoration: const InputDecoration(
+                  label: Text('Name'),
                 ),
-              ],
-            ),
-          ],
+                validator: (value) {
+                  return value!.isEmpty ? 'Please enter name' : null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: descriptionTextController,
+                decoration: const InputDecoration(
+                  label: Text('Description'),
+                ),
+                validator: (value) {
+                  return value!.isEmpty ? 'Please enter description' : null;
+                },
+              ),
+              const SizedBox(height: 24.0),
+              const Text('Project type:'),
+              RadioListTile(
+                groupValue: selected.value,
+                title: const Text('Product'),
+                value: ProjectType.product,
+                onChanged: (value) {
+                  selected.value = value!;
+                },
+              ),
+              RadioListTile(
+                groupValue: selected.value,
+                title: const Text('Service'),
+                value: ProjectType.service,
+                onChanged: (value) {
+                  selected.value = value!;
+                },
+              ),
+              RadioListTile(
+                groupValue: selected.value,
+                title: const Text('Other'),
+                value: ProjectType.other,
+                onChanged: (value) {
+                  selected.value = value!;
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.cancel),
+                    label: const Text('Cancel'),
+                  ),
+                  const SizedBox(width: 20),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        final _ = _saveNewProject(
+                          ref,
+                          nameTextController.text,
+                          descriptionTextController.text,
+                          selected.value,
+                        );
+                        Navigator.of(context).pop();
+                      }
+
+                      // context.goNamed(
+                      //   AppRoute.addProject.name,
+                      //   extra: project,
+                      // );
+                    },
+                    icon: const Icon(Icons.check),
+                    label: const Text('Create a New Project'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       );
     });
@@ -135,8 +142,7 @@ class NewProjectDialog extends HookConsumerWidget {
       name: name,
       description: description,
       type: type.name,
-      externalComponents: [],
-      internalComponents: [],
+      components: [],
       createdAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.dummyUser,
       team: [
@@ -146,9 +152,10 @@ class NewProjectDialog extends HookConsumerWidget {
 
     //Save project to project list
     ref.read(projectsProvider.notifier).addProject(project);
-    //NOTE: Save this new created project as a current ont
-    ref.read(projectsProvider.notifier).setCurrentProject(project);
-    debugPrint(project.toString());
+    //NOTE: update active project as the latest one
+    ref.read(activeProjectProvider.notifier).setProject(project);
+    // ref.read(projectsProvider.notifier).setCurrentProject(project);
+    // debugPrint(project.toString());
 
     return project;
   }

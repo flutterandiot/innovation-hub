@@ -19,12 +19,12 @@ A provider is initialized:
 
   @override
   void didUpdateProvider(ProviderBase<Object?> provider, Object? previousValue, Object? newValue, ProviderContainer container) {
-    debugPrint('''
-"Provider": ${provider.name ?? provider.runtimeType}, 
-" Previous value": $previousValue,
-" New value" : $newValue
-    ''');
     super.didUpdateProvider(provider, previousValue, newValue, container);
+    debugPrint('''
+" Provider": ${provider.name ?? provider.runtimeType}, 
+" ✊ Previous value": $previousValue,
+" 👉 New value" : $newValue
+    ''');
   }
 }
 

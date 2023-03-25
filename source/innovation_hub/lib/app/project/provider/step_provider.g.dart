@@ -6,7 +6,7 @@ part of 'step_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentStepHash() => r'8f07857f96dcbcfa6f14717ef038dff24242968b';
+String _$currentStepHash() => r'0514eb864e136213e935f9407248d8188f4b288b';
 
 /// See also [CurrentStep].
 @ProviderFor(CurrentStep)

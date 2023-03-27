@@ -16,6 +16,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 enum AppRoute {
+  home,
   projects,
   explore,
   settings,
@@ -42,7 +43,7 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      name: 'home',
+      name: AppRoute.home.name,
       builder: (context, state) => const StartUpPage(),
     ),
 
@@ -58,7 +59,7 @@ final router = GoRouter(
       },
       routes: [
         GoRoute(
-          path: 'add-project',
+          path: '/add-project',
           name: AppRoute.addProject.name,
           // builder: (context, state) => const NewProjectPage(),
           pageBuilder: (context, state) {

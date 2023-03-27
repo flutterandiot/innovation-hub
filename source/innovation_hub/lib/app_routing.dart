@@ -7,6 +7,7 @@ import 'package:innovation_hub/app/project/project_views/prj_dashboard_view.dart
 import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/sit_technique_page.dart';
 
+import 'app/project/new_project_page.dart';
 import 'app/project/project_workspace.dart';
 
 // GoRouter configuration
@@ -44,11 +45,9 @@ final router = GoRouter(
       name: 'home',
       builder: (context, state) => const StartUpPage(),
     ),
-    // GoRoute(
-    //   path: 'new-project',
-    //   name: 'new-project',
-    //   builder: (context, state) => const NewProjectPage(),
-    // ),
+
+    //!Use NoTransitionPage
+    //NOTE - We use a NoTransitionPage inside the main (/dashboard, /explore,/settings) routes to prevent unintended animations when switching between destination (this is the default behavior on popular iOS apps).
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
       pageBuilder: (context, state, child) {
@@ -57,49 +56,35 @@ final router = GoRouter(
           key: state.pageKey,
         );
       },
-      // routes: [
-      //   // Dashboard
-      //   GoRoute(
-      //     path: '/home',
-      //     name: AppRoute.projects.name,
-      //     //NOTE - this builder will use default animation, which cause unintended animation when switching between destinations, we we don't use this builder
-      //     // builder: (context, state) => const DashboardPageBody(),
-      //     //!Use NoTransitionPage
-      //     //NOTE - We use a NoTransitionPage inside the main (/dashboard, /explore,/settings) routes to prevent unintended animations when switching between destination (this is the default behavior on popular iOS apps).
-
-      //     pageBuilder: (context, state) => NoTransitionPage(
-      //       key: state.pageKey,
-      //       child: const ProjectsHomePageBody(),
-      //     ),
       routes: [
-        // GoRoute(
-        //   path: 'add-project',
-        //   name: AppRoute.addProject.name,
-        //   // builder: (context, state) => const NewProjectPage(),
-        //   pageBuilder: (context, state) {
-        //     return CustomTransitionPage(
-        //       child: NewProjectPage(
-        //         project: state.extra as Project,
-        //       ),
-        //       transitionsBuilder: (context, animation, secondAnimation, child) {
-        //         const begin = Offset(1.0, 0.0);
-        //         const end = Offset.zero;
-        //         const curve = Curves.ease;
-        //         final tween = Tween(begin: begin, end: end).chain(
-        //           CurveTween(curve: curve),
-        //         );
-        //         return SlideTransition(
-        //           position: animation.drive(tween),
-        //           // child: child,
-        //           child: FadeTransition(
-        //             opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-        //             child: child,
-        //           ),
-        //         );
-        //       },
-        //     );
-        //   },
-        // ),
+        GoRoute(
+          path: 'add-project',
+          name: AppRoute.addProject.name,
+          // builder: (context, state) => const NewProjectPage(),
+          pageBuilder: (context, state) {
+            return CustomTransitionPage(
+              child: NewProjectPage(
+                project: state.extra as Project,
+              ),
+              transitionsBuilder: (context, animation, secondAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
+                final tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  // child: child,
+                  child: FadeTransition(
+                    opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                    child: child,
+                  ),
+                );
+              },
+            );
+          },
+        ),
         //NOTE: Go to project page
         GoRoute(
           path: '/:id/dashboard',
@@ -189,25 +174,5 @@ final router = GoRouter(
         ),
       ],
     ),
-    // Explore
-    // GoRoute(
-    //   path: '/explore',
-    //   name: AppRoute.explore.name,
-    //   // builder: (context, state) => const ExplorePageBody(),
-    //   pageBuilder: (context, state) => NoTransitionPage(
-    //     key: state.pageKey,
-    //     child: const ExplorePageBody(),
-    //   ),
-    //   routes: [
-    //     GoRoute(
-    //       path: 'learn-sit',
-    //       name: AppRoute.learnSIT.name,
-    //       builder: (context, state) => const StudySITPage(),
-    //     ),
-    //   ],
-    // ),
-    // Settings
-    // ],
-    // ),
   ],
 );

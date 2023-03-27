@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/home/startup_page.dart';
-import 'package:innovation_hub/app/project/tab_views/prj_component_view.dart';
-import 'package:innovation_hub/app/project/tab_views/prj_dashboard_view.dart';
+import 'package:innovation_hub/app/project/project_views/prj_component_view.dart';
+import 'package:innovation_hub/app/project/project_views/prj_dashboard_view.dart';
 import 'package:innovation_hub/app/projects/projects_home_body.dart';
 
-import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/sit_technique_page.dart';
+
+import 'app/project/project_workspace.dart';
 
 // GoRouter configuration
 // private navigators
@@ -54,8 +55,7 @@ final router = GoRouter(
       navigatorKey: _shellNavigatorKey,
       pageBuilder: (context, state, child) {
         return NoTransitionPage(
-          // child: const StartUpPage(),
-          child: HomePage(body: child),
+          child: ProjectWorkspace(body: child),
           key: state.pageKey,
         );
       },

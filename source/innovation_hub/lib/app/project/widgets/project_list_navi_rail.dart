@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app_routing.dart';
 
-import '../model/project_model.dart';
-import '../provider/project_provider.dart';
+import '../../model/project_model.dart';
+import '../../provider/project_provider.dart';
 
 class ProjectListNaviRail extends ConsumerWidget {
   const ProjectListNaviRail({
@@ -18,7 +18,6 @@ class ProjectListNaviRail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
         const Divider(thickness: 1.5),

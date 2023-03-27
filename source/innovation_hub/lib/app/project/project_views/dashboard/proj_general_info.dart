@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../utils/app_utils.dart';
-import '../../provider/project_provider.dart';
+import '../../../provider/project_provider.dart';
 
 class ProjectGeneralInfo extends ConsumerWidget {
   const ProjectGeneralInfo({super.key});

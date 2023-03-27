@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/provider/step_provider.dart';
+
+import '../../provider/step_provider.dart';
 
 class TaskUnificationSteps extends ConsumerWidget {
   const TaskUnificationSteps({

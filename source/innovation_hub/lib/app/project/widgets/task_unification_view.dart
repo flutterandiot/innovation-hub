@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 
-import '../provider/project_provider.dart';
+import '../../provider/project_provider.dart';
 
 class TaskUnificationView extends HookConsumerWidget {
   const TaskUnificationView({super.key});

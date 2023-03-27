@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:innovation_hub/app/project/model/project_models.dart';
+import 'package:innovation_hub/app/model/project_models.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 import 'package:test/test.dart';

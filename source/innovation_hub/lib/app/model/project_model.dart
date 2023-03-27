@@ -4,10 +4,10 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:innovation_hub/app/project/model/component_model.dart';
+import 'package:innovation_hub/app/model/component_model.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 
-import '../../shared/user.dart';
+import '../shared/user.dart';
 
 enum ProjectType {
   product,

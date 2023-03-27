@@ -14,10 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/component_container.dart';
-import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/app/project/widgets/project_page_header.dart';
 
-import '../../../utils/app_utils.dart';
 import '../widgets/project_app_bar.dart';
 
 class ProjectDashboardView extends ConsumerWidget {

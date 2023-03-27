@@ -13,7 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../model/project_models.dart';
+import '../model/attribute_model.dart';
+import '../model/component_model.dart';
+import '../model/project_model.dart';
 
 part 'project_provider.g.dart';
 

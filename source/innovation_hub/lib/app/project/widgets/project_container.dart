@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:innovation_hub/app/project/model/project_model.dart';
+import 'package:innovation_hub/app/model/project_model.dart';
 
 import '../../../app_routing.dart';
-import '../provider/project_provider.dart';
+import '../../provider/project_provider.dart';
 
 class ProjectsContainer extends ConsumerWidget {
   const ProjectsContainer({

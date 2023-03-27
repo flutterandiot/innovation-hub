@@ -4,7 +4,7 @@ import 'package:innovation_hub/app/home/startup_page.dart';
 import 'package:innovation_hub/app/project/project_views/prj_component_view.dart';
 import 'package:innovation_hub/app/project/project_views/prj_dashboard_view.dart';
 
-import 'package:innovation_hub/app/project/model/project_model.dart';
+import 'package:innovation_hub/app/model/project_model.dart';
 
 import 'app/project/project_views/prj_techniques_view.dart';
 import 'app/project/project_workspace.dart';

@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/home/widgets/logo.dart';
-import 'package:innovation_hub/app/project/provider/project_provider.dart';
 
 import '../../app_routing.dart';
-import '../project/model/project_model.dart';
+import '../model/project_model.dart';
+import '../provider/project_provider.dart';
 
 class ProjectWorkspace extends ConsumerStatefulWidget {
   const ProjectWorkspace({

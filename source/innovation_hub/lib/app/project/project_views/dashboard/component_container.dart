@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/provider/project_provider.dart';
+
+import '../../../provider/project_provider.dart';
 
 class ProjectComponentsContainer extends ConsumerWidget {
   const ProjectComponentsContainer({super.key});

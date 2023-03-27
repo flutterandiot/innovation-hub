@@ -23,7 +23,7 @@ class SitTechniquePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentProject = ref.watch(projectsProvider.notifier).currentProject!;
+    final currentProject = ref.watch(activeProjectProvider);
     final activeStep = ref.watch(currentStepProvider);
     final maxSteps = stepViews.length;
     return WillPopScope(

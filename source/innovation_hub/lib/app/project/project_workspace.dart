@@ -22,16 +22,11 @@ class ProjectWorkspace extends ConsumerStatefulWidget {
 
 class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
   late final List<NavigationDestination> destinations;
-  Project? selectedProject;
+  Project? activeProject;
   @override
   void initState() {
     super.initState();
     _initDestinations();
-
-    @override
-    void didChangeDependencies() {
-      super.didChangeDependencies();
-    }
   }
 
   void _initDestinations() {
@@ -62,12 +57,25 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
   }
 
   void _selectedNavi(BuildContext context, int index) {
+    final activeProject = ref.watch(activeProjectProvider);
     if (index == 0) {
-      context.goNamed(AppRoute.projectDashboard.name);
+      context.goNamed(
+        AppRoute.projectDashboard.name,
+        params: {'id': activeProject.id},
+        extra: activeProject,
+      );
     } else if (index == 1) {
-      context.goNamed(AppRoute.projectComponent.name);
+      context.goNamed(
+        AppRoute.projectComponent.name,
+        params: {'id': activeProject.id},
+        extra: activeProject,
+      );
     } else if (index == 2) {
-      context.goNamed(AppRoute.projectTechnique.name);
+      context.goNamed(
+        AppRoute.projectTechnique.name,
+        params: {'id': activeProject.id},
+        extra: activeProject,
+      );
     }
   }
 
@@ -88,19 +96,6 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
                 },
               ),
             ),
-            // Breakpoints.large: SlotLayout.from(
-            //   key: const Key('primary-navi-large'),
-            //   inAnimation: AdaptiveScaffold.fadeIn,
-            //   outAnimation: AdaptiveScaffold.leftInOut,
-            //   builder: (context) => AdaptiveScaffold.standardNavigationRail(
-            //     extended: true,
-            //     destinations: destinations.map(AdaptiveScaffold.toRailDestination).toList(),
-            //     leading: const PrimaryNaviLeading(),
-            //     onDestinationSelected: (index) {
-            //       _selectedNavi(context, index);
-            //     },
-            //   ),
-            // ),
           },
         ),
         body: SlotLayout(

@@ -138,7 +138,10 @@ class Project {
     description: 'Demo project',
     createdAt: AppUtilities.getTimeStampFromNow(),
     createdBy: User.dummyUser,
-    team: [User.dummyUser],
+    team: [
+      User.dummyUser,
+      User.dummyUser,
+    ],
     type: ProjectType.product.name,
     favorite: true,
     components: [],
@@ -151,7 +154,10 @@ class Project {
       description: 'Demo project',
       createdAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.dummyUser,
-      team: [User.dummyUser],
+      team: [
+        User.dummyUser,
+        User.dummyUser,
+      ],
       type: ProjectType.product.name,
       favorite: true,
       components: [],

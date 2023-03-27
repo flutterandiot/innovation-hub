@@ -11,23 +11,90 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/component_container.dart';
+import 'package:innovation_hub/app/project/provider/project_provider.dart';
+import 'package:innovation_hub/app/project/widgets/project_page_header.dart';
 
-import 'dashboard/proj_general_info.dart';
+import '../../../utils/app_utils.dart';
 
-class ProjectDashboardView extends StatelessWidget {
+class ProjectDashboardView extends ConsumerWidget {
   const ProjectDashboardView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isSmall = Breakpoints.small.isActive(context);
     final isMedium = Breakpoints.medium.isActive(context);
+    final activeProject = ref.watch(activeProjectProvider);
     return Scaffold(
+      appBar: AppBar(
+        leading: Row(
+          children: [
+            Text(
+              'Project dashboard',
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ],
+        ),
+        leadingWidth: 200,
+        actions: [
+          Tooltip(
+            message: 'Created at ${AppUtilities.getDateTimeFormatted(
+              AppUtilities.getTimeFromEpoch(
+                int.tryParse(activeProject.createdAt),
+              ),
+            )} by ${activeProject.createdBy.name}\nCreated at ${AppUtilities.getDateTimeFormatted(
+              AppUtilities.getTimeFromEpoch(
+                int.tryParse(activeProject.createdAt),
+              ),
+            )} by ${activeProject.createdBy.name}',
+            child: Text(
+              'Created at ${AppUtilities.getDateTimeFormatted(
+                AppUtilities.getTimeFromEpoch(
+                  int.tryParse(activeProject.createdAt),
+                ),
+              )}',
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    color: Colors.grey,
+                  ),
+            ),
+          ),
+          // NOTE - Write a post a show how to create a team list
+          if (activeProject.team.length >= 2)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 32.0 * activeProject.team.length.toDouble(),
+                  maxHeight: 100,
+                ),
+                child: Stack(
+                  children: List.generate(
+                    activeProject.team.length,
+                    (index) => Positioned(
+                      right: index * 20,
+                      child: CircleAvatar(
+                        backgroundColor: index % 2 == 0 ? Colors.amber : Colors.blue,
+                        radius: 16,
+                        //TODO - replace this icon by user avatar
+                        child: const Icon(Icons.person),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          const SizedBox(
+            width: 20,
+          ),
+        ],
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
             children: [
-              const Text('heading'),
+              const ProjectPageHeader(),
               Expanded(
                 child: GridView.count(
                   crossAxisCount: (isSmall || isMedium) ? 1 : 2,
@@ -37,18 +104,6 @@ class ProjectDashboardView extends StatelessWidget {
                     right: 32,
                   ),
                   children: [
-                    const SizedBox(
-                      // height: 100,
-                      child: ProjectGeneralInfo(),
-                    ),
-                    SizedBox(
-                      height: 200,
-                      width: 200,
-                      child: Image.asset(
-                        'assets/images/chair-indoor-green-lifestyle-wo-bg.png',
-                        fit: BoxFit.contain,
-                      ),
-                    ),
                     SizedBox(
                       height: constraints.maxHeight * 0.3,
                       // width: constraints.maxWidth * 0.85,

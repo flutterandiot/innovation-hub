@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:innovation_hub/app/model/idea_model.dart';
+import 'package:innovation_hub/app/project/widgets/project_app_bar.dart';
 
 import 'sit_attribute_dependency.dart';
 import 'sit_division.dart';
@@ -18,6 +19,16 @@ class TechniquePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(AppBar().preferredSize.height),
+        child: ProjectPageAppBar(
+          title: Text(
+            'Apply SIT Technique',
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+      ),
       body: _getBodyView(),
     );
   }

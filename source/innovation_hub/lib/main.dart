@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:innovation_hub/theme.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'app_routing.dart';
+import 'package:window_manager/window_manager.dart';
 
 class ProviderLogger extends ProviderObserver {
   @override
@@ -28,7 +32,19 @@ A provider is initialized:
   }
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
+    await windowManager.ensureInitialized();
+    WindowOptions windowOptions = const WindowOptions(
+      minimumSize: Size(600, 800),
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
+
   setPathUrlStrategy();
   runApp(
     ProviderScope(

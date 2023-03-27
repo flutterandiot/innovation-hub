@@ -30,4 +30,35 @@ class AppUtilities {
   static String getUid() {
     return UniqueKey().toString().replaceAll('#', '').replaceAll('[', '').replaceAll(']', '');
   }
+
+  ///Get the greeting message from time of day
+  ///
+  /// = Good morning
+  /// 12 AM to 11 AM
+//(12 to 11) in 24 hour format
+
+  /// = Good afternoon
+  ///12PM to 4:59PM
+  ///(24 to 16:59) in 24 hour format
+  ///
+  /// = Good evening
+  /// 5PM to 7:59PM
+  /// (17 to 19:59) in 24 hour format
+  ///
+  /// = Good night
+  /// 8PM to 11:59 PM
+  /// (20 to 22:59) in 24 hour format
+  ///
+  static Map<int, String> getGreetingMessage() {
+    final hour = DateTime.now().hour; // always return hour in 24 hour format, [0..23]
+    if (hour < 12) {
+      return {1: '☀️ Good morning'};
+    } else if (hour >= 12 && hour <= 16) {
+      return {2: '😎 Good afternoon'};
+    } else if (hour > 16 && hour < 20) {
+      return {3: '🌝 Good evening'};
+    } else {
+      return {4: '🌜 Good night'};
+    }
+  }
 }

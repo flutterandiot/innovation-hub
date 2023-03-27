@@ -21,7 +21,7 @@ part 'project_provider.g.dart';
 class Projects extends _$Projects {
   @override
   List<Project> build() {
-    return [];
+    return Project.sampleProjects;
   }
 
   Project? currentProject;
@@ -64,7 +64,7 @@ class ActiveProject extends _$ActiveProject {
         createdBy: User.dummyUser,
         team: [],
         type: ProjectType.product.name,
-        components: [],
+        components: [], favorite: false,
       );
 
   void setProject(Project project) {

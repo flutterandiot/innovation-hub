@@ -165,22 +165,22 @@ class _HomePageState extends ConsumerState<HomePage> {
             // ),
           },
         ),
-        secondaryBody: (showSecondaryBody)
-            ? SlotLayout(
-                config: {
-                  Breakpoints.smallAndUp: SlotLayout.from(
-                    key: const Key('second-body-small-n-up'),
-                    builder: (context) {
-                      return const Placeholder(
-                        child: Center(
-                          child: Text('Second body'),
-                        ),
-                      );
-                    },
-                  ),
-                },
-              )
-            : null,
+        // secondaryBody: (showSecondaryBody)
+        //     ? SlotLayout(
+        //         config: {
+        //           Breakpoints.smallAndUp: SlotLayout.from(
+        //             key: const Key('second-body-small-n-up'),
+        //             builder: (context) {
+        //               return const Placeholder(
+        //                 child: Center(
+        //                   child: Text('Second body'),
+        //                 ),
+        //               );
+        //             },
+        //           ),
+        //         },
+        //       )
+        //     : null,
         bottomNavigation: SlotLayout(
           config: {
             Breakpoints.small: SlotLayout.from(

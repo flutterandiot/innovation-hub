@@ -13,9 +13,10 @@ void main() {
       type: ProjectType.product.name,
       components: [],
       createdAt: (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString(),
-      createdBy: User.dummyUser,
+      updatedAt: '',
+      createdBy: User.demoUser1,
       team: [
-        User.dummyUser,
+        User.demoUser1,
       ],
       favorite: false,
     );

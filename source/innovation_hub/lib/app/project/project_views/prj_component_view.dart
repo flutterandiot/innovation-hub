@@ -16,6 +16,7 @@ import 'package:innovation_hub/app/project/provider/project_provider.dart';
 import 'package:innovation_hub/app/project/widgets/component_dialog.dart';
 
 import '../widgets/component_card.dart';
+import '../widgets/project_app_bar.dart';
 
 class ProjectComponentView extends ConsumerWidget {
   const ProjectComponentView({super.key});
@@ -26,76 +27,88 @@ class ProjectComponentView extends ConsumerWidget {
     final activeProject = ref.watch(activeProjectProvider);
     final components = activeProject.components;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12.0, left: 12, right: 12),
-            child: Column(
-              children: [
-                //Header
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Components', style: textTheme.headlineMedium),
-                    IconButton(
-                      onPressed: () async {
-                        await _showAddNewComponent(context);
-                      },
-                      icon: const Icon(
-                        Icons.add_box,
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(AppBar().preferredSize.height),
+        child: ProjectPageAppBar(
+          title: Text(
+            'Project components',
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12.0, left: 12, right: 12),
+              child: Column(
+                children: [
+                  //Header
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('Components', style: textTheme.headlineMedium),
+                      IconButton(
+                        onPressed: () async {
+                          await _showAddNewComponent(context);
+                        },
+                        icon: const Icon(
+                          Icons.add_box,
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Search component',
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.search),
-                            onPressed: () {
-                              //TODO - add code for searching components
-                            },
+                      const Spacer(),
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Search component',
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {
+                                //TODO - add code for searching components
+                              },
+                            ),
                           ),
                         ),
                       ),
+                    ],
+                  ), // Header
+                  //Show components
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
+                    child: Divider(
+                      thickness: 2,
                     ),
-                  ],
-                ), // Header
-                //Show components
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.0),
-                  child: Divider(
-                    thickness: 2,
                   ),
-                ),
-                SizedBox(
-                  width: double.infinity, //add this to make the wrap width as much as position
-                  child: Wrap(
-                    alignment: WrapAlignment.start,
-                    runAlignment: WrapAlignment.start,
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: components
-                        .map(
-                          (comp) => SizedBox(
-                            width: 300,
-                            child: AspectRatio(
-                              aspectRatio: 9 / 16,
-                              child: ComponentCard(
-                                component: comp,
+                  SizedBox(
+                    width: double.infinity, //add this to make the wrap width as much as position
+                    child: Wrap(
+                      alignment: WrapAlignment.start,
+                      runAlignment: WrapAlignment.start,
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: components
+                          .map(
+                            (comp) => SizedBox(
+                              width: 300,
+                              child: AspectRatio(
+                                aspectRatio: 9 / 16,
+                                child: ComponentCard(
+                                  component: comp,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

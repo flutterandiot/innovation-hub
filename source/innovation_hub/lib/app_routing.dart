@@ -8,6 +8,7 @@ import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/sit_technique_page.dart';
 
 import 'app/project/new_project_page.dart';
+import 'app/project/project_views/prj_techniques_view.dart';
 import 'app/project/project_workspace.dart';
 
 // GoRouter configuration
@@ -151,9 +152,7 @@ final router = GoRouter(
           pageBuilder: (context, state) {
             final project = state.extra as Project;
             return CustomTransitionPage(
-              child: SitTechniquePage(
-                project: project,
-              ),
+              child: const ProjectTechniquesView(),
               transitionsBuilder: (context, animation, secondAnimation, child) {
                 const begin = Offset(1.0, 0.0);
                 const end = Offset.zero;

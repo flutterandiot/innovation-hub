@@ -28,7 +28,7 @@ class Project {
   bool favorite;
   User createdBy;
   List<User> team;
-
+  String updatedAt;
   String type;
   List<Component> components;
   Project({
@@ -36,6 +36,7 @@ class Project {
     required this.name,
     required this.description,
     required this.createdAt,
+    required this.updatedAt,
     required this.favorite,
     required this.createdBy,
     required this.team,
@@ -51,6 +52,7 @@ class Project {
     bool? favorite,
     User? createdBy,
     List<User>? team,
+    String? updatedAt,
     String? type,
     List<Component>? components,
   }) {
@@ -62,6 +64,7 @@ class Project {
       favorite: favorite ?? this.favorite,
       createdBy: createdBy ?? this.createdBy,
       team: team ?? this.team,
+      updatedAt: updatedAt ?? this.updatedAt,
       type: type ?? this.type,
       components: components ?? this.components,
     );
@@ -76,6 +79,7 @@ class Project {
       'favorite': favorite,
       'createdBy': createdBy.toMap(),
       'team': team.map((x) => x.toMap()).toList(),
+      'updatedAt': updatedAt,
       'type': type,
       'components': components.map((x) => x.toMap()).toList(),
     };
@@ -94,6 +98,7 @@ class Project {
           (x) => User.fromMap(x as Map<String, dynamic>),
         ),
       ),
+      updatedAt: map['updatedAt'] as String,
       type: map['type'] as String,
       components: List<Component>.from(
         (map['components'] as List<int>).map<Component>(
@@ -109,7 +114,7 @@ class Project {
 
   @override
   String toString() {
-    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, favorite: $favorite, createdBy: $createdBy, team: $team, type: $type, components: $components)';
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, favorite: $favorite, createdBy: $createdBy, team: $team, updatedAt: $updatedAt, type: $type, components: $components)';
   }
 
   @override
@@ -123,63 +128,52 @@ class Project {
         other.favorite == favorite &&
         other.createdBy == createdBy &&
         listEquals(other.team, team) &&
+        other.updatedAt == updatedAt &&
         other.type == type &&
         listEquals(other.components, components);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ description.hashCode ^ createdAt.hashCode ^ favorite.hashCode ^ createdBy.hashCode ^ team.hashCode ^ type.hashCode ^ components.hashCode;
+    return id.hashCode ^ name.hashCode ^ description.hashCode ^ createdAt.hashCode ^ favorite.hashCode ^ createdBy.hashCode ^ team.hashCode ^ updatedAt.hashCode ^ type.hashCode ^ components.hashCode;
   }
-
-  static Project dummyProject = Project(
-    id: '123',
-    name: 'Demo',
-    description: 'Demo project',
-    createdAt: AppUtilities.getTimeStampFromNow(),
-    createdBy: User.dummyUser,
-    team: [
-      User.dummyUser,
-      User.dummyUser,
-    ],
-    type: ProjectType.product.name,
-    favorite: true,
-    components: [],
-  );
 
   static List<Project> sampleProjects = [
     Project(
-      id: '123',
+      id: AppUtilities.getUid(),
       name: 'Sample Project 1',
       description: 'Demo project',
       createdAt: AppUtilities.getTimeStampFromNow(),
-      createdBy: User.dummyUser,
+      updatedAt: AppUtilities.getTimeStampFromNow(),
+      createdBy: User.demoUser1,
       team: [
-        User.dummyUser,
-        User.dummyUser,
+        User.demoUser1,
+        User.demoUser2,
       ],
       type: ProjectType.product.name,
       favorite: true,
       components: [],
     ),
     Project(
-      id: '1234',
+      id: AppUtilities.getUid(),
       name: 'Sample Project 2',
       description: 'Demo project',
       createdAt: AppUtilities.getTimeStampFromNow(),
-      createdBy: User.dummyUser,
-      team: [User.dummyUser],
+      updatedAt: AppUtilities.getTimeStampFromNow(),
+      createdBy: User.demoUser1,
+      team: [User.demoUser1],
       type: ProjectType.product.name,
       favorite: false,
       components: [],
     ),
     Project(
-      id: '1235',
+      id: AppUtilities.getUid(),
       name: 'Sample Project 3',
       description: 'Demo project',
       createdAt: AppUtilities.getTimeStampFromNow(),
-      createdBy: User.dummyUser,
-      team: [User.dummyUser],
+      updatedAt: AppUtilities.getTimeStampFromNow(),
+      createdBy: User.demoUser1,
+      team: [User.demoUser1],
       type: ProjectType.product.name,
       favorite: false,
       components: [],

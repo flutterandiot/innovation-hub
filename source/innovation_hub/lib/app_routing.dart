@@ -4,13 +4,11 @@ import 'package:innovation_hub/app/home/startup_page.dart';
 import 'package:innovation_hub/app/project/tab_views/prj_component_view.dart';
 import 'package:innovation_hub/app/project/tab_views/prj_dashboard_view.dart';
 import 'package:innovation_hub/app/projects/projects_home_body.dart';
-import 'package:innovation_hub/app/explore/explore_body.dart';
-import 'package:innovation_hub/app/explore/study_sit_page.dart';
+
 import 'package:innovation_hub/app/home/home_page.dart';
 import 'package:innovation_hub/app/project/new_project_page.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/sit_technique_page.dart';
-import 'package:innovation_hub/app/settings/settings_body.dart';
 
 // GoRouter configuration
 // private navigators
@@ -195,32 +193,23 @@ final router = GoRouter(
           ],
         ),
         // Explore
-        GoRoute(
-          path: '/explore',
-          name: AppRoute.explore.name,
-          // builder: (context, state) => const ExplorePageBody(),
-          pageBuilder: (context, state) => NoTransitionPage(
-            key: state.pageKey,
-            child: const ExplorePageBody(),
-          ),
-          routes: [
-            GoRoute(
-              path: 'learn-sit',
-              name: AppRoute.learnSIT.name,
-              builder: (context, state) => const StudySITPage(),
-            ),
-          ],
-        ),
+        // GoRoute(
+        //   path: '/explore',
+        //   name: AppRoute.explore.name,
+        //   // builder: (context, state) => const ExplorePageBody(),
+        //   pageBuilder: (context, state) => NoTransitionPage(
+        //     key: state.pageKey,
+        //     child: const ExplorePageBody(),
+        //   ),
+        //   routes: [
+        //     GoRoute(
+        //       path: 'learn-sit',
+        //       name: AppRoute.learnSIT.name,
+        //       builder: (context, state) => const StudySITPage(),
+        //     ),
+        //   ],
+        // ),
         // Settings
-        GoRoute(
-          path: '/settings',
-          name: AppRoute.settings.name,
-          // builder: (context, state) => const SettingsPageBody(),
-          pageBuilder: (context, state) => NoTransitionPage(
-            key: state.pageKey,
-            child: const SettingsPageBody(),
-          ),
-        ),
       ],
     ),
   ],

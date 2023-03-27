@@ -7,7 +7,7 @@ import 'package:innovation_hub/app/project/project_views/prj_dashboard_view.dart
 import 'package:innovation_hub/app/project/project_views/prj_techniques_view.dart';
 
 import '../../app_routing.dart';
-import 'model/project_model.dart';
+import '../project/model/project_model.dart';
 
 class ProjectPage extends ConsumerStatefulWidget {
   const ProjectPage({

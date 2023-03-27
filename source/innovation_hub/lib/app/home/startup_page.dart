@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 
+import '../project/widgets/new_project_dialog.dart';
 import '../project/widgets/project_container.dart';
 import 'widgets/header.dart';
 
@@ -51,7 +52,9 @@ class StartUpPage extends HookWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await _showNewProjectDialog(context);
+                    },
                     icon: const Icon(
                       Icons.add_circle,
                       color: Colors.indigo,
@@ -125,6 +128,19 @@ class StartUpPage extends HookWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showNewProjectDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: const NewProjectDialog(),
+        );
+      },
     );
   }
 }

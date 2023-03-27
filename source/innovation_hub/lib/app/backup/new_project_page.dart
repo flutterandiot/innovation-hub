@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/method_card.dart';
 import 'package:innovation_hub/app/project/model/project_model.dart';
 import 'package:innovation_hub/app/project/widgets/tool_button.dart';
 import 'package:innovation_hub/app_routing.dart';
@@ -22,6 +21,8 @@ import 'package:innovation_hub/constants.dart';
 import 'package:innovation_hub/utils/padding.dart';
 import 'package:innovation_hub/utils/space.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'method_card.dart';
 
 class NewProjectPage extends HookConsumerWidget {
   const NewProjectPage({

@@ -8,7 +8,7 @@ import 'package:innovation_hub/app/home/widgets/logo.dart';
 import 'package:innovation_hub/app/project/provider/project_provider.dart';
 
 import '../../app_routing.dart';
-import 'model/project_model.dart';
+import '../project/model/project_model.dart';
 
 class ProjectWorkspace extends ConsumerStatefulWidget {
   const ProjectWorkspace({
@@ -144,6 +144,11 @@ class PrimaryNaviLeading extends StatelessWidget {
               onChanged: (selectProj) {
                 if (selectProj != null) {
                   ref.read(activeProjectProvider.notifier).setProject(selectProj);
+                  context.goNamed(
+                    AppRoute.projectDashboard.name,
+                    params: {'id': activeProject.id},
+                    extra: activeProject,
+                  );
                 }
               },
             );

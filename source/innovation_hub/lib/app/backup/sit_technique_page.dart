@@ -9,9 +9,9 @@ import 'package:innovation_hub/app/project/widgets/task_unification_view.dart';
 import 'package:innovation_hub/utils/space.dart';
 
 import '../../app_routing.dart';
-import 'model/project_model.dart';
-import 'provider/project_provider.dart';
-import 'widgets/current_situation.dart';
+import '../project/model/project_model.dart';
+import '../project/provider/project_provider.dart';
+import '../project/widgets/current_situation.dart';
 
 class SitTechniquePage extends ConsumerWidget {
   const SitTechniquePage({

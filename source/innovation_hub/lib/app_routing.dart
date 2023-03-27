@@ -5,9 +5,7 @@ import 'package:innovation_hub/app/project/project_views/prj_component_view.dart
 import 'package:innovation_hub/app/project/project_views/prj_dashboard_view.dart';
 
 import 'package:innovation_hub/app/project/model/project_model.dart';
-import 'package:innovation_hub/app/project/sit_technique_page.dart';
 
-import 'app/project/new_project_page.dart';
 import 'app/project/project_views/prj_techniques_view.dart';
 import 'app/project/project_workspace.dart';
 
@@ -59,34 +57,6 @@ final router = GoRouter(
         );
       },
       routes: [
-        GoRoute(
-          path: '/add-project',
-          name: AppRoute.addProject.name,
-          // builder: (context, state) => const NewProjectPage(),
-          pageBuilder: (context, state) {
-            return CustomTransitionPage(
-              child: NewProjectPage(
-                project: state.extra as Project,
-              ),
-              transitionsBuilder: (context, animation, secondAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.ease;
-                final tween = Tween(begin: begin, end: end).chain(
-                  CurveTween(curve: curve),
-                );
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  // child: child,
-                  child: FadeTransition(
-                    opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                    child: child,
-                  ),
-                );
-              },
-            );
-          },
-        ),
         //NOTE: Go to project page
         GoRoute(
           path: '/:id/dashboard',

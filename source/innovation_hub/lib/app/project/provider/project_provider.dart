@@ -64,7 +64,8 @@ class ActiveProject extends _$ActiveProject {
         createdBy: User.dummyUser,
         team: [],
         type: ProjectType.product.name,
-        components: [], favorite: false,
+        components: [],
+        favorite: false,
       );
 
   void setProject(Project project) {
@@ -180,17 +181,17 @@ class ActiveProject extends _$ActiveProject {
   }
 }
 
-@Riverpod(keepAlive: true)
+// @Riverpod(keepAlive: true)
 
-/// A provider to manage show/hide secondbody  view
-class ShowSecondaryBody extends _$ShowSecondaryBody {
-  @override
-  bool build() {
-    return false;
-  }
+// /// A provider to manage show/hide secondbody  view
+// class ShowSecondaryBody extends _$ShowSecondaryBody {
+//   @override
+//   bool build() {
+//     return false;
+//   }
 
-  /// Set new value by [isShow]
-  void enableShowSecondaryBody(bool isShow) {
-    state = isShow;
-  }
-}
+//   /// Set new value by [isShow]
+//   void enableShowSecondaryBody(bool isShow) {
+//     state = isShow;
+//   }
+// }

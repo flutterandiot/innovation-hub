@@ -22,43 +22,52 @@ class ProjectDashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     final isSmall = Breakpoints.small.isActive(context);
     final isMedium = Breakpoints.medium.isActive(context);
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return GridView.count(
-          crossAxisCount: (isSmall || isMedium) ? 1 : 2,
-          padding: const EdgeInsets.only(
-            top: 48,
-            left: 32,
-            right: 32,
-          ),
-          children: [
-            const SizedBox(
-              // height: 100,
-              child: ProjectGeneralInfo(),
-            ),
-            SizedBox(
-              height: 200,
-              width: 200,
-              child: Image.asset(
-                'assets/images/chair-indoor-green-lifestyle-wo-bg.png',
-                fit: BoxFit.contain,
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            children: [
+              const Text('heading'),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: (isSmall || isMedium) ? 1 : 2,
+                  padding: const EdgeInsets.only(
+                    top: 48,
+                    left: 32,
+                    right: 32,
+                  ),
+                  children: [
+                    const SizedBox(
+                      // height: 100,
+                      child: ProjectGeneralInfo(),
+                    ),
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: Image.asset(
+                        'assets/images/chair-indoor-green-lifestyle-wo-bg.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.3,
+                      // width: constraints.maxWidth * 0.85,
+                      child: const ProjectComponentsContainer(),
+                    ),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.3,
+                      // width: constraints.maxWidth * 0.85,
+                      child: const Placeholder(
+                        child: Text('component attributes'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: constraints.maxHeight * 0.3,
-              // width: constraints.maxWidth * 0.85,
-              child: const ProjectComponentsContainer(),
-            ),
-            SizedBox(
-              height: constraints.maxHeight * 0.3,
-              // width: constraints.maxWidth * 0.85,
-              child: const Placeholder(
-                child: Text('component attributes'),
-              ),
-            ),
-          ],
-        );
-      },
+            ],
+          );
+        },
+      ),
     );
   }
 }

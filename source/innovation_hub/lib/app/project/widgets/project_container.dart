@@ -93,7 +93,6 @@ class ProjectCard extends ConsumerWidget {
 
   void _onSelectProject(BuildContext context, WidgetRef ref) {
     ref.read(activeProjectProvider.notifier).setProject(project);
-    ref.read(showSecondaryBodyProvider.notifier).enableShowSecondaryBody(true);
 
     context.goNamed(
       AppRoute.projectDashboard.name,

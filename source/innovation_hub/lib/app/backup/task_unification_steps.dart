@@ -2,7 +2,7 @@
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../provider/step_provider.dart';
+import '../provider/step_provider.dart';
 
 class TaskUnificationSteps extends ConsumerWidget {
   const TaskUnificationSteps({

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/widgets.dart';
 import 'package:innovation_hub/app/model/project_models.dart';
 import 'package:innovation_hub/app/shared/user.dart';

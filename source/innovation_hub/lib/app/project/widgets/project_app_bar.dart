@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utils/app_utils.dart';
-import '../provider/project_provider.dart';
+import '../../provider/project_provider.dart';
 
 class ProjectPageAppBar extends ConsumerWidget {
   const ProjectPageAppBar({

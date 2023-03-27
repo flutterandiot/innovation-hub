@@ -18,10 +18,8 @@ class ProjectTechniquesView extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        child: const Center(
-          child: Text('Techniques'),
-        ),
+      body: const Center(
+        child: Text('Techniques'),
       ),
     );
   }

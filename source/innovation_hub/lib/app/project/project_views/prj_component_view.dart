@@ -12,7 +12,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/widgets/component_dialog.dart';
+import 'package:innovation_hub/app/project/widgets/dialogs/component_dialog.dart';
 
 import '../../provider/project_provider.dart';
 import '../widgets/component_card.dart';

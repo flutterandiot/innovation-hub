@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 
-import '../../../utils/app_utils.dart';
-import '../../model/project_model.dart';
-import '../../provider/project_provider.dart';
+import '../../../../utils/app_utils.dart';
+import '../../../model/project_model.dart';
+import '../../../provider/project_provider.dart';
 
 class NewProjectDialog extends HookConsumerWidget {
   const NewProjectDialog({super.key});

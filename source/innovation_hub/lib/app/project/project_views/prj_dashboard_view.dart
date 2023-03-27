@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/component_container.dart';
+import 'package:innovation_hub/app/project/project_views/dashboard/ideas_container.dart';
 import 'package:innovation_hub/app/project/widgets/project_page_header.dart';
 
 import '../widgets/project_app_bar.dart';
@@ -41,29 +42,12 @@ class ProjectDashboardView extends ConsumerWidget {
           return Column(
             children: [
               const ProjectPageHeader(),
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: (isSmall || isMedium) ? 1 : 2,
-                  padding: const EdgeInsets.only(
-                    top: 48,
-                    left: 32,
-                    right: 32,
-                  ),
-                  children: [
-                    SizedBox(
-                      height: constraints.maxHeight * 0.3,
-                      // width: constraints.maxWidth * 0.85,
-                      child: const ProjectComponentsContainer(),
-                    ),
-                    SizedBox(
-                      height: constraints.maxHeight * 0.3,
-                      // width: constraints.maxWidth * 0.85,
-                      child: const Placeholder(
-                        child: Text('component attributes'),
-                      ),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  Expanded(child: ProjectComponentsContainer()),
+                  IdeasContainer(),
+                ],
               ),
             ],
           );

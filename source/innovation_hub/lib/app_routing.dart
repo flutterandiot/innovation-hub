@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/home/startup_page.dart';
+import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/project/project_views/prj_component_view.dart';
 import 'package:innovation_hub/app/project/project_views/prj_dashboard_view.dart';
+import 'package:innovation_hub/app/project/project_views/techniques/technique_page.dart';
 
-import 'app/project/project_views/prj_techniques_view.dart';
 import 'app/project/project_workspace.dart';
 
 // GoRouter configuration
@@ -115,11 +116,15 @@ final router = GoRouter(
           // Go to a SIT technique with 2 params
           // [id]: project Id
           // [technique]: technique name
-          path: '/:id/techniques',
+          path: '/:id/techniques/:technique',
           name: AppRoute.projectTechnique.name,
           pageBuilder: (context, state) {
             return CustomTransitionPage(
-              child: const ProjectTechniquesView(),
+              child: TechniquePage(
+                technique: SITTechniques.values.byName(
+                  state.params['technique']!,
+                ),
+              ),
               transitionsBuilder: (context, animation, secondAnimation, child) {
                 const begin = Offset(1.0, 0.0);
                 const end = Offset.zero;

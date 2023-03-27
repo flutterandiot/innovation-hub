@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../model/attribute_model.dart';
 import '../../model/component_model.dart';
-import 'attribute_dialog.dart';
+import 'dialogs/attribute_dialog.dart';
 import 'proj_constants.dart';
 
 class AttributeCard extends HookConsumerWidget {

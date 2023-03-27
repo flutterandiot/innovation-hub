@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:innovation_hub/app/model/component_model.dart';
+import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 
 import '../shared/user.dart';
@@ -31,6 +32,7 @@ class Project {
   String updatedAt;
   String type;
   List<Component> components;
+  List<Idea>? ideas;
   Project({
     required this.id,
     required this.name,
@@ -42,6 +44,7 @@ class Project {
     required this.team,
     required this.type,
     required this.components,
+    this.ideas,
   });
 
   Project copyWith({
@@ -55,6 +58,7 @@ class Project {
     String? updatedAt,
     String? type,
     List<Component>? components,
+    List<Idea>? ideas,
   }) {
     return Project(
       id: id ?? this.id,
@@ -67,6 +71,7 @@ class Project {
       updatedAt: updatedAt ?? this.updatedAt,
       type: type ?? this.type,
       components: components ?? this.components,
+      ideas: ideas ?? this.ideas,
     );
   }
 
@@ -82,6 +87,7 @@ class Project {
       'updatedAt': updatedAt,
       'type': type,
       'components': components.map((x) => x.toMap()).toList(),
+      'ideas': ideas?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -105,6 +111,13 @@ class Project {
           (x) => Component.fromMap(x as Map<String, dynamic>),
         ),
       ),
+      ideas: map['ideas'] != null
+          ? List<Idea>.from(
+              (map['ideas'] as List<int>).map<Idea?>(
+                (x) => Idea.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
     );
   }
 
@@ -114,7 +127,7 @@ class Project {
 
   @override
   String toString() {
-    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, favorite: $favorite, createdBy: $createdBy, team: $team, updatedAt: $updatedAt, type: $type, components: $components)';
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, favorite: $favorite, createdBy: $createdBy, team: $team, updatedAt: $updatedAt, type: $type, components: $components, ideas: $ideas)';
   }
 
   @override
@@ -130,12 +143,23 @@ class Project {
         listEquals(other.team, team) &&
         other.updatedAt == updatedAt &&
         other.type == type &&
-        listEquals(other.components, components);
+        listEquals(other.components, components) &&
+        listEquals(other.ideas, ideas);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ description.hashCode ^ createdAt.hashCode ^ favorite.hashCode ^ createdBy.hashCode ^ team.hashCode ^ updatedAt.hashCode ^ type.hashCode ^ components.hashCode;
+    return id.hashCode ^
+        name.hashCode ^
+        description.hashCode ^
+        createdAt.hashCode ^
+        favorite.hashCode ^
+        createdBy.hashCode ^
+        team.hashCode ^
+        updatedAt.hashCode ^
+        type.hashCode ^
+        components.hashCode ^
+        ideas.hashCode;
   }
 
   static List<Project> sampleProjects = [
@@ -153,6 +177,7 @@ class Project {
       type: ProjectType.product.name,
       favorite: true,
       components: [],
+      ideas: [],
     ),
     Project(
       id: AppUtilities.getUid(),
@@ -165,6 +190,7 @@ class Project {
       type: ProjectType.product.name,
       favorite: false,
       components: [],
+      ideas: [],
     ),
     Project(
       id: AppUtilities.getUid(),
@@ -177,6 +203,7 @@ class Project {
       type: ProjectType.product.name,
       favorite: false,
       components: [],
+      ideas: [],
     ),
   ];
 }

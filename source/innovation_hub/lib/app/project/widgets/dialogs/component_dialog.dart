@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/model/project_models.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 
-import '../../provider/project_provider.dart';
+import '../../../provider/project_provider.dart';
 
 class ComponentDialog extends HookConsumerWidget {
   const ComponentDialog({

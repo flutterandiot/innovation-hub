@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 
-import '../project/widgets/new_project_dialog.dart';
+import '../project/widgets/dialogs/new_project_dialog.dart';
 import '../project/widgets/project_container.dart';
 import 'widgets/header.dart';
 

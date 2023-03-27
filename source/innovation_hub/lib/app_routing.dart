@@ -38,15 +38,15 @@ enum AppRoute {
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/home',
+  initialLocation: '/',
   //NOTE - Show debug info of routing
   debugLogDiagnostics: true,
   routes: [
-    // GoRoute(
-    //   path: '/',
-    //   name: 'home',
-    //   builder: (context, state) => const HomePage(),
-    // ),
+    GoRoute(
+      path: '/',
+      name: 'home',
+      builder: (context, state) => const StartUpPage(),
+    ),
     // GoRoute(
     //   path: 'new-project',
     //   name: 'new-project',
@@ -56,8 +56,8 @@ final router = GoRouter(
       navigatorKey: _shellNavigatorKey,
       pageBuilder: (context, state, child) {
         return NoTransitionPage(
-          child: const StartUpPage(),
-          // child: HomePage(body: child),
+          // child: const StartUpPage(),
+          child: HomePage(body: child),
           key: state.pageKey,
         );
       },

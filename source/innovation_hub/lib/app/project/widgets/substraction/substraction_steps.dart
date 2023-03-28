@@ -3,7 +3,7 @@ import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../provider/step_provider.dart';
+import '../../../provider/step_provider.dart';
 
 class SubstractionStep extends ConsumerWidget {
   const SubstractionStep({
@@ -30,14 +30,17 @@ class SubstractionStep extends ConsumerWidget {
             finishedStepTextColor: Colors.black,
             finishedStepBackgroundColor: Colors.deepOrange,
             activeStepIconColor: Colors.green,
-            steps: steps,
+            steps: substractionSteps,
             onStepReached: (index) {
               ref.read(currentStepProvider.notifier).update(index);
             },
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: constraints.maxWidth * 0.1, vertical: 8),
+              padding: EdgeInsets.symmetric(
+                horizontal: constraints.maxWidth * 0.1,
+                vertical: 8,
+              ),
               child: const _StepView(
                 body: _GeneralView(),
               ),
@@ -104,7 +107,7 @@ class _GeneralView extends HookConsumerWidget {
   }
 }
 
-const List<EasyStep> steps = [
+const List<EasyStep> substractionSteps = [
   EasyStep(
     icon: Icon(Icons.info),
     title: 'General',

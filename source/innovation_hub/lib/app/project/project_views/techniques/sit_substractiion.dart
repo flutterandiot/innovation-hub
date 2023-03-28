@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/widgets/dialogs/substract_idea_dialog.dart';
+import 'package:innovation_hub/app/project/widgets/substraction/substract_idea_dialog.dart';
 
 import 'package:innovation_hub/app/provider/project_provider.dart';
 

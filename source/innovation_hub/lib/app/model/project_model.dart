@@ -176,7 +176,13 @@ class Project {
       ],
       type: ProjectType.product.name,
       favorite: true,
-      components: [],
+      components: [
+        Component.demoComp1,
+        Component.demoComp2,
+        Component.demoComp3,
+        Component.demoComp4,
+        Component.demoComp5,
+      ],
       ideas: [],
     ),
     Project(

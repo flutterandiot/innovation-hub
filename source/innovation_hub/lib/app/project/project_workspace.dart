@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/home/widgets/logo.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
+import 'package:innovation_hub/constants.dart';
 
 import '../../app_routing.dart';
 import '../model/project_model.dart';
@@ -23,7 +24,6 @@ class ProjectWorkspace extends ConsumerStatefulWidget {
 
 class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
   late final List<NavigationDestination> destinations;
-  Project? activeProject;
   @override
   void initState() {
     super.initState();
@@ -57,19 +57,18 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
     ];
   }
 
-  void _selectedNavi(BuildContext context, int index) {
-    final activeProject = ref.watch(activeProjectProvider);
+  void _selectedNavi(BuildContext context, int index, Project project) {
     if (index == 0) {
       context.goNamed(
         AppRoute.projectDashboard.name,
-        params: {'id': activeProject.id},
-        extra: activeProject,
+        params: {'id': project.id},
+        extra: project,
       );
     } else {
       context.goNamed(
         AppRoute.projectComponent.name,
-        params: {'id': activeProject.id},
-        extra: activeProject,
+        params: {'id': project.id},
+        extra: project,
       );
       // } else if (index == 2) {
       //   context.goNamed(
@@ -82,6 +81,7 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
 
   @override
   Widget build(BuildContext context) {
+    final activeProject = ref.watch(activeProjectProvider);
     return Scaffold(
       body: AdaptiveLayout(
         primaryNavigation: SlotLayout(
@@ -93,9 +93,9 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
                 destinations: destinations.map(AdaptiveScaffold.toRailDestination).toList(),
                 leading: const _PrimaryNaviLeading(),
                 onDestinationSelected: (index) {
-                  _selectedNavi(context, index);
+                  _selectedNavi(context, index, activeProject);
                 },
-                trailing: const _PrimaryTrailing(),
+                trailing: activeProject.components.isNotEmpty ? const _PrimaryTrailing() : null,
               ),
             ),
           },
@@ -186,6 +186,7 @@ class _PrimaryTrailing extends ConsumerWidget {
               );
             },
             centerTitle: true,
+            image: taskUnificationIcon,
           ),
           _ProjectItemListTile(
             title: 'Substraction',
@@ -197,6 +198,7 @@ class _PrimaryTrailing extends ConsumerWidget {
               );
             },
             centerTitle: true,
+            image: substractionIcon,
           ),
           _ProjectItemListTile(
             title: 'Multiplication',
@@ -208,6 +210,7 @@ class _PrimaryTrailing extends ConsumerWidget {
               );
             },
             centerTitle: true,
+            image: multiplicationIcon,
           ),
           _ProjectItemListTile(
             title: 'Division',
@@ -219,6 +222,7 @@ class _PrimaryTrailing extends ConsumerWidget {
               );
             },
             centerTitle: true,
+            image: divisionIcon,
           ),
           _ProjectItemListTile(
             title: 'Attribute Dependency',
@@ -230,6 +234,7 @@ class _PrimaryTrailing extends ConsumerWidget {
               );
             },
             centerTitle: true,
+            image: attributeDependencyIcon,
           ),
         ],
       ),
@@ -254,11 +259,13 @@ class _ProjectItemListTile extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.centerTitle,
+    required this.image,
   }) : super(key: key);
 
   final String title;
   final VoidCallback? onTap;
   final bool? centerTitle;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -267,8 +274,11 @@ class _ProjectItemListTile extends StatelessWidget {
       visualDensity: VisualDensity.compact,
       leading: centerTitle == null
           ? null
-          : const SizedBox(
-              child: Text('-'),
+          : Image.asset(
+              image,
+              fit: BoxFit.contain,
+              width: 24,
+              height: 24,
             ),
       minLeadingWidth: 2,
       title: Text(

@@ -44,4 +44,5 @@ flutter:
   assets:
     - assets/brand/
     - assets/images/
+    - assets/images/sit-icons/
     - assets/animations/

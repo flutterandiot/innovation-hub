@@ -12,7 +12,6 @@ import 'package:window_manager/window_manager.dart';
 class ProviderLogger extends ProviderObserver {
   @override
   void didAddProvider(ProviderBase<Object?> provider, Object? value, ProviderContainer container) {
-    // TODO: implement didAddProvider
     super.didAddProvider(provider, value, container);
     debugPrint('''
 A provider is initialized:

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/widgets/attribute_dialog.dart';
+import 'package:innovation_hub/app/project/widgets/dialogs/attribute_dialog.dart';
 
-import '../model/component_model.dart';
-import '../provider/project_provider.dart';
+import '../../model/component_model.dart';
+import '../../provider/project_provider.dart';
 import 'attribute_card.dart';
-import 'component_dialog.dart';
+import 'dialogs/component_dialog.dart';
 import 'delete_comp_confirm_dialog.dart';
 import 'proj_constants.dart';
 

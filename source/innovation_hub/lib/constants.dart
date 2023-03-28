@@ -13,3 +13,20 @@ const trizTooltip = """
 const sitMethodIndex = 0;
 
 const trizMethodIndex = 1;
+
+//Image of SIT technique
+
+///task unitification
+const taskUnificationIcon = 'assets/images/sit-icons/task-unification.png';
+
+///substraction
+const substractionIcon = 'assets/images/sit-icons/substraction.png';
+
+///multiplication
+const multiplicationIcon = 'assets/images/sit-icons/multiplication.png';
+
+///division
+const divisionIcon = 'assets/images/sit-icons/division.png';
+
+///attribute dependency
+const attributeDependencyIcon = 'assets/images/sit-icons/attribute-dependency.png';

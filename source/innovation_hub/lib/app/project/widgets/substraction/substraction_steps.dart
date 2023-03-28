@@ -462,7 +462,7 @@ const List<EasyStep> substractionSteps = [
   ),
   EasyStep(
     icon: Icon(Icons.bug_report),
-    title: 'Issue',
+    title: 'Delivery values',
   ),
   EasyStep(
     icon: Icon(Icons.star_rate),

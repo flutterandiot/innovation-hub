@@ -46,7 +46,7 @@ class DialogHeader extends ConsumerWidget {
               style: DefaultTextStyle.of(context).style.copyWith(
                     fontSize: 20,
                   ),
-              text: 'Image the ', // default text style
+              text: 'Imagine the ', // default text style
               children: [
                 TextSpan(
                   text: project.name,

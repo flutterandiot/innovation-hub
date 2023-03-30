@@ -173,7 +173,7 @@ class _ComponentListHeader extends StatelessWidget {
               label: const Text('Generate ideas'),
               onPressed: () {
                 for (final component in components) {
-                  final idea = ref.read(ideaControlProvider.notifier).generateNewIdea(
+                  final idea = ref.read(activeIdeaProvider.notifier).create(
                         activeProject,
                         component,
                         SITTechniques.substraction,

@@ -24,7 +24,7 @@ part 'idea_controller.g.dart';
 @Riverpod(
   keepAlive: true,
 )
-class IdeaControl extends _$IdeaControl {
+class IdeaManage extends _$IdeaManage {
   @override
   Idea? build() => null;
 
@@ -33,7 +33,7 @@ class IdeaControl extends _$IdeaControl {
   //   state = idea;
   // }
 
-  Idea? generateNewIdea(Project ofProject, Component withComponent, SITTechniques using) {
+  Idea? create(Project ofProject, Component withComponent, SITTechniques using) {
     switch (using) {
       case SITTechniques.taskUnification:
         // TODO: Handle this case.
@@ -79,7 +79,7 @@ class IdeaControl extends _$IdeaControl {
   }
 
   ///Update the idea
-  void updateIdea(Idea idea) {
+  void update(Idea idea) {
     state = state?.copyWith(
       id: idea.id,
       name: idea.name,
@@ -93,7 +93,17 @@ class IdeaControl extends _$IdeaControl {
     );
   }
 
+  /// Read idea with [fromId]
+  /// return: read idea
+  /// if not found, return null
+  Idea? read(String fromId) {
+    return null;
+  }
+
   /// If idea is liked, it will save to project ideas
+  /// return:
+  ///  - true : idea is added
+  ///  - false: idea is not added, due to already added
   bool likeIdea() {
     // ref.read(activeProjectProvider).ideas?.add(idea);
     final project = ref.watch(activeProjectProvider);
@@ -128,7 +138,7 @@ class IdeaControl extends _$IdeaControl {
 class Ideas extends _$Ideas {
   @override
   List<Idea> build() {
-    return [];
+    return ref.watch(activeProjectProvider).ideas;
   }
 
   void addIdea(Idea idea) {
@@ -140,8 +150,8 @@ class Ideas extends _$Ideas {
       ...state,
       idea,
     ];
-    // No need to call "notifyListeners" or anything similar. Calling "state ="
-    // will automatically rebuild the UI when necessary.
+    //Update to project
+    ref.read(activeProjectProvider).ideas = state;
   }
 
   void update(Idea withIdea) {
@@ -150,9 +160,11 @@ class Ideas extends _$Ideas {
       for (final idea in state)
         if (idea.id == withIdea.id) Idea.fromMap(ideaMap) else idea
     ];
+    ref.read(activeProjectProvider).ideas = state;
   }
 
   void removeIdea(String ideaId) {
     state = state.where((idea) => idea.id != ideaId).toList();
+    ref.read(activeProjectProvider).ideas = state;
   }
 }

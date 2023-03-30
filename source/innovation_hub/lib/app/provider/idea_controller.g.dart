@@ -6,21 +6,21 @@ part of 'idea_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ideaControlHash() => r'51dfd57b39c624b0e8ffe4efee7170aca9a5f78e';
+String _$ideaManageHash() => r'8f5d5c547e632ee692f79d53cdcf5b61d6bf4166';
 
-/// See also [IdeaControl].
-@ProviderFor(IdeaControl)
-final ideaControlProvider = NotifierProvider<IdeaControl, Idea?>.internal(
-  IdeaControl.new,
-  name: r'ideaControlProvider',
+/// See also [IdeaManage].
+@ProviderFor(IdeaManage)
+final ideaManageProvider = NotifierProvider<IdeaManage, Idea?>.internal(
+  IdeaManage.new,
+  name: r'ideaManageProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$ideaControlHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$ideaManageHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$IdeaControl = Notifier<Idea?>;
-String _$ideasHash() => r'f0263c19997557a44152c0264da7447849d684ca';
+typedef _$IdeaManage = Notifier<Idea?>;
+String _$ideasHash() => r'dcf4267bb09e7338c25c31e0f04671dca8687491';
 
 /// See also [Ideas].
 @ProviderFor(Ideas)

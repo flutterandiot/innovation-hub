@@ -15,21 +15,23 @@ class SITSubstraction extends ConsumerWidget {
     final activeProject = ref.watch(activeProjectProvider);
     final components = activeProject.components;
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-        child: Column(
-          children: [
-            Text(
-              'Select a component to use Substraction technique to generate idea',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const Divider(),
-            Expanded(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            'Select a component to use Substraction technique to generate idea',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const Divider(),
+          LayoutBuilder(builder: (context, constraints) {
+            return Container(
+              padding: const EdgeInsets.only(left: 8, right: 8, bottom: 16, top: 20),
+              height: 500,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
+                    // width: 300,
                     width: constraints.maxWidth * 0.48,
                     child: _ComponentListContainer(
                       internal: true,
@@ -45,19 +47,19 @@ class SITSubstraction extends ConsumerWidget {
                   ),
                 ],
               ),
-            ),
-            Card(
+            );
+          }),
+          const SizedBox(
+            height: 400,
+            width: double.infinity,
+            child: Card(
               elevation: 2,
-              child: SizedBox(
-                height: constraints.maxHeight * 0.25,
-                width: double.infinity,
-                child: const Text('Idea view'),
-              ),
+              child: Text('Idea view'),
             ),
-          ],
-        ),
-      );
-    });
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -74,10 +76,12 @@ class _ComponentListContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final len = components.length;
     return Card(
-      elevation: 4,
+      elevation: 1,
+      // color: Colors,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (internal)

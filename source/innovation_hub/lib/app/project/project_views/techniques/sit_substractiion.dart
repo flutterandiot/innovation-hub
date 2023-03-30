@@ -75,7 +75,18 @@ class SITSubstraction extends ConsumerWidget {
           Container(
             margin: const EdgeInsets.only(left: 8, right: 8),
             padding: const EdgeInsets.only(left: 8, right: 8),
-            color: Colors.white70,
+            decoration: BoxDecoration(
+                // border: Border.all(
+                //   color: Colors.grey,
+                // ),
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 2,
+                    color: Colors.black,
+                  ),
+                ]),
             height: 400,
             width: double.infinity,
             child: const Text('Idea view'),
@@ -102,18 +113,19 @@ class _ComponentListContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       margin: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: BoxDecoration(
-          // border: Border.all(
-          //   color: Colors.grey,
-          // ),
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              offset: Offset(1, 1),
-              blurRadius: 4,
-              color: Colors.black,
-            ),
-          ]),
+        // border: Border.all(
+        //   color: Colors.grey,
+        // ),
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            // offset: Offset(1, 1),
+            blurRadius: 2,
+            color: Colors.black,
+          ),
+        ],
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,

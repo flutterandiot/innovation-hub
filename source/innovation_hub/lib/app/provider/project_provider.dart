@@ -26,13 +26,6 @@ class Projects extends _$Projects {
     return Project.sampleProjects;
   }
 
-  Project? currentProject;
-
-  void setCurrentProject(Project project) {
-    debugPrint('Set current project is ${project.id}-${project.name}');
-    currentProject = project;
-  }
-
   void addProject(Project project) {
     // Since our state is immutable, we are not allowed to do `state.add(project)`.
     // Instead, we should create a new list of todos which contains the previous

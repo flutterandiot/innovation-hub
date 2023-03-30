@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/widgets/substraction/substract_idea_dialog.dart';
 
@@ -14,7 +15,7 @@ class SITSubstraction extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activeProject = ref.watch(activeProjectProvider);
     final components = activeProject.components;
-
+    final isMedium = Breakpoints.medium.isActive(context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -23,39 +24,61 @@ class SITSubstraction extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const Divider(),
-          LayoutBuilder(builder: (context, constraints) {
-            return Container(
-              padding: const EdgeInsets.only(left: 8, right: 8, bottom: 16, top: 20),
-              height: 500,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    // width: 300,
-                    width: constraints.maxWidth * 0.48,
-                    child: _ComponentListContainer(
-                      internal: true,
-                      components: components.where((element) => element.isInternal == true).toList(),
-                    ),
+          //NOTE - show when in large screen
+          if (!isMedium)
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return Container(
+                  padding: const EdgeInsets.only(left: 8, right: 8, bottom: 16, top: 20),
+                  height: 500,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        // width: 300,
+                        width: constraints.maxWidth * 0.48,
+                        child: _ComponentListContainer(
+                          internal: true,
+                          components: components.where((element) => element.isInternal == true).toList(),
+                        ),
+                      ),
+                      SizedBox(
+                        width: constraints.maxWidth * 0.48,
+                        child: _ComponentListContainer(
+                          internal: false,
+                          components: components.where((element) => element.isInternal == false).toList(),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: constraints.maxWidth * 0.48,
-                    child: _ComponentListContainer(
-                      internal: false,
-                      components: components.where((element) => element.isInternal == false).toList(),
-                    ),
-                  ),
-                ],
+                );
+              },
+            ),
+          //NOTE - Show as a column in medium and small view
+          if (isMedium)
+            SizedBox(
+              height: 400,
+              child: _ComponentListContainer(
+                internal: true,
+                components: components.where((element) => element.isInternal == true).toList(),
               ),
-            );
-          }),
-          const SizedBox(
+            ),
+          if (isMedium)
+            SizedBox(
+              height: 400,
+              child: _ComponentListContainer(
+                internal: false,
+                components: components.where((element) => element.isInternal == false).toList(),
+              ),
+            ),
+          //NOTE - Idea container
+          Container(
+            margin: const EdgeInsets.only(left: 8, right: 8),
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            color: Colors.white70,
             height: 400,
             width: double.infinity,
-            child: Card(
-              elevation: 2,
-              child: Text('Idea view'),
-            ),
+            child: const Text('Idea view'),
           ),
         ],
       ),
@@ -75,39 +98,49 @@ class _ComponentListContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final len = components.length;
-    return Card(
-      elevation: 1,
-      // color: Colors,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (internal)
-              Text(
-                'Internal',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            if (!internal)
-              Text(
-                'External',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: len,
-                itemBuilder: (context, index) {
-                  final comp = components[index];
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-                    child: _ComponentListTile(comp: comp),
-                  );
-                },
-              ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+      margin: const EdgeInsets.only(top: 8, bottom: 8),
+      decoration: BoxDecoration(
+          // border: Border.all(
+          //   color: Colors.grey,
+          // ),
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(1, 1),
+              blurRadius: 4,
+              color: Colors.black,
             ),
-          ],
-        ),
+          ]),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (internal)
+            Text(
+              'Internal',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          if (!internal)
+            Text(
+              'External',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: len,
+              itemBuilder: (context, index) {
+                final comp = components[index];
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                  child: _ComponentListTile(comp: comp),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -126,63 +159,66 @@ class _ComponentListTile extends ConsumerWidget {
           activeProjectProvider.select((proj) => proj.ideas),
         ) ??
         [];
-    return ExpansionTile(
-      title: Text(comp.name),
-      subtitle: Text(comp.description),
-      trailing: SizedBox(
-        width: 100,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CircleAvatar(
-              radius: 20,
-              child: Text(
-                comp.importance.toString(),
+    return Card(
+      child: ExpansionTile(
+        backgroundColor: Colors.amber,
+        title: Text(comp.name),
+        subtitle: Text(comp.description),
+        trailing: SizedBox(
+          width: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CircleAvatar(
+                radius: 16,
+                child: Text(
+                  comp.importance.toString(),
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            IconButton(
-              onPressed: () async {
-                //TODO - Show Popup todos
+              const SizedBox(
+                width: 12,
+              ),
+              IconButton(
+                onPressed: () async {
+                  //TODO - Show Popup todos
+                },
+                icon: const Icon(Icons.more_vert),
+              ),
+            ],
+          ),
+        ),
+        // dense: true,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        children: [
+          // Show list of ideas
+          SizedBox.shrink(
+            child: ListView.builder(
+              itemCount: ideas.length,
+              itemBuilder: (context, index) {
+                final idea = ideas[index];
+                return ListTile(
+                  title: Text(idea.name),
+                );
               },
-              icon: const Icon(Icons.more_vert),
             ),
-          ],
-        ),
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                _showAddIdea(context, comp);
+              },
+              icon: const Icon(
+                Icons.tips_and_updates,
+                color: Colors.amber,
+              ),
+              label: const Text('Add new idea'),
+            ),
+          ),
+        ],
+        // tileColor: comp.isInternal ? Colors.blue : Colors.amber,
       ),
-      // dense: true,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      children: [
-        // Show list of ideas
-        SizedBox.shrink(
-          child: ListView.builder(
-            itemCount: ideas.length,
-            itemBuilder: (context, index) {
-              final idea = ideas[index];
-              return ListTile(
-                title: Text(idea.name),
-              );
-            },
-          ),
-        ),
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 10),
-          child: ElevatedButton.icon(
-            onPressed: () {
-              _showAddIdea(context, comp);
-            },
-            icon: const Icon(
-              Icons.tips_and_updates,
-              color: Colors.amber,
-            ),
-            label: const Text('Add new idea'),
-          ),
-        ),
-      ],
-      // tileColor: comp.isInternal ? Colors.blue : Colors.amber,
     );
   }
 

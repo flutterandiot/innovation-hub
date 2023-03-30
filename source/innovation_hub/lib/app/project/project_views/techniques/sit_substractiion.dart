@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/project/widgets/substraction/substract_idea_dialog.dart';
+import 'package:innovation_hub/app/model/idea_model.dart';
 
+import 'package:innovation_hub/app/project/widgets/substraction/substract_idea_dialog.dart';
+import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
 
 import '../../../model/component_model.dart';
@@ -126,16 +128,12 @@ class _ComponentListContainer extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (internal)
-            Text(
-              'Internal',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          if (!internal)
-            Text(
-              'External',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+          _ComponentListHeader(
+            isInternal: internal,
+            onGenerateIdeas: () {
+              debugPrint('On Generate new ideas');
+            },
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: len,
@@ -150,6 +148,62 @@ class _ComponentListContainer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ComponentListHeader extends StatelessWidget {
+  const _ComponentListHeader({
+    Key? key,
+    required this.isInternal,
+    required this.onGenerateIdeas,
+  }) : super(key: key);
+  final bool isInternal;
+  final VoidCallback onGenerateIdeas;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        if (isInternal)
+          Text(
+            'Internal',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        if (!isInternal)
+          Text(
+            'External',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        const Spacer(),
+        Consumer(
+          builder: (context, ref, child) {
+            final activeProject = ref.watch(activeProjectProvider);
+            List<Component> components = [];
+            if (isInternal) {
+              components = activeProject.components.where((comp) => comp.isInternal == true).toList();
+            } else {
+              components = activeProject.components.where((comp) => comp.isInternal == false).toList();
+            }
+            return ElevatedButton.icon(
+              icon: const Icon(Icons.tips_and_updates),
+              label: const Text('Generate ideas'),
+              onPressed: () {
+                for (final component in components) {
+                  final idea = ref.read(ideaControlProvider.notifier).generateNewIdea(
+                        activeProject,
+                        component,
+                        SITTechniques.substraction,
+                      );
+                  if (idea != null) {
+                    debugPrint('🌟 Idea generared: ${idea.toString()}\n');
+                  }
+                }
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }

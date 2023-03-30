@@ -75,7 +75,7 @@ class ActiveProject extends _$ActiveProject {
     state = project;
   }
 
-  void addComponent(Component component) {
+  void addComponentToProject(Component component) {
     var prj = state;
     prj.components.add(component);
     state = state.copyWith(
@@ -83,7 +83,7 @@ class ActiveProject extends _$ActiveProject {
     );
   }
 
-  void updateComponent(Component component) {
+  void updateComponentToProject(Component component) {
     var prj = state;
     bool found = false;
     int i = 0;
@@ -105,7 +105,7 @@ class ActiveProject extends _$ActiveProject {
     }
   }
 
-  void deleteComponent(Component component) {
+  void deleteComponentFromProject(Component component) {
     var prj = state;
     bool found = false;
     found = prj.components.contains(component);
@@ -180,7 +180,7 @@ class ActiveProject extends _$ActiveProject {
       i++;
     }
     //Update component
-    updateComponent(component);
+    updateComponentToProject(component);
   }
 }
 

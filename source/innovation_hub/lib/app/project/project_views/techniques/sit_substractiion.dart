@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:innovation_hub/app/model/idea_model.dart';
 
+import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/project/widgets/substraction/substract_idea_dialog.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
@@ -281,12 +281,11 @@ class _ComponentListTile extends ConsumerWidget {
   }
 }
 
-class _IdeasContainer extends ConsumerWidget {
+class _IdeasContainer extends StatelessWidget {
   const _IdeasContainer();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final ideas = ref.watch(ideasProvider);
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8),
       padding: const EdgeInsets.only(left: 8, right: 8),
@@ -307,15 +306,22 @@ class _IdeasContainer extends ConsumerWidget {
       child: Column(
         children: [
           const Text('Ideas generated'),
-          Expanded(
-            child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return _IdeaListTile(idea: ideas[index]);
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
-                itemCount: ideas.length),
+          Consumer(
+            builder: (context, ref, child) {
+              final ideas = ref.watch(ideasProvider);
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: ideas.length,
+                  itemBuilder: (context, index) {
+                    return _IdeaListTile(ideas[index]);
+                    // _IdeaListTile(idea: ideas[index]);
+                  },
+                  // separatorBuilder: (context, index) {
+                  //   return const Divider();
+                  // },
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -324,15 +330,15 @@ class _IdeasContainer extends ConsumerWidget {
 }
 
 class _IdeaListTile extends HookConsumerWidget {
-  const _IdeaListTile({
-    required this.idea,
-  });
-
+  const _IdeaListTile(
+    this.idea,
+  );
   final Idea idea;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final checked = useState(false);
+
+    debugPrint('Idea  rebuilt');
     return Card(
       child: ListTile(
         tileColor: Theme.of(context).primaryColor,
@@ -346,6 +352,7 @@ class _IdeaListTile extends HookConsumerWidget {
         trailing: TextButton.icon(
           onPressed: () {
             _likeTheIdea(context, ref, idea);
+            // idea.rating++;
           },
           label: Text(
             '${idea.rating}',

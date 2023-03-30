@@ -6,7 +6,7 @@ part of 'idea_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ideaManageHash() => r'8f5d5c547e632ee692f79d53cdcf5b61d6bf4166';
+String _$ideaManageHash() => r'9a0e9540667456249d1e0bab2a05a2b0bf9ed85a';
 
 /// See also [IdeaManage].
 @ProviderFor(IdeaManage)

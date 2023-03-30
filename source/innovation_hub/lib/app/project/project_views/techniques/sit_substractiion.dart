@@ -173,7 +173,7 @@ class _ComponentListHeader extends StatelessWidget {
               label: const Text('Generate ideas'),
               onPressed: () {
                 for (final component in components) {
-                  final idea = ref.read(activeIdeaProvider.notifier).create(
+                  final idea = ref.read(ideaManageProvider.notifier).create(
                         activeProject,
                         component,
                         SITTechniques.substraction,
@@ -333,41 +333,50 @@ class _IdeaListTile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final checked = useState(false);
-    return ListTile(
-      leading: Checkbox(
-        value: checked.value,
-        onChanged: (value) {
-          checked.value = value!;
-        },
-      ),
-      title: Text(idea.concept),
-      trailing: IconButton(
-        onPressed: () {
-          _likeTheIdea(context, ref, idea);
-        },
-        icon: const Icon(
-          Icons.thumb_up,
-          color: Colors.blue,
+    return Card(
+      child: ListTile(
+        tileColor: Theme.of(context).primaryColor,
+        leading: Checkbox(
+          value: checked.value,
+          onChanged: (value) {
+            checked.value = value!;
+          },
+        ),
+        title: Text(idea.concept),
+        trailing: TextButton.icon(
+          onPressed: () {
+            _likeTheIdea(context, ref, idea);
+          },
+          label: Text(
+            '${idea.rating}',
+            style: const TextStyle(color: Colors.red),
+          ),
+          icon: const Icon(
+            Icons.thumb_up,
+            color: Colors.blue,
+          ),
         ),
       ),
     );
   }
 
   void _likeTheIdea(BuildContext context, WidgetRef ref, Idea idea) {
-    ref.read(ideaControlProvider.notifier).state = idea;
+    // if (idea.rating < 5) {
+    //   ref.read(ideaManageProvider.select((mIdea) => mIdea!.rating++));
+    // }
 
-    final result = ref.read(ideaControlProvider.notifier).likeIdea();
-    var message = '';
-    if (result) {
-      message = "'${idea.concept}' has been added to project";
-    } else {
-      message = "'${idea.concept}' is already added to project";
-    }
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
+    ref.read(ideaManageProvider.notifier).likeIdea(idea);
+    // var message = '';
+    // if (result) {
+    //   message = "'${idea.concept}' has been added to project";
+    // } else {
+    //   message = "'${idea.concept}' is already added to project";
+    // }
+    // ScaffoldMessenger.of(context).clearSnackBars();
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text(message),
+    //   ),
+    // );
   }
 }

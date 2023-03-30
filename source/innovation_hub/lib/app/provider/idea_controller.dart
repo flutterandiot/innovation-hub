@@ -29,9 +29,9 @@ class IdeaManage extends _$IdeaManage {
   Idea? build() => null;
 
   ///Set activie idea with [idea]
-  // void setIdea(Idea? idea) {
-  //   state = idea;
-  // }
+  void setIdea(Idea? idea) {
+    state = idea;
+  }
 
   Idea? create(Project ofProject, Component withComponent, SITTechniques using) {
     switch (using) {
@@ -104,18 +104,25 @@ class IdeaManage extends _$IdeaManage {
   /// return:
   ///  - true : idea is added
   ///  - false: idea is not added, due to already added
-  bool likeIdea() {
-    // ref.read(activeProjectProvider).ideas?.add(idea);
-    final project = ref.watch(activeProjectProvider);
-
-    if (project.ideas.isEmpty || !project.ideas.contains(state)) {
-      project.ideas.add(state!);
-
-      ref.read(activeProjectProvider.notifier).updateProject(project);
-      return true; // let the caller know it is added
-    } else {
-      return false; // let the caller know it is not added
+  void likeIdea(Idea idea) {
+    if (idea.rating < 5) {
+      idea.rating++;
+      ref.read(ideasProvider.notifier).update(idea);
     }
+
+    // final projectIdeas = ref.read(activeProjectProvider).ideas;
+    // var i = 0;
+    // final len = projectIdeas.length;
+    // for (i; i < len; i++) {
+    //   if (projectIdeas[i].id == idea.id) {
+    //     projectIdeas[i] = projectIdeas[i].copyWith(
+    //       rating: idea.rating,
+    //     );
+    //   }
+    //   i++;
+    // }
+
+    //   ref.read(activeProjectProvider.notifier).updateProject(project);
   }
 
   void addIdeaToList(Idea idea) {

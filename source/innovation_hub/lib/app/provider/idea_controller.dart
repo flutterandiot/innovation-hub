@@ -52,6 +52,17 @@ class IdeaControl extends _$IdeaControl {
           createdAt: AppUtilities.getTimeStampFromNow(),
           createdBy: User.demoUser1,
         );
+
+        // check if this idea is already generated
+        final ideaList = ref.read(ideasProvider);
+        for (final id in ideaList) {
+          if (id.concept.contains(idea.concept)) {
+            debugPrint('Skip this concept');
+            return null; // Skip the idea
+          }
+        }
+        // else, update to the list
+        debugPrint('Add this concenpt');
         state = idea;
         addIdeaToList(idea);
         return idea;

@@ -171,7 +171,6 @@ class _ComponentListHeader extends StatelessWidget {
               icon: const Icon(Icons.tips_and_updates),
               label: const Text('Generate ideas'),
               onPressed: () {
-                ref.read(ideasProvider).clear();
                 for (final component in components) {
                   final idea = ref.read(ideaControlProvider.notifier).generateNewIdea(
                         activeProject,
@@ -179,7 +178,7 @@ class _ComponentListHeader extends StatelessWidget {
                         SITTechniques.substraction,
                       );
                   if (idea != null) {
-                    debugPrint('🌟 Idea generared: ${idea.toString()}\n');
+                    debugPrint('🌟 Idea generared: ${idea.concept}\n');
                   }
                 }
               },

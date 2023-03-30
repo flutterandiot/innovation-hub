@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
 
@@ -309,18 +310,7 @@ class _IdeasContainer extends ConsumerWidget {
           Expanded(
             child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(ideas[index].concept),
-                    trailing: IconButton(
-                      onPressed: () {
-                        _likeTheIdea(context, ref, ideas[index]);
-                      },
-                      icon: const Icon(
-                        Icons.thumb_up,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  );
+                  return _IdeaListTile(idea: ideas[index]);
                 },
                 separatorBuilder: (context, index) {
                   return const Divider();
@@ -328,6 +318,37 @@ class _IdeasContainer extends ConsumerWidget {
                 itemCount: ideas.length),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _IdeaListTile extends HookConsumerWidget {
+  const _IdeaListTile({
+    required this.idea,
+  });
+
+  final Idea idea;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final checked = useState(false);
+    return ListTile(
+      leading: Checkbox(
+        value: checked.value,
+        onChanged: (value) {
+          checked.value = value!;
+        },
+      ),
+      title: Text(idea.concept),
+      trailing: IconButton(
+        onPressed: () {
+          _likeTheIdea(context, ref, idea);
+        },
+        icon: const Icon(
+          Icons.thumb_up,
+          color: Colors.blue,
+        ),
       ),
     );
   }

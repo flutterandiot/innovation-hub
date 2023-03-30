@@ -11,6 +11,7 @@
  */
 import 'package:innovation_hub/app/model/component_model.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
+import 'package:innovation_hub/app/provider/project_provider.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,7 +20,7 @@ import '../model/project_model.dart';
 
 part 'idea_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class IdeaControl extends _$IdeaControl {
   @override
   Idea? build() => null;
@@ -45,7 +46,9 @@ class IdeaControl extends _$IdeaControl {
   }
 
   void addIdeaToProjecet(Idea idea, Project proj) {
+    final project = ref.watch(activeProjectProvider);
     proj.ideas?.add(idea);
+    ref.read(activeProjectProvider.notifier).updateProject(project);
   }
 
   void updateIdeaToProject(Idea idea, Project proj) {}

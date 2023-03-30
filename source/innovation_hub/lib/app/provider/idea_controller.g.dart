@@ -6,12 +6,11 @@ part of 'idea_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ideaControlHash() => r'990f4a9be7b2b77e3ef7408a6553b71e20e781f3';
+String _$ideaControlHash() => r'0057c90827fbe3c317e3d920e39b4fd9818d90fb';
 
 /// See also [IdeaControl].
 @ProviderFor(IdeaControl)
-final ideaControlProvider =
-    AutoDisposeNotifierProvider<IdeaControl, Idea?>.internal(
+final ideaControlProvider = NotifierProvider<IdeaControl, Idea?>.internal(
   IdeaControl.new,
   name: r'ideaControlProvider',
   debugGetCreateSourceHash:
@@ -20,7 +19,7 @@ final ideaControlProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$IdeaControl = AutoDisposeNotifier<Idea?>;
+typedef _$IdeaControl = Notifier<Idea?>;
 String _$ideasHash() => r'33d59a02510b922a4938be355602bd52e0bbfcb2';
 
 /// See also [Ideas].

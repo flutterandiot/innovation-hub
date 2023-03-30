@@ -74,25 +74,7 @@ class SITSubstraction extends ConsumerWidget {
               ),
             ),
           //NOTE - Idea container
-          Container(
-            margin: const EdgeInsets.only(left: 8, right: 8),
-            padding: const EdgeInsets.only(left: 8, right: 8),
-            decoration: BoxDecoration(
-                // border: Border.all(
-                //   color: Colors.grey,
-                // ),
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 2,
-                    color: Colors.black,
-                  ),
-                ]),
-            height: 400,
-            width: double.infinity,
-            child: const Text('Idea view'),
-          ),
+          const _IdeasContainer(),
         ],
       ),
     );
@@ -296,5 +278,49 @@ class _ComponentListTile extends ConsumerWidget {
             ),
           );
         });
+  }
+}
+
+class _IdeasContainer extends ConsumerWidget {
+  const _IdeasContainer();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ideas = ref.watch(activeProjectProvider).ideas;
+    return Container(
+      margin: const EdgeInsets.only(left: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      decoration: BoxDecoration(
+          // border: Border.all(
+          //   color: Colors.grey,
+          // ),
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 2,
+              color: Colors.black,
+            ),
+          ]),
+      height: 400,
+      width: double.infinity,
+      child: Column(
+        children: [
+          const Text('Ideas generated'),
+          Expanded(
+            child: ListView.separated(
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(ideas[index].concept),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider();
+                },
+                itemCount: ideas!.length),
+          ),
+        ],
+      ),
+    );
   }
 }

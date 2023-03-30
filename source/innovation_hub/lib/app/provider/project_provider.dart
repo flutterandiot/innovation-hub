@@ -68,6 +68,22 @@ class ActiveProject extends _$ActiveProject {
     state = project;
   }
 
+  void updateProject(Project withProject) {
+    state = state.copyWith(
+      id: withProject.id,
+      name: withProject.name,
+      description: withProject.description,
+      createdAt: withProject.createdAt,
+      favorite: withProject.favorite,
+      createdBy: withProject.createdBy,
+      team: withProject.team,
+      updatedAt: withProject.updatedAt,
+      type: withProject.type,
+      components: withProject.components,
+      ideas: withProject.ideas,
+    );
+  }
+
   void addComponentToProject(Component component) {
     var prj = state;
     prj.components.add(component);

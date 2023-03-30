@@ -32,7 +32,7 @@ class Project {
   String updatedAt;
   String type;
   List<Component> components;
-  List<Idea>? ideas;
+  List<Idea> ideas;
   Project({
     required this.id,
     required this.name,
@@ -44,7 +44,7 @@ class Project {
     required this.team,
     required this.type,
     required this.components,
-    this.ideas,
+    required this.ideas,
   });
 
   Project copyWith({
@@ -87,7 +87,7 @@ class Project {
       'updatedAt': updatedAt,
       'type': type,
       'components': components.map((x) => x.toMap()).toList(),
-      'ideas': ideas?.map((x) => x.toMap()).toList(),
+      'ideas': ideas.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -111,13 +111,11 @@ class Project {
           (x) => Component.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      ideas: map['ideas'] != null
-          ? List<Idea>.from(
-              (map['ideas'] as List<int>).map<Idea?>(
-                (x) => Idea.fromMap(x as Map<String, dynamic>),
-              ),
-            )
-          : null,
+      ideas: List<Idea>.from(
+        (map['ideas'] as List<int>).map<Idea?>(
+          (x) => Idea.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 

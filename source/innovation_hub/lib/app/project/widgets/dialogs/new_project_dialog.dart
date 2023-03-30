@@ -150,6 +150,7 @@ class NewProjectDialog extends HookConsumerWidget {
       team: [
         User.demoUser1,
       ],
+      ideas: [],
     );
 
     //Save project to project list

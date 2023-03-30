@@ -9,6 +9,7 @@
 *
 * Description: This file is a place to manage idea with riverpod
  */
+import 'package:flutter/foundation.dart';
 import 'package:innovation_hub/app/model/component_model.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
@@ -20,40 +21,17 @@ import '../model/project_model.dart';
 
 part 'idea_controller.g.dart';
 
-@Riverpod(keepAlive: true)
+@Riverpod(
+  keepAlive: true,
+)
 class IdeaControl extends _$IdeaControl {
   @override
   Idea? build() => null;
 
   ///Set activie idea with [idea]
-  void setIdea(Idea? idea) {
-    state = idea;
-  }
-
-  ///Update the idea
-  void updateIdea(Idea idea) {
-    state = state?.copyWith(
-      id: idea.id,
-      name: idea.name,
-      rating: idea.rating,
-      benefit: idea.benefit,
-      method: idea.method,
-      componentId: idea.componentId,
-      attributeIds: idea.attributeIds,
-      createdAt: idea.createdAt,
-      createdBy: idea.createdBy,
-    );
-  }
-
-  void addIdeaToProjecet(Idea idea, Project proj) {
-    final project = ref.watch(activeProjectProvider);
-    proj.ideas?.add(idea);
-    ref.read(activeProjectProvider.notifier).updateProject(project);
-  }
-
-  void updateIdeaToProject(Idea idea, Project proj) {}
-
-  void removeIdeaFromProject(Idea idea, Project proj) {}
+  // void setIdea(Idea? idea) {
+  //   state = idea;
+  // }
 
   Idea? generateNewIdea(Project ofProject, Component withComponent, SITTechniques using) {
     switch (using) {
@@ -74,8 +52,8 @@ class IdeaControl extends _$IdeaControl {
           createdAt: AppUtilities.getTimeStampFromNow(),
           createdBy: User.demoUser1,
         );
-        setIdea(idea);
-        addIdeaToProjecet(idea, ofProject);
+        state = idea;
+        addIdeaToList(idea);
         return idea;
       case SITTechniques.multiplication:
         // TODO: Handle this case.
@@ -88,9 +66,54 @@ class IdeaControl extends _$IdeaControl {
         return null;
     }
   }
+
+  ///Update the idea
+  void updateIdea(Idea idea) {
+    state = state?.copyWith(
+      id: idea.id,
+      name: idea.name,
+      rating: idea.rating,
+      benefit: idea.benefit,
+      method: idea.method,
+      componentId: idea.componentId,
+      attributeIds: idea.attributeIds,
+      createdAt: idea.createdAt,
+      createdBy: idea.createdBy,
+    );
+  }
+
+  /// If idea is liked, it will save to project ideas
+  bool likeIdea() {
+    // ref.read(activeProjectProvider).ideas?.add(idea);
+    final project = ref.watch(activeProjectProvider);
+
+    if (project.ideas.isEmpty || !project.ideas.contains(state)) {
+      project.ideas.add(state!);
+
+      ref.read(activeProjectProvider.notifier).updateProject(project);
+      return true; // let the caller know it is added
+    } else {
+      return false; // let the caller know it is not added
+    }
+  }
+
+  void addIdeaToList(Idea idea) {
+    // final project = ref.watch(activeProjectProvider);
+    debugPrint('😎 👉 Add idea to list of idea');
+    // project.ideas?.add(idea);
+    ref.read(ideasProvider.notifier).addIdea(state!);
+  }
+
+  void updateIdeaInList(Idea idea) {
+    ref.read(ideasProvider.notifier).update(state!);
+  }
+
+  void removeIdeaFromList(Idea idea) {
+    ref.read(ideasProvider.notifier).removeIdea(state!.id);
+  }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Ideas extends _$Ideas {
   @override
   List<Idea> build() {
@@ -102,18 +125,23 @@ class Ideas extends _$Ideas {
     // Instead, we should create a new list of todos which contains the previous
     // items and the new one.
     // Using Dart's spread operator here is helpful!
-    state = [...state, idea];
+    state = [
+      ...state,
+      idea,
+    ];
     // No need to call "notifyListeners" or anything similar. Calling "state ="
     // will automatically rebuild the UI when necessary.
   }
 
-  void removeIdea(String ideaId) {
-    // Again, our state is immutable. So we're making a new list instead of
-    // changing the existing list.
-
+  void update(Idea withIdea) {
+    final ideaMap = withIdea.toMap();
     state = [
       for (final idea in state)
-        if (idea.id != ideaId) idea
+        if (idea.id == withIdea.id) Idea.fromMap(ideaMap) else idea
     ];
+  }
+
+  void removeIdea(String ideaId) {
+    state = state.where((idea) => idea.id != ideaId).toList();
   }
 }

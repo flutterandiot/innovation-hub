@@ -62,6 +62,7 @@ class ActiveProject extends _$ActiveProject {
         type: ProjectType.product.name,
         components: [],
         favorite: false,
+        ideas: [],
       );
 
   void setProject(Project project) {

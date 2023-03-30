@@ -171,6 +171,7 @@ class _ComponentListHeader extends StatelessWidget {
               icon: const Icon(Icons.tips_and_updates),
               label: const Text('Generate ideas'),
               onPressed: () {
+                ref.read(ideasProvider).clear();
                 for (final component in components) {
                   final idea = ref.read(ideaControlProvider.notifier).generateNewIdea(
                         activeProject,
@@ -200,9 +201,8 @@ class _ComponentListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ideas = ref.watch(
-          activeProjectProvider.select((proj) => proj.ideas),
-        ) ??
-        [];
+      activeProjectProvider.select((proj) => proj.ideas),
+    );
     return Card(
       child: ExpansionTile(
         backgroundColor: Colors.amber,
@@ -286,7 +286,7 @@ class _IdeasContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ideas = ref.watch(activeProjectProvider).ideas;
+    final ideas = ref.watch(ideasProvider);
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8),
       padding: const EdgeInsets.only(left: 8, right: 8),
@@ -312,14 +312,41 @@ class _IdeasContainer extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(ideas[index].concept),
+                    trailing: IconButton(
+                      onPressed: () {
+                        _likeTheIdea(context, ref, ideas[index]);
+                      },
+                      icon: const Icon(
+                        Icons.thumb_up,
+                        color: Colors.blue,
+                      ),
+                    ),
                   );
                 },
                 separatorBuilder: (context, index) {
                   return const Divider();
                 },
-                itemCount: ideas!.length),
+                itemCount: ideas.length),
           ),
         ],
+      ),
+    );
+  }
+
+  void _likeTheIdea(BuildContext context, WidgetRef ref, Idea idea) {
+    ref.read(ideaControlProvider.notifier).state = idea;
+
+    final result = ref.read(ideaControlProvider.notifier).likeIdea();
+    var message = '';
+    if (result) {
+      message = "'${idea.concept}' has been added to project";
+    } else {
+      message = "'${idea.concept}' is already added to project";
+    }
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
       ),
     );
   }

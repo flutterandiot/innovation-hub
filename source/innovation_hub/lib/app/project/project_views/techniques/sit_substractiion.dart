@@ -29,7 +29,7 @@ class SITSubstraction extends ConsumerWidget {
             LayoutBuilder(
               builder: (context, constraints) {
                 return Container(
-                  padding: const EdgeInsets.only(left: 8, right: 8, bottom: 16, top: 20),
+                  padding: const EdgeInsets.only(bottom: 16, top: 20),
                   height: 500,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,16 +111,12 @@ class _ComponentListContainer extends StatelessWidget {
     final len = components.length;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-      margin: const EdgeInsets.only(top: 8, bottom: 8),
+      margin: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 8),
       decoration: BoxDecoration(
-        // border: Border.all(
-        //   color: Colors.grey,
-        // ),
         borderRadius: BorderRadius.circular(8),
         color: Colors.white,
         boxShadow: const [
           BoxShadow(
-            // offset: Offset(1, 1),
             blurRadius: 2,
             color: Colors.black,
           ),

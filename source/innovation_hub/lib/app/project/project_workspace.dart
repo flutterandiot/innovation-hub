@@ -113,47 +113,43 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
   }
 }
 
-class _PrimaryNaviLeading extends StatelessWidget {
+class _PrimaryNaviLeading extends ConsumerWidget {
   const _PrimaryNaviLeading();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final projectList = ref.watch(projectsProvider);
+    Project activeProject = ref.watch(activeProjectProvider);
+    if (activeProject.name.isEmpty) {
+      activeProject = projectList.first;
+    }
     return Column(
       children: [
         const BrandLogo(),
-        Consumer(
-          builder: (context, ref, child) {
-            final projectList = ref.watch(projectsProvider);
-            Project activeProject = ref.watch(activeProjectProvider);
-            if (activeProject.name.isEmpty) {
-              activeProject = projectList.first;
+        DropdownButton<Project>(
+          hint: const Text('Select a project'),
+          borderRadius: BorderRadius.circular(4),
+          value: activeProject,
+          items: projectList
+              .map<DropdownMenuItem<Project>>(
+                (project) => DropdownMenuItem(
+                  value: project,
+                  child: Text(
+                    project.name,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+              )
+              .toList(),
+          onChanged: (selectProj) {
+            if (selectProj != null) {
+              ref.read(activeProjectProvider.notifier).setProject(selectProj);
+              context.goNamed(
+                AppRoute.projectDashboard.name,
+                params: {'id': activeProject.id},
+                extra: activeProject,
+              );
             }
-            return DropdownButton<Project>(
-              hint: const Text('Select a project'),
-              borderRadius: BorderRadius.circular(4),
-              value: activeProject,
-              items: projectList
-                  .map<DropdownMenuItem<Project>>(
-                    (project) => DropdownMenuItem(
-                      value: project,
-                      child: Text(
-                        project.name,
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (selectProj) {
-                if (selectProj != null) {
-                  ref.read(activeProjectProvider.notifier).setProject(selectProj);
-                  context.goNamed(
-                    AppRoute.projectDashboard.name,
-                    params: {'id': activeProject.id},
-                    extra: activeProject,
-                  );
-                }
-              },
-            );
           },
         ),
       ],

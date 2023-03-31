@@ -75,7 +75,7 @@ class SITSubstraction extends ConsumerWidget {
               ),
             ),
           //NOTE - Idea container
-          const _IdeasContainer(),
+          const _IdeaListViewContainer(),
         ],
       ),
     );
@@ -281,8 +281,8 @@ class _ComponentListTile extends ConsumerWidget {
   }
 }
 
-class _IdeasContainer extends StatelessWidget {
-  const _IdeasContainer();
+class _IdeaListViewContainer extends StatelessWidget {
+  const _IdeaListViewContainer();
 
   @override
   Widget build(BuildContext context) {
@@ -306,11 +306,11 @@ class _IdeasContainer extends StatelessWidget {
       child: Column(
         children: [
           const Text('Ideas generated'),
-          Consumer(
-            builder: (context, ref, child) {
-              final ideas = ref.watch(ideasProvider);
-              return Expanded(
-                child: ListView.builder(
+          Expanded(
+            child: Consumer(
+              builder: (context, ref, child) {
+                final ideas = ref.watch(ideasProvider);
+                return ListView.builder(
                   itemCount: ideas.length,
                   itemBuilder: (context, index) {
                     return _IdeaListTile(ideas[index]);
@@ -319,9 +319,9 @@ class _IdeasContainer extends StatelessWidget {
                   // separatorBuilder: (context, index) {
                   //   return const Divider();
                   // },
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -338,10 +338,10 @@ class _IdeaListTile extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final checked = useState(false);
 
-    debugPrint('Idea  rebuilt');
+    debugPrint('Idea  rebuilt: ${idea.id}');
     return Card(
       child: ListTile(
-        tileColor: Theme.of(context).primaryColor,
+        // tileColor: Theme.of(context).primaryColor,
         leading: Checkbox(
           value: checked.value,
           onChanged: (value) {

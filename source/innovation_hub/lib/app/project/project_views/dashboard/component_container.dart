@@ -14,6 +14,7 @@ class ProjectComponentsContainer extends ConsumerWidget {
 
     if (components.isEmpty) {
       return SizedBox(
+        height: 400,
         child: Center(
           child: TextButton.icon(
             icon: const Icon(Icons.add),
@@ -36,8 +37,18 @@ class ProjectComponentsContainer extends ConsumerWidget {
         if (comp.isInternal) comp
     ];
     return Container(
+      height: 400,
+      margin: const EdgeInsets.only(left: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       decoration: BoxDecoration(
-        border: Border.all(),
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 2,
+            color: Colors.black,
+          ),
+        ],
       ),
       child: Column(
         children: [

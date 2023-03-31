@@ -163,8 +163,8 @@ class Project {
   static List<Project> sampleProjects = [
     Project(
       id: AppUtilities.getUid(),
-      name: 'Sample Project 1',
-      description: 'Demo project',
+      name: 'New Chair',
+      description: 'New office chair concept',
       createdAt: AppUtilities.getTimeStampFromNow(),
       updatedAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.demoUser1,
@@ -185,8 +185,8 @@ class Project {
     ),
     Project(
       id: AppUtilities.getUid(),
-      name: 'Sample Project 2',
-      description: 'Demo project',
+      name: 'New Car',
+      description: 'New car concept',
       createdAt: AppUtilities.getTimeStampFromNow(),
       updatedAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.demoUser1,
@@ -198,8 +198,8 @@ class Project {
     ),
     Project(
       id: AppUtilities.getUid(),
-      name: 'Sample Project 3',
-      description: 'Demo project',
+      name: 'New mobile phone',
+      description: 'New mobile phone concept',
       createdAt: AppUtilities.getTimeStampFromNow(),
       updatedAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.demoUser1,

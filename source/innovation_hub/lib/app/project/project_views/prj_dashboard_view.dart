@@ -37,21 +37,11 @@ class ProjectDashboardView extends ConsumerWidget {
           ),
         ),
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Column(
-            children: [
-              const ProjectPageHeader(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Expanded(child: ProjectComponentsContainer()),
-                  IdeasContainer(),
-                ],
-              ),
-            ],
-          );
-        },
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: const [ProjectPageHeader(), SizedBox(height: 16), ProjectComponentsContainer(), SizedBox(height: 16), IdeasContainer()],
+        ),
       ),
     );
   }

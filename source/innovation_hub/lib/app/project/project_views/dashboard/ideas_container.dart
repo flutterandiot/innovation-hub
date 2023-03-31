@@ -14,14 +14,17 @@ class IdeasContainer extends ConsumerWidget {
   }
 }
 
-class _IdeaListViewContainer extends StatelessWidget {
+class _IdeaListViewContainer extends ConsumerWidget {
   const _IdeaListViewContainer();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ideas = ref.watch(
+      activeProjectProvider.select((value) => value.ideas),
+    );
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8),
-      padding: const EdgeInsets.only(left: 8, right: 8),
+      // padding: const EdgeInsets.only(left: 8, right: 8),
       decoration: BoxDecoration(
         // border: Border.all(
         //   color: Colors.grey,
@@ -35,18 +38,31 @@ class _IdeaListViewContainer extends StatelessWidget {
           ),
         ],
       ),
-      height: 400,
+      height: ideas.isNotEmpty ? 400 : 100,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Ideas generated'),
+          Container(
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              // border: Border.all(
+              //   color: Colors.grey,
+              // ),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
+              ),
+              color: Colors.amber,
+            ),
+            child: Text(
+              'Ideas generated',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
           Expanded(
-            child: Consumer(
-              builder: (context, ref, child) {
-                final ideas = ref.watch(
-                  activeProjectProvider.select((value) => value.ideas),
-                );
-                if (ideas.isNotEmpty) {
-                  return ListView.builder(
+            child: (ideas.isNotEmpty)
+                ? ListView.builder(
+                    padding: const EdgeInsets.only(left: 8, right: 8),
                     itemCount: ideas.length,
                     itemBuilder: (context, index) {
                       return _IdeaListTile(ideas[index]);
@@ -55,16 +71,12 @@ class _IdeaListViewContainer extends StatelessWidget {
                     // separatorBuilder: (context, index) {
                     //   return const Divider();
                     // },
-                  );
-                }
-
-                return const SizedBox(
-                  child: Center(
-                    child: Text("There isn't any idea for this for project."),
+                  )
+                : const SizedBox(
+                    child: Center(
+                      child: Text("There isn't any idea for this for project."),
+                    ),
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),

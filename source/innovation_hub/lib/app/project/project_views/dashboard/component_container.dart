@@ -1,6 +1,9 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:innovation_hub/app/project/widgets/chart_indicator.dart';
 import 'package:innovation_hub/app_routing.dart';
 
 import '../../../provider/project_provider.dart';
@@ -20,7 +23,7 @@ class ProjectComponentsContainer extends ConsumerWidget {
   }
 }
 
-class _ComponentSummaryView extends ConsumerWidget {
+class _ComponentSummaryView extends HookConsumerWidget {
   const _ComponentSummaryView();
 
   @override
@@ -36,8 +39,9 @@ class _ComponentSummaryView extends ConsumerWidget {
           (element) => element.isInternal == false,
         )
         .toList();
+
+    final touchedIndex = useState<int>(-1);
     return Container(
-      height: 400,
       margin: const EdgeInsets.only(left: 8, right: 8),
       padding: const EdgeInsets.only(left: 8, right: 8),
       decoration: BoxDecoration(
@@ -56,11 +60,55 @@ class _ComponentSummaryView extends ConsumerWidget {
             'Total: ${components.length}',
             style: Theme.of(context).textTheme.headlineLarge,
           ),
-          CircleAvatar(
-            child: Text('${internalComps.length}'),
-          ),
-          CircleAvatar(
-            child: Text('${externalComps.length}'),
+          SizedBox(
+            height: 200,
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: PieChart(
+                    PieChartData(
+                      pieTouchData: PieTouchData(
+                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                          if (!event.isInterestedForInteractions || pieTouchResponse == null || pieTouchResponse.touchedSection == null) {
+                            touchedIndex.value = -1;
+                            return;
+                          }
+                          touchedIndex.value = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                        },
+                      ),
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      sectionsSpace: 0,
+                      centerSpaceRadius: 40,
+                      sections: [
+                        PieChartSectionData(
+                          value: internalComps.length.toDouble(),
+                          title: '${internalComps.length}',
+                          color: Colors.amber,
+                          radius: touchedIndex.value == 0 ? 44 : 40,
+                        ),
+                        PieChartSectionData(
+                          value: externalComps.length.toDouble(),
+                          title: '${externalComps.length}',
+                          color: Colors.blue,
+                          radius: touchedIndex.value == 1 ? 44 : 40,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Column(
+                  children: const [
+                    Indicator(color: Colors.amber, text: 'Internal', isSquare: true),
+                    Indicator(color: Colors.blue, text: 'External', isSquare: true),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

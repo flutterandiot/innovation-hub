@@ -57,48 +57,58 @@ class _ComponentSummaryView extends HookConsumerWidget {
       child: Column(
         children: [
           Text(
-            'Total: ${components.length}',
-            style: Theme.of(context).textTheme.headlineLarge,
+            'Components in this project',
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           SizedBox(
             height: 200,
+            width: 300,
             child: Row(
               children: [
                 const SizedBox(
                   width: 12,
                 ),
                 Expanded(
-                  child: PieChart(
-                    PieChartData(
-                      pieTouchData: PieTouchData(
-                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                          if (!event.isInterestedForInteractions || pieTouchResponse == null || pieTouchResponse.touchedSection == null) {
-                            touchedIndex.value = -1;
-                            return;
-                          }
-                          touchedIndex.value = pieTouchResponse.touchedSection!.touchedSectionIndex;
-                        },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Text(
+                        '${components.length}',
+                        style: Theme.of(context).textTheme.headlineLarge,
                       ),
-                      borderData: FlBorderData(
-                        show: false,
+                      PieChart(
+                        PieChartData(
+                          pieTouchData: PieTouchData(
+                            touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                              if (!event.isInterestedForInteractions || pieTouchResponse == null || pieTouchResponse.touchedSection == null) {
+                                touchedIndex.value = -1;
+                                return;
+                              }
+                              touchedIndex.value = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                            },
+                          ),
+                          borderData: FlBorderData(
+                            show: true,
+                          ),
+                          sectionsSpace: 0,
+                          centerSpaceRadius: 40,
+                          sections: [
+                            PieChartSectionData(
+                              value: internalComps.length.toDouble(),
+                              title: '${internalComps.length}',
+                              color: Colors.amber,
+                              radius: touchedIndex.value == 0 ? 44 : 40,
+                            ),
+                            PieChartSectionData(
+                              value: externalComps.length.toDouble(),
+                              title: '${externalComps.length}',
+                              color: Colors.blue,
+                              radius: touchedIndex.value == 1 ? 44 : 40,
+                            ),
+                          ],
+                        ),
                       ),
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 40,
-                      sections: [
-                        PieChartSectionData(
-                          value: internalComps.length.toDouble(),
-                          title: '${internalComps.length}',
-                          color: Colors.amber,
-                          radius: touchedIndex.value == 0 ? 44 : 40,
-                        ),
-                        PieChartSectionData(
-                          value: externalComps.length.toDouble(),
-                          title: '${externalComps.length}',
-                          color: Colors.blue,
-                          radius: touchedIndex.value == 1 ? 44 : 40,
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
                 Column(

@@ -126,14 +126,14 @@ class _PrimaryNaviLeading extends ConsumerWidget {
     return Column(
       children: [
         const BrandLogo(),
-        DropdownButton<Project>(
+        DropdownButton<String>(
           hint: const Text('Select a project'),
           borderRadius: BorderRadius.circular(4),
-          value: activeProject,
+          value: activeProject.id,
           items: projectList
-              .map<DropdownMenuItem<Project>>(
+              .map<DropdownMenuItem<String>>(
                 (project) => DropdownMenuItem(
-                  value: project,
+                  value: project.id,
                   child: Text(
                     project.name,
                     style: const TextStyle(fontSize: 12),
@@ -143,7 +143,8 @@ class _PrimaryNaviLeading extends ConsumerWidget {
               .toList(),
           onChanged: (selectProj) {
             if (selectProj != null) {
-              ref.read(activeProjectProvider.notifier).setProject(selectProj);
+              final project = projectList.firstWhere((element) => element.id == selectProj);
+              ref.read(activeProjectProvider.notifier).setProject(project);
               context.goNamed(
                 AppRoute.projectDashboard.name,
                 params: {'id': activeProject.id},

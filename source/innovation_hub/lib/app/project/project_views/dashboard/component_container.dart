@@ -13,29 +13,29 @@ class ProjectComponentsContainer extends ConsumerWidget {
     final components = ref.watch(activeProjectProvider.select((value) => value.components));
 
     if (components.isEmpty) {
-      return SizedBox(
-        height: 400,
-        child: Center(
-          child: TextButton.icon(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              final activeProject = ref.read(activeProjectProvider);
-              context.goNamed(
-                AppRoute.projectComponent.name,
-                params: {'id': activeProject.id},
-                extra: activeProject,
-              );
-            },
-            label: const Text('Add component'),
-          ),
-        ),
-      );
+      return const _EmptyComponentView();
     }
 
-    final internalComponent = [
-      for (final comp in components)
-        if (comp.isInternal) comp
-    ];
+    return const _ComponentSummaryView();
+  }
+}
+
+class _ComponentSummaryView extends ConsumerWidget {
+  const _ComponentSummaryView();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final components = ref.watch(activeProjectProvider.select((proj) => proj.components));
+    final internalComps = components
+        .where(
+          (element) => element.isInternal == true,
+        )
+        .toList();
+    final externalComps = components
+        .where(
+          (element) => element.isInternal == false,
+        )
+        .toList();
     return Container(
       height: 400,
       margin: const EdgeInsets.only(left: 8, right: 8),
@@ -56,9 +56,38 @@ class ProjectComponentsContainer extends ConsumerWidget {
             'Total: ${components.length}',
             style: Theme.of(context).textTheme.headlineLarge,
           ),
-          Text('Internal: ${internalComponent.length}'),
-          Text('External: ${components.length - internalComponent.length}'),
+          CircleAvatar(
+            child: Text('${internalComps.length}'),
+          ),
+          CircleAvatar(
+            child: Text('${externalComps.length}'),
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class _EmptyComponentView extends ConsumerWidget {
+  const _EmptyComponentView();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SizedBox(
+      height: 400,
+      child: Center(
+        child: TextButton.icon(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            final activeProject = ref.read(activeProjectProvider);
+            context.goNamed(
+              AppRoute.projectComponent.name,
+              params: {'id': activeProject.id},
+              extra: activeProject,
+            );
+          },
+          label: const Text('Add component'),
+        ),
       ),
     );
   }

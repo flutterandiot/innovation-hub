@@ -104,25 +104,9 @@ class IdeaManage extends _$IdeaManage {
   /// return:
   ///  - true : idea is added
   ///  - false: idea is not added, due to already added
-  void likeIdea(Idea idea) {
-    if (idea.rating < 5) {
-      idea.rating++;
-      ref.read(ideasProvider.notifier).update(idea);
-    }
-
-    // final projectIdeas = ref.read(activeProjectProvider).ideas;
-    // var i = 0;
-    // final len = projectIdeas.length;
-    // for (i; i < len; i++) {
-    //   if (projectIdeas[i].id == idea.id) {
-    //     projectIdeas[i] = projectIdeas[i].copyWith(
-    //       rating: idea.rating,
-    //     );
-    //   }
-    //   i++;
-    // }
-
-    //   ref.read(activeProjectProvider.notifier).updateProject(project);
+  void ratingIdea(Idea idea, double rating) {
+    idea.rating = rating.toInt();
+    ref.read(ideasProvider.notifier).update(idea);
   }
 
   void addIdeaToList(Idea idea) {

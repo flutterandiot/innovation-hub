@@ -374,7 +374,7 @@ class _IdeaListTile extends HookConsumerWidget {
     //   ref.read(ideaManageProvider.select((mIdea) => mIdea!.rating++));
     // }
 
-    ref.read(ideaManageProvider.notifier).likeIdea(idea);
+    ref.read(ideaManageProvider.notifier).ratingIdea(idea, 3);
     // var message = '';
     // if (result) {
     //   message = "'${idea.concept}' has been added to project";

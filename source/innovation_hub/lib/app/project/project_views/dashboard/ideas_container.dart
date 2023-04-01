@@ -139,17 +139,14 @@ class _IdeaListTile extends HookConsumerWidget {
                 ),
               ),
               TextButton.icon(
-                onPressed: () {
-                  // _likeTheIdea(context, ref, idea);
-                  // idea.rating++;
-                },
+                onPressed: null,
                 label: Text(
                   '${idea.rating}',
                   style: const TextStyle(color: Colors.red),
                 ),
-                icon: const Icon(
-                  Icons.thumb_up,
-                  color: Colors.blue,
+                icon: Icon(
+                  Icons.star,
+                  color: isSelected.value ? Colors.white : Colors.amber,
                 ),
               ),
             ],

@@ -86,6 +86,7 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
     } else {
       isDashboardShow = false;
     }
+    debugPrint('Rebuild the project workspace');
     return Scaffold(
       body: AdaptiveLayout(
         bodyRatio: 0.5,

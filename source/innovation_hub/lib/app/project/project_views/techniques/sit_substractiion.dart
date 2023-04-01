@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/model/idea_model.dart';
+import 'package:innovation_hub/app/project/project_views/dashboard/ideas_container.dart';
 import 'package:innovation_hub/app/project/widgets/substraction/substract_idea_dialog.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
@@ -75,7 +76,7 @@ class SITSubstraction extends ConsumerWidget {
               ),
             ),
           //NOTE - Idea container
-          const _IdeaListViewContainer(),
+          const IdeasContainer(),
         ],
       ),
     );

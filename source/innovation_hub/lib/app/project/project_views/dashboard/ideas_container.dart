@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
-import 'package:innovation_hub/app/provider/project_provider.dart';
 
 class IdeasContainer extends ConsumerWidget {
   const IdeasContainer({super.key});
@@ -18,9 +17,7 @@ class _IdeaListViewContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ideas = ref.watch(
-      activeProjectProvider.select((value) => value.ideas),
-    );
+    final ideas = ref.watch(ideasProvider);
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8),
       // padding: const EdgeInsets.only(left: 8, right: 8),

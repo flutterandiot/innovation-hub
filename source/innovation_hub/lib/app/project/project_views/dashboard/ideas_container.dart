@@ -135,15 +135,22 @@ class _IdeaListTile extends HookConsumerWidget {
                   child: const Text('D'),
                 ),
               ),
-              TextButton.icon(
-                onPressed: null,
-                label: Text(
-                  '${idea.rating}',
-                  style: const TextStyle(color: Colors.red),
-                ),
-                icon: Icon(
-                  Icons.star,
-                  color: isSelected.value ? Colors.white : Colors.amber,
+              SizedBox(
+                width: 64,
+                height: 64,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Icon(
+                      Icons.star,
+                      color: isSelected.value ? Colors.white : Colors.amber,
+                      size: 48,
+                    ),
+                    Text(
+                      '${idea.rating}',
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ],
                 ),
               ),
             ],

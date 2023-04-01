@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/home/widgets/logo.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
+import 'package:innovation_hub/app/project/project_views/idea_details_page.dart';
 import 'package:innovation_hub/app/project/widgets/top_navi_view.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/constants.dart';
@@ -123,11 +124,7 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
                   // disappearing as it is animating out.
                   outAnimation: AdaptiveScaffold.stayOnScreen,
                   builder: (context) {
-                    return SafeArea(
-                      child: SizedBox(
-                        child: Text(activeIdea.concept),
-                      ),
-                    );
+                    return const IdeaDetailsPage();
                   },
                 ),
               }),

@@ -147,6 +147,8 @@ class _ComponentListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       alignment: WrapAlignment.spaceAround,
+      spacing: 12,
+      runSpacing: 12,
       // mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         if (isInternal)
@@ -159,7 +161,6 @@ class _ComponentListHeader extends StatelessWidget {
             'External',
             style: Theme.of(context).textTheme.titleLarge,
           ),
-        const Spacer(),
         Consumer(
           builder: (context, ref, child) {
             final activeProject = ref.watch(activeProjectProvider);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
@@ -84,31 +85,23 @@ class _IdeaListViewContainer extends ConsumerWidget {
   }
 }
 
-class _IdeaListTile extends ConsumerStatefulWidget {
+class _IdeaListTile extends HookConsumerWidget {
   const _IdeaListTile(
     this.idea,
   );
   final Idea idea;
-  @override
-  ConsumerState<_IdeaListTile> createState() => _IdeaListTileState();
-}
 
-class _IdeaListTileState extends ConsumerState<_IdeaListTile> {
   @override
-  Widget build(BuildContext context) {
-    debugPrint('Idea  rebuilt: ${widget.idea.id}');
+  Widget build(BuildContext context, WidgetRef ref) {
+    debugPrint('Idea  rebuilt: ${idea.id}');
+    final selectedIdea = ref.watch(ideaManageProvider);
+    final isSelected = useState(false);
+    isSelected.value = idea.id == selectedIdea?.id;
     return Card(
       child: ListTile(
-        // tileColor: Theme.of(context).primaryColor,
-        // leading: Checkbox(
-        //   value: checked.value,
-        //   onChanged: (value) {
-        //     checked.value = value!;
-        //   },
-        // ),
-        selected: widget.idea.id == ref.read(ideaManageProvider)!.id,
-        // selectedColor: Colors.amberAccent,
-        title: Text(widget.idea.concept),
+        selected: isSelected.value,
+        selectedTileColor: Colors.amberAccent,
+        title: Text(idea.concept),
         trailing: ConstrainedBox(
           constraints: const BoxConstraints(
             maxWidth: 300,
@@ -142,7 +135,7 @@ class _IdeaListTileState extends ConsumerState<_IdeaListTile> {
                   // idea.rating++;
                 },
                 label: Text(
-                  '${widget.idea.rating}',
+                  '${idea.rating}',
                   style: const TextStyle(color: Colors.red),
                 ),
                 icon: const Icon(
@@ -154,8 +147,7 @@ class _IdeaListTileState extends ConsumerState<_IdeaListTile> {
           ),
         ),
         onTap: () {
-          ref.read(ideaManageProvider.notifier).setIdea(widget.idea);
-          setState(() {});
+          ref.read(ideaManageProvider.notifier).setIdea(idea);
         },
       ),
     );

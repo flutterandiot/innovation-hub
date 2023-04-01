@@ -11,31 +11,16 @@
 * Description: This is the project dashboard tabview.
  */
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/component_container.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/ideas_container.dart';
 import 'package:innovation_hub/app/project/widgets/project_page_header.dart';
 
-import '../widgets/project_app_bar.dart';
-
-class ProjectDashboardView extends ConsumerWidget {
+class ProjectDashboardView extends StatelessWidget {
   const ProjectDashboardView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // final isSmall = Breakpoints.small.isActive(context);
-    // final isMedium = Breakpoints.medium.isActive(context);
+  Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-      //   child: ProjectPageAppBar(
-      //     title: Text(
-      //       'Project dashboard',
-      //       overflow: TextOverflow.ellipsis,
-      //       style: Theme.of(context).textTheme.titleLarge,
-      //     ),
-      //   ),
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

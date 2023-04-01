@@ -62,8 +62,7 @@ class IdeaManage extends _$IdeaManage {
           }
         }
         // else, update to the list
-        debugPrint('Add this concenpt');
-        state = idea;
+        // state = idea;
         addIdeaToList(idea);
         return idea;
       case SITTechniques.multiplication:
@@ -113,7 +112,7 @@ class IdeaManage extends _$IdeaManage {
     // final project = ref.watch(activeProjectProvider);
     debugPrint('😎 👉 Add idea to list of idea');
     // project.ideas?.add(idea);
-    ref.read(ideasProvider.notifier).addIdea(state!);
+    ref.read(ideasProvider.notifier).addIdea(idea);
   }
 
   void updateIdeaInList(Idea idea) {

@@ -4,8 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
 
-import '../../../model/idea_model.dart';
-
 class IdeasContainer extends ConsumerWidget {
   const IdeasContainer({super.key});
 
@@ -66,7 +64,13 @@ class _IdeaListViewContainer extends ConsumerWidget {
                     padding: const EdgeInsets.only(left: 8, right: 8),
                     itemCount: ideas.length,
                     itemBuilder: (context, index) {
-                      return _IdeaListTile(ideas[index]);
+                      return ProviderScope(
+                        overrides: [
+                          ideaIndexProvider.overrideWithValue(index),
+                        ],
+                        child: const _IdeaListTile(),
+                      );
+                      // return _IdeaListTile(ideas[index]);
                       // _IdeaListTile(idea: ideas[index]);
                     },
                     // separatorBuilder: (context, index) {
@@ -87,16 +91,21 @@ class _IdeaListViewContainer extends ConsumerWidget {
 
 class _IdeaListTile extends HookConsumerWidget {
   const _IdeaListTile(
-    this.idea,
-  );
-  final Idea idea;
+      // this.idea,
+      );
+  // final Idea idea;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint('Idea  rebuilt: ${idea.id}');
     final selectedIdea = ref.watch(ideaManageProvider);
+    final ideaIndex = ref.watch(ideaIndexProvider);
+    final ideaList = ref.watch(ideasProvider);
+    final idea = ideaList[ideaIndex];
     final isSelected = useState(false);
     isSelected.value = idea.id == selectedIdea?.id;
+
+    debugPrint('Idea  rebuilt: ${idea.id}');
+
     return Card(
       child: ListTile(
         selected: isSelected.value,

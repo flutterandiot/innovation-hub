@@ -10,6 +10,7 @@
 * Description: This file is ....
  */
 import 'package:flutter/material.dart';
+import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -67,6 +68,9 @@ class ActiveProject extends _$ActiveProject {
 
   void setProject(Project project) {
     state = project;
+    if (project.ideas.isEmpty) {
+      ref.read(ideaManageProvider.notifier).setIdea(null);
+    }
   }
 
   void updateProject(Project withProject) {

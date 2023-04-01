@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
 
 import '../../../model/idea_model.dart';
@@ -84,40 +84,79 @@ class _IdeaListViewContainer extends ConsumerWidget {
   }
 }
 
-class _IdeaListTile extends HookConsumerWidget {
+class _IdeaListTile extends ConsumerStatefulWidget {
   const _IdeaListTile(
     this.idea,
   );
   final Idea idea;
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final checked = useState(false);
+  ConsumerState<_IdeaListTile> createState() => _IdeaListTileState();
+}
 
-    debugPrint('Idea  rebuilt: ${idea.id}');
+class _IdeaListTileState extends ConsumerState<_IdeaListTile> {
+  @override
+  Widget build(BuildContext context) {
+    debugPrint('Idea  rebuilt: ${widget.idea.id}');
     return Card(
       child: ListTile(
         // tileColor: Theme.of(context).primaryColor,
-        leading: Checkbox(
-          value: checked.value,
-          onChanged: (value) {
-            checked.value = value!;
-          },
-        ),
-        title: Text(idea.concept),
-        trailing: TextButton.icon(
-          onPressed: () {
-            // _likeTheIdea(context, ref, idea);
-            // idea.rating++;
-          },
-          label: Text(
-            '${idea.rating}',
-            style: const TextStyle(color: Colors.red),
+        // leading: Checkbox(
+        //   value: checked.value,
+        //   onChanged: (value) {
+        //     checked.value = value!;
+        //   },
+        // ),
+        selected: widget.idea.id == ref.read(ideaManageProvider)!.id,
+        // selectedColor: Colors.amberAccent,
+        title: Text(widget.idea.concept),
+        trailing: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 300,
+            minWidth: 100,
           ),
-          icon: const Icon(
-            Icons.thumb_up,
-            color: Colors.blue,
+          child: Row(
+            children: [
+              Tooltip(
+                message: 'Feasible',
+                child: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(),
+                  ),
+                  child: const Text('F'),
+                ),
+              ),
+              Tooltip(
+                message: 'Desirable',
+                child: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(),
+                  ),
+                  child: const Text('D'),
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () {
+                  // _likeTheIdea(context, ref, idea);
+                  // idea.rating++;
+                },
+                label: Text(
+                  '${widget.idea.rating}',
+                  style: const TextStyle(color: Colors.red),
+                ),
+                icon: const Icon(
+                  Icons.thumb_up,
+                  color: Colors.blue,
+                ),
+              ),
+            ],
           ),
         ),
+        onTap: () {
+          ref.read(ideaManageProvider.notifier).setIdea(widget.idea);
+          setState(() {});
+        },
       ),
     );
   }

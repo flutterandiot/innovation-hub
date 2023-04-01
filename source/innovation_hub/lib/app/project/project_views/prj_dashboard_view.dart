@@ -11,7 +11,6 @@
 * Description: This is the project dashboard tabview.
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/component_container.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/ideas_container.dart';
@@ -24,29 +23,31 @@ class ProjectDashboardView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSmall = Breakpoints.small.isActive(context);
-    final isMedium = Breakpoints.medium.isActive(context);
+    // final isSmall = Breakpoints.small.isActive(context);
+    // final isMedium = Breakpoints.medium.isActive(context);
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-        child: ProjectPageAppBar(
-          title: Text(
-            'Project dashboard',
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleLarge,
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(AppBar().preferredSize.height),
+      //   child: ProjectPageAppBar(
+      //     title: Text(
+      //       'Project dashboard',
+      //       overflow: TextOverflow.ellipsis,
+      //       style: Theme.of(context).textTheme.titleLarge,
+      //     ),
+      //   ),
+      // ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: const [
+              ProjectPageHeader(),
+              SizedBox(height: 16),
+              ProjectComponentsContainer(),
+              SizedBox(height: 16),
+              IdeasContainer(),
+            ],
           ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
-            ProjectPageHeader(),
-            SizedBox(height: 16),
-            ProjectComponentsContainer(),
-            SizedBox(height: 16),
-            IdeasContainer(),
-          ],
         ),
       ),
     );

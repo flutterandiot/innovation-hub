@@ -145,8 +145,9 @@ class _ComponentListHeader extends StatelessWidget {
   final VoidCallback onGenerateIdeas;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Wrap(
+      alignment: WrapAlignment.spaceAround,
+      // mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         if (isInternal)
           Text(

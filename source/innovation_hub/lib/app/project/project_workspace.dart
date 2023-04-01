@@ -6,6 +6,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/home/widgets/logo.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
+import 'package:innovation_hub/app/project/widgets/top_navi_view.dart';
+import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/constants.dart';
 
 import '../../app_routing.dart';
@@ -24,6 +26,7 @@ class ProjectWorkspace extends ConsumerStatefulWidget {
 
 class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
   late final List<NavigationDestination> destinations;
+  bool isDashboardShow = true;
   @override
   void initState() {
     super.initState();
@@ -70,20 +73,22 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
         params: {'id': project.id},
         extra: project,
       );
-      // } else if (index == 2) {
-      //   context.goNamed(
-      //     AppRoute.projectTechnique.name,
-      //     params: {'id': activeProject.id},
-      //     extra: activeProject,
-      //   );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final activeProject = ref.watch(activeProjectProvider);
+    final activeIdea = ref.watch(ideaManageProvider);
+    final currentRoute = GoRouter.of(context).location;
+    if (currentRoute.contains('dashboard')) {
+      isDashboardShow = true;
+    } else {
+      isDashboardShow = false;
+    }
     return Scaffold(
       body: AdaptiveLayout(
+        bodyRatio: 0.5,
         primaryNavigation: SlotLayout(
           config: {
             Breakpoints.mediumAndUp: SlotLayout.from(
@@ -105,6 +110,52 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
             Breakpoints.smallAndUp: SlotLayout.from(
               key: const Key('body-small-n-up'),
               builder: (_) => widget.body,
+            ),
+          },
+        ),
+        secondaryBody: (activeIdea == null || !isDashboardShow)
+            ? null
+            : SlotLayout(config: {
+                Breakpoints.large: SlotLayout.from(
+                  key: const Key('second-body-medium-n-up'),
+                  // This overrides the default behavior of the secondaryBody
+                  // disappearing as it is animating out.
+                  outAnimation: AdaptiveScaffold.stayOnScreen,
+                  builder: (context) {
+                    return SafeArea(
+                      child: SizedBox(
+                        child: Text(activeIdea.concept),
+                      ),
+                    );
+                  },
+                ),
+              }),
+        bottomNavigation: SlotLayout(
+          config: <Breakpoint, SlotLayoutConfig>{
+            Breakpoints.small: SlotLayout.from(
+              key: const Key('Bottom Navi Small'),
+              builder: (_) => BottomNavigationBarTheme(
+                data: const BottomNavigationBarThemeData(backgroundColor: Colors.amber, type: BottomNavigationBarType.fixed),
+                child: AdaptiveScaffold.standardBottomNavigationBar(
+                  destinations: destinations,
+                ),
+              ),
+            ),
+          },
+        ),
+        topNavigation: SlotLayout(
+          config: {
+            Breakpoints.smallAndUp: SlotLayout.from(
+              key: const Key('top-navi'),
+              builder: (context) {
+                return TopNaviView(
+                  title: Text(
+                    '',
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                );
+              },
             ),
           },
         ),

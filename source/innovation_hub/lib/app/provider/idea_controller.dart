@@ -77,6 +77,26 @@ class IdeaManage extends _$IdeaManage {
     }
   }
 
+  void generateIdeasUsingSIT(SITTechniques technique, bool isInternal) {
+    final activeProject = ref.watch(activeProjectProvider);
+    List<Component> components = [];
+    if (isInternal) {
+      components = activeProject.components.where((comp) => comp.isInternal == true).toList();
+    } else {
+      components = activeProject.components.where((comp) => comp.isInternal == false).toList();
+    }
+    for (final component in components) {
+      final idea = ref.read(ideaManageProvider.notifier).create(
+            activeProject,
+            component,
+            SITTechniques.substraction,
+          );
+      if (idea != null) {
+        debugPrint('🌟 Idea generared: ${idea.concept}\n');
+      }
+    }
+  }
+
   ///Update the idea
   void update(Idea idea) {
     state = state?.copyWith(

@@ -113,9 +113,6 @@ class _ComponentListContainer extends StatelessWidget {
         children: [
           _ComponentListHeader(
             isInternal: internal,
-            onGenerateIdeas: () {
-              debugPrint('On Generate new ideas');
-            },
           ),
           Expanded(
             child: ListView.builder(
@@ -139,10 +136,8 @@ class _ComponentListHeader extends StatelessWidget {
   const _ComponentListHeader({
     Key? key,
     required this.isInternal,
-    required this.onGenerateIdeas,
   }) : super(key: key);
   final bool isInternal;
-  final VoidCallback onGenerateIdeas;
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -163,27 +158,28 @@ class _ComponentListHeader extends StatelessWidget {
           ),
         Consumer(
           builder: (context, ref, child) {
-            final activeProject = ref.watch(activeProjectProvider);
-            List<Component> components = [];
-            if (isInternal) {
-              components = activeProject.components.where((comp) => comp.isInternal == true).toList();
-            } else {
-              components = activeProject.components.where((comp) => comp.isInternal == false).toList();
-            }
+            // final activeProject = ref.watch(activeProjectProvider);
+            // List<Component> components = [];
+            // if (isInternal) {
+            //   components = activeProject.components.where((comp) => comp.isInternal == true).toList();
+            // } else {
+            //   components = activeProject.components.where((comp) => comp.isInternal == false).toList();
+            // }
             return ElevatedButton.icon(
               icon: const Icon(Icons.tips_and_updates),
               label: const Text('Generate ideas'),
               onPressed: () {
-                for (final component in components) {
-                  final idea = ref.read(ideaManageProvider.notifier).create(
-                        activeProject,
-                        component,
-                        SITTechniques.substraction,
-                      );
-                  if (idea != null) {
-                    debugPrint('🌟 Idea generared: ${idea.concept}\n');
-                  }
-                }
+                ref.read(ideaManageProvider.notifier).generateIdeasUsingSIT(SITTechniques.substraction, isInternal);
+                // for (final component in components) {
+                //   final idea = ref.read(ideaManageProvider.notifier).create(
+                //         activeProject,
+                //         component,
+                //         SITTechniques.substraction,
+                //       );
+                //   if (idea != null) {
+                //     debugPrint('🌟 Idea generared: ${idea.concept}\n');
+                //   }
+                // }
               },
             );
           },

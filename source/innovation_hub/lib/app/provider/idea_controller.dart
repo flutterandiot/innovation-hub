@@ -175,3 +175,8 @@ class Ideas extends _$Ideas {
     ref.read(activeProjectProvider).ideas = state;
   }
 }
+
+@riverpod
+int ideaIndex(IdeaIndexRef ref) {
+  return throw UnimplementedError();
+}

@@ -21,7 +21,7 @@ final projectsProvider =
 );
 
 typedef _$Projects = AutoDisposeNotifier<List<Project>>;
-String _$activeProjectHash() => r'f2ee075052dd5149d3e1be7f882cdd092dece17b';
+String _$activeProjectHash() => r'1fb9827cfaa171d811e67f552b3f81c5d85924bc';
 
 /// See also [ActiveProject].
 @ProviderFor(ActiveProject)

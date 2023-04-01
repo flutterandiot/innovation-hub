@@ -6,6 +6,20 @@ part of 'idea_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$ideaIndexHash() => r'e4215a7cf4357324eed30f8e3d7b1d15a200a573';
+
+/// See also [ideaIndex].
+@ProviderFor(ideaIndex)
+final ideaIndexProvider = AutoDisposeProvider<int>.internal(
+  ideaIndex,
+  name: r'ideaIndexProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$ideaIndexHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef IdeaIndexRef = AutoDisposeProviderRef<int>;
 String _$ideaManageHash() => r'9a0e9540667456249d1e0bab2a05a2b0bf9ed85a';
 
 /// See also [IdeaManage].

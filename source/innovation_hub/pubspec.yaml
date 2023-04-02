@@ -22,6 +22,7 @@ dependencies:
   hooks_riverpod: ^2.3.2
   intl: ^0.18.0
   lottie: ^2.2.0
+  pluto_grid: ^6.0.4
   riverpod_annotation: ^2.0.1
   textfield_tags: ^2.0.2
   url_strategy: ^0.2.0

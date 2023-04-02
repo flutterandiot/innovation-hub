@@ -10,6 +10,7 @@
 * Description: This file is ....
  */
 import 'package:flutter/material.dart';
+import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -24,13 +25,6 @@ class Projects extends _$Projects {
   @override
   List<Project> build() {
     return Project.sampleProjects;
-  }
-
-  Project? currentProject;
-
-  void setCurrentProject(Project project) {
-    debugPrint('Set current project is ${project.id}-${project.name}');
-    currentProject = project;
   }
 
   void addProject(Project project) {
@@ -69,13 +63,33 @@ class ActiveProject extends _$ActiveProject {
         type: ProjectType.product.name,
         components: [],
         favorite: false,
+        ideas: [],
       );
 
   void setProject(Project project) {
     state = project;
+    if (project.ideas.isEmpty) {
+      ref.read(ideaManageProvider.notifier).setIdea(null);
+    }
   }
 
-  void addComponent(Component component) {
+  void updateProject(Project withProject) {
+    state = state.copyWith(
+      id: withProject.id,
+      name: withProject.name,
+      description: withProject.description,
+      createdAt: withProject.createdAt,
+      favorite: withProject.favorite,
+      createdBy: withProject.createdBy,
+      team: withProject.team,
+      updatedAt: withProject.updatedAt,
+      type: withProject.type,
+      components: withProject.components,
+      ideas: withProject.ideas,
+    );
+  }
+
+  void addComponentToProject(Component component) {
     var prj = state;
     prj.components.add(component);
     state = state.copyWith(
@@ -83,7 +97,7 @@ class ActiveProject extends _$ActiveProject {
     );
   }
 
-  void updateComponent(Component component) {
+  void updateComponentToProject(Component component) {
     var prj = state;
     bool found = false;
     int i = 0;
@@ -105,7 +119,7 @@ class ActiveProject extends _$ActiveProject {
     }
   }
 
-  void deleteComponent(Component component) {
+  void deleteComponentFromProject(Component component) {
     var prj = state;
     bool found = false;
     found = prj.components.contains(component);
@@ -180,7 +194,7 @@ class ActiveProject extends _$ActiveProject {
       i++;
     }
     //Update component
-    updateComponent(component);
+    updateComponentToProject(component);
   }
 }
 

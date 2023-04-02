@@ -21,6 +21,7 @@ void main() {
         User.demoUser1,
       ],
       favorite: false,
+      ideas: [],
     );
 
     print(project.toString());

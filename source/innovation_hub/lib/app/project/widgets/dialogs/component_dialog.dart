@@ -175,9 +175,9 @@ class ComponentDialog extends HookConsumerWidget {
     bool isEdit,
   ) {
     if (isEdit) {
-      ref.read(activeProjectProvider.notifier).updateComponent(component);
+      ref.read(activeProjectProvider.notifier).updateComponentToProject(component);
     } else {
-      ref.read(activeProjectProvider.notifier).addComponent(component);
+      ref.read(activeProjectProvider.notifier).addComponentToProject(component);
     }
   }
 

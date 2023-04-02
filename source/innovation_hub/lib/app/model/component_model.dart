@@ -114,42 +114,42 @@ class Component {
 
   static final demoComp1 = Component(
     id: AppUtilities.getUid(),
-    name: 'Demo Comp1',
+    name: 'Leg',
     importance: 3,
     isInternal: true,
-    description: 'Demo component',
+    description: 'Leg of the chair, support the base of the chair',
     attributes: [],
   );
   static final demoComp2 = Component(
     id: AppUtilities.getUid(),
-    name: 'Demo Comp2',
+    name: 'Base',
     importance: 3,
     isInternal: true,
-    description: 'Demo component',
+    description: 'base of the chair, person will sit on',
     attributes: [],
   );
   static final demoComp3 = Component(
     id: AppUtilities.getUid(),
-    name: 'Demo Comp3',
+    name: 'Back',
     importance: 3,
     isInternal: true,
-    description: 'Demo component',
+    description: 'Back of the chair, person will lean back',
     attributes: [],
   );
   static final demoComp4 = Component(
     id: AppUtilities.getUid(),
-    name: 'Demo Comp4',
+    name: 'Floor',
     importance: 3,
     isInternal: false,
-    description: 'Demo component',
+    description: 'Floor where the chair is stayed on',
     attributes: [],
   );
   static final demoComp5 = Component(
     id: AppUtilities.getUid(),
-    name: 'Demo Comp5',
+    name: 'Person',
     importance: 3,
     isInternal: false,
-    description: 'Demo component',
+    description: 'Soneone sit on the chair',
     attributes: [],
   );
 }

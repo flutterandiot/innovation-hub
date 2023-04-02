@@ -145,7 +145,7 @@ class ComponentCard extends HookConsumerWidget {
           onWillPop: () async => false,
           child: DeleteComponentCofirmDialog(
             onDelete: () {
-              ref.read(activeProjectProvider.notifier).deleteComponent(component);
+              ref.read(activeProjectProvider.notifier).deleteComponentFromProject(component);
             },
           ),
         );

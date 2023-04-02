@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../utils/app_utils.dart';
 import '../../provider/project_provider.dart';
 
-class ProjectPageAppBar extends ConsumerWidget {
-  const ProjectPageAppBar({
+class TopNaviView extends ConsumerWidget {
+  const TopNaviView({
     Key? key,
     required this.title,
   }) : super(key: key);
@@ -19,14 +19,10 @@ class ProjectPageAppBar extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       height: 72,
-      child: AppBar(
-        leading: Row(
-          children: [
-            title,
-          ],
-        ),
-        leadingWidth: 300,
-        actions: [
+      child: Row(
+        children: [
+          const Spacer(),
+          title,
           Tooltip(
             message: 'Created at ${AppUtilities.getDateTimeFormatted(
               AppUtilities.getTimeFromEpoch(

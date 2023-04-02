@@ -32,7 +32,7 @@ class Project {
   String updatedAt;
   String type;
   List<Component> components;
-  List<Idea>? ideas;
+  List<Idea> ideas;
   Project({
     required this.id,
     required this.name,
@@ -44,7 +44,7 @@ class Project {
     required this.team,
     required this.type,
     required this.components,
-    this.ideas,
+    required this.ideas,
   });
 
   Project copyWith({
@@ -87,7 +87,7 @@ class Project {
       'updatedAt': updatedAt,
       'type': type,
       'components': components.map((x) => x.toMap()).toList(),
-      'ideas': ideas?.map((x) => x.toMap()).toList(),
+      'ideas': ideas.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -111,13 +111,11 @@ class Project {
           (x) => Component.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      ideas: map['ideas'] != null
-          ? List<Idea>.from(
-              (map['ideas'] as List<int>).map<Idea?>(
-                (x) => Idea.fromMap(x as Map<String, dynamic>),
-              ),
-            )
-          : null,
+      ideas: List<Idea>.from(
+        (map['ideas'] as List<int>).map<Idea?>(
+          (x) => Idea.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
@@ -165,8 +163,8 @@ class Project {
   static List<Project> sampleProjects = [
     Project(
       id: AppUtilities.getUid(),
-      name: 'Sample Project 1',
-      description: 'Demo project',
+      name: 'New Chair',
+      description: 'New office chair concept',
       createdAt: AppUtilities.getTimeStampFromNow(),
       updatedAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.demoUser1,
@@ -187,8 +185,8 @@ class Project {
     ),
     Project(
       id: AppUtilities.getUid(),
-      name: 'Sample Project 2',
-      description: 'Demo project',
+      name: 'New Car',
+      description: 'New car concept',
       createdAt: AppUtilities.getTimeStampFromNow(),
       updatedAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.demoUser1,
@@ -200,8 +198,8 @@ class Project {
     ),
     Project(
       id: AppUtilities.getUid(),
-      name: 'Sample Project 3',
-      description: 'Demo project',
+      name: 'New mobile phone',
+      description: 'New mobile phone concept',
       createdAt: AppUtilities.getTimeStampFromNow(),
       updatedAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.demoUser1,

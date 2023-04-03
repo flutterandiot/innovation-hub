@@ -68,15 +68,18 @@ class MainApp extends StatelessWidget {
 // you use a lower version, some properties may not be supported. In
 // that case you can also remove them after copying the theme to your app.
       theme: FlexThemeData.light(
-        // scheme: FlexScheme.blumineBlue,
-        colorScheme: flexSchemeLight,
+        scheme: FlexScheme.material,
         surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-        blendLevel: 9,
-        tabBarStyle: null,
+        blendLevel: 7,
+        appBarStyle: FlexAppBarStyle.material,
         subThemesData: const FlexSubThemesData(
           blendOnLevel: 10,
           blendOnColors: false,
+          blendTextTheme: true,
           useM2StyleDividerInM3: true,
+          defaultRadius: 2.0,
+          outlinedButtonOutlineSchemeColor: SchemeColor.primary,
+          chipRadius: 1.0,
         ),
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
@@ -85,14 +88,15 @@ class MainApp extends StatelessWidget {
         // fontFamily: GoogleFonts.notoSans().fontFamily,
       ),
       darkTheme: FlexThemeData.dark(
-        // scheme: FlexScheme.blumineBlue,
-        colorScheme: flexSchemeDark,
+        scheme: FlexScheme.material,
         surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-        blendLevel: 15,
-        tabBarStyle: null,
+        blendLevel: 13,
         subThemesData: const FlexSubThemesData(
           blendOnLevel: 20,
           useM2StyleDividerInM3: true,
+          defaultRadius: 2.0,
+          outlinedButtonOutlineSchemeColor: SchemeColor.primary,
+          chipRadius: 1.0,
         ),
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,

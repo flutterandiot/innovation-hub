@@ -6,8 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/home/widgets/logo.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
-import 'package:innovation_hub/app/project/project_views/idea_details_page.dart';
-import 'package:innovation_hub/app/project/widgets/top_navi_view.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/constants.dart';
 
@@ -115,19 +113,21 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
             ),
           },
         ),
-        secondaryBody: (activeIdea == null || !isDashboardShow)
-            ? null
-            : SlotLayout(config: {
-                Breakpoints.large: SlotLayout.from(
-                  key: const Key('second-body-medium-n-up'),
-                  // This overrides the default behavior of the secondaryBody
-                  // disappearing as it is animating out.
-                  outAnimation: AdaptiveScaffold.stayOnScreen,
-                  builder: (context) {
-                    return const IdeaDetailsPage();
-                  },
-                ),
-              }),
+        // secondaryBody: (activeIdea == null || !isDashboardShow)
+        //     ? null
+        //     : SlotLayout(
+        //         config: {
+        //           Breakpoints.large: SlotLayout.from(
+        //             key: const Key('second-body-medium-n-up'),
+        //             // This overrides the default behavior of the secondaryBody
+        //             // disappearing as it is animating out.
+        //             outAnimation: AdaptiveScaffold.stayOnScreen,
+        //             builder: (context) {
+        //               return const IdeaDetailsPage();
+        //             },
+        //           ),
+        //         },
+        //       ),
         bottomNavigation: SlotLayout(
           config: <Breakpoint, SlotLayoutConfig>{
             Breakpoints.small: SlotLayout.from(
@@ -141,22 +141,22 @@ class _ProjectWorkspaceState extends ConsumerState<ProjectWorkspace> {
             ),
           },
         ),
-        topNavigation: SlotLayout(
-          config: {
-            Breakpoints.smallAndUp: SlotLayout.from(
-              key: const Key('top-navi'),
-              builder: (context) {
-                return TopNaviView(
-                  title: Text(
-                    '',
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                );
-              },
-            ),
-          },
-        ),
+        // topNavigation: SlotLayout(
+        //   config: {
+        //     Breakpoints.smallAndUp: SlotLayout.from(
+        //       key: const Key('top-navi'),
+        //       builder: (context) {
+        //         return TopNaviView(
+        //           title: Text(
+        //             '',
+        //             overflow: TextOverflow.ellipsis,
+        //             style: Theme.of(context).textTheme.titleLarge,
+        //           ),
+        //         );
+        //       },
+        //     ),
+        //   },
+        // ),
       ),
     );
   }

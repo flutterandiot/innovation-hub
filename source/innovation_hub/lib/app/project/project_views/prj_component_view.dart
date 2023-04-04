@@ -13,10 +13,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/widgets/dialogs/component_dialog.dart';
+import 'package:innovation_hub/app/project/widgets/top_navi_view.dart';
 
 import '../../provider/project_provider.dart';
 import '../widgets/component_card.dart';
-import '../widgets/project_app_bar.dart';
 
 class ProjectComponentView extends ConsumerWidget {
   const ProjectComponentView({super.key});
@@ -28,16 +28,16 @@ class ProjectComponentView extends ConsumerWidget {
     final components = activeProject.components;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-        child: ProjectPageAppBar(
-          title: Text(
-            'Project components',
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(AppBar().preferredSize.height),
+      //   child: TopNaviView(
+      //     title: Text(
+      //       'Project components',
+      //       overflow: TextOverflow.ellipsis,
+      //       style: Theme.of(context).textTheme.titleLarge,
+      //     ),
+      //   ),
+      // ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -46,6 +46,13 @@ class ProjectComponentView extends ConsumerWidget {
               child: Column(
                 children: [
                   //Header
+                  TopNaviView(
+                    title: Text(
+                      'Project components',
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

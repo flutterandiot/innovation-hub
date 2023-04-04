@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:innovation_hub/app/model/idea_model.dart';
-import 'package:innovation_hub/app/project/widgets/project_app_bar.dart';
+import 'package:innovation_hub/app/project/widgets/top_navi_view.dart';
 
 import 'sit_attribute_dependency.dart';
 import 'sit_division.dart';
@@ -22,7 +22,7 @@ class TechniquePage extends StatelessWidget {
       backgroundColor: Theme.of(context).dialogBackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-        child: ProjectPageAppBar(
+        child: TopNaviView(
           title: Text(
             'Apply SIT Technique',
             overflow: TextOverflow.ellipsis,

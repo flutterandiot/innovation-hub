@@ -21,8 +21,9 @@ class TopNaviView extends ConsumerWidget {
       height: 72,
       child: Row(
         children: [
-          const Spacer(),
           title,
+          const Spacer(),
+
           Tooltip(
             message: 'Created at ${AppUtilities.getDateTimeFormatted(
               AppUtilities.getTimeFromEpoch(

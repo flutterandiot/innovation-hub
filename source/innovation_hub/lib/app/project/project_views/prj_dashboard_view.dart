@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/component_container.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/ideas_container.dart';
 import 'package:innovation_hub/app/project/widgets/project_page_header.dart';
+import 'package:innovation_hub/app/project/widgets/top_navi_view.dart';
 
 class ProjectDashboardView extends StatelessWidget {
   const ProjectDashboardView({super.key});
@@ -24,15 +25,23 @@ class ProjectDashboardView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
-              ProjectPageHeader(),
-              SizedBox(height: 16),
-              ProjectComponentsContainer(),
-              SizedBox(height: 16),
-              IdeasContainer(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12.0, left: 12, right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TopNaviView(
+                    title: Text(
+                  'Dashboard',
+                  style: Theme.of(context).textTheme.titleLarge,
+                )),
+                const ProjectPageHeader(),
+                const SizedBox(height: 16),
+                const ProjectComponentsContainer(),
+                const SizedBox(height: 16),
+                const IdeasContainer(),
+              ],
+            ),
           ),
         ),
       ),

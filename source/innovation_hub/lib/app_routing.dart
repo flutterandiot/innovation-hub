@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:innovation_hub/app/home/startup_page.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
+import 'package:innovation_hub/app/project/project_views/idea_details_page.dart';
 import 'package:innovation_hub/app/project/project_views/prj_component_view.dart';
 import 'package:innovation_hub/app/project/project_views/prj_dashboard_view.dart';
 import 'package:innovation_hub/app/project/project_views/techniques/technique_page.dart';
@@ -31,6 +32,7 @@ enum AppRoute {
   projectDashboard,
   projectComponent,
   projectTechnique,
+  ideaPage,
 }
 
 final router = GoRouter(
@@ -111,7 +113,32 @@ final router = GoRouter(
             );
           },
         ),
-
+        GoRoute(
+          path: '/:id/ideas/:ideaId',
+          name: AppRoute.ideaPage.name,
+          pageBuilder: (context, state) {
+            // final idea = state.extra as Idea;
+            return CustomTransitionPage(
+              child: const IdeaDetailsPage(),
+              transitionsBuilder: (context, animation, secondAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
+                final tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  // child: child,
+                  child: FadeTransition(
+                    opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                    child: child,
+                  ),
+                );
+              },
+            );
+          },
+        ),
         GoRoute(
           // Go to a SIT technique with 2 params
           // [id]: project Id

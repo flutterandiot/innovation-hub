@@ -1,13 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/project/project_views/dashboard/ideas_container.dart';
-import 'package:innovation_hub/app/project/widgets/substraction/substract_idea_dialog.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
+import 'package:innovation_hub/app_routing.dart';
 
 import '../../../model/component_model.dart';
 
@@ -250,7 +251,7 @@ class _ComponentListTile extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 8.0, bottom: 10),
             child: ElevatedButton.icon(
               onPressed: () {
-                _showAddIdea(context, comp);
+                _showAddIdea(context, ref, comp);
               },
               icon: const Icon(
                 Icons.tips_and_updates,
@@ -265,17 +266,42 @@ class _ComponentListTile extends ConsumerWidget {
     );
   }
 
-  Future<void> _showAddIdea(BuildContext context, Component component) async {
-    await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return WillPopScope(
-            onWillPop: () async => false,
-            child: SubstractionIdeaDialog(
-              component: component,
-            ),
-          );
-        });
+  Future<void> _showAddIdea(BuildContext context, WidgetRef ref, Component component) async {
+    final project = ref.read(activeProjectProvider);
+    final idea = ref.read(ideaManageProvider.notifier).create(
+          project,
+          component,
+          SITTechniques.substraction,
+        );
+    if (idea != null) {
+      //NOTE -  set new created idea as the current one
+      ref.read(ideaManageProvider.notifier).setIdea(idea);
+      // Get location of the page route
+      final currentLocation = GoRouter.of(context).location;
+      debugPrint('Show idea page for ${idea.id}, from $currentLocation');
+      // Go to idea details page
+      context.goNamed(
+        AppRoute.ideaPage.name,
+        params: {
+          'id': project.id,
+          'ideaId': idea.id,
+        },
+        extra: currentLocation,
+      );
+    } else {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('This component is already used to create an idea')));
+    }
+    //   await showDialog(
+    //       context: context,
+    //       barrierDismissible: false,
+    //       builder: (context) {
+    //         return WillPopScope(
+    //           onWillPop: () async => false,
+    //           child: SubstractionIdeaDialog(
+    //             component: component,
+    //           ),
+    //         );
+    //       });
   }
 }

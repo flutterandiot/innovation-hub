@@ -13,6 +13,9 @@ class IdeaDetailsPage extends HookConsumerWidget {
 
     final nameTextController = useTextEditingController(text: idea.name);
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Idea page'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

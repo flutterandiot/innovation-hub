@@ -9,6 +9,8 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 
+import '../../../model/idea_model.dart';
+
 class IdeasContainer extends ConsumerWidget {
   const IdeasContainer({super.key});
 
@@ -174,8 +176,11 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
   /// You can manipulate the grid dynamically at runtime by passing this through the [onLoaded] callback.
   late final PlutoGridStateManager stateManager;
 
-  List<PlutoRow> _createIdeaRows(BuildContext context) {
-    final ideaList = ref.watch(ideasProvider);
+  List<PlutoRow> _createIdeaRows(
+    BuildContext context,
+    List<Idea> ideaList,
+  ) {
+    debugPrint('rebuild idea rows');
     return ideaList
         .map(
           (mIdea) => PlutoRow(
@@ -199,12 +204,15 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
 
   @override
   Widget build(BuildContext context) {
+    final ideaList = ref.watch(ideasProvider);
+    debugPrint('Rebuid idea table');
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(15),
         child: PlutoGrid(
           columns: columns,
-          rows: _createIdeaRows(context),
+          rows: _createIdeaRows(context, ideaList),
+
           // columnGroups: columnGroups,
           onLoaded: (PlutoGridOnLoadedEvent event) {
             stateManager = event.stateManager;

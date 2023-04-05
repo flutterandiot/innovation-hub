@@ -21,7 +21,6 @@ class ProjectDashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Rebuild the Dashboard');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

@@ -110,6 +110,7 @@ class IdeaManage extends _$IdeaManage {
       createdAt: idea.createdAt,
       createdBy: idea.createdBy,
     );
+    ref.read(ideasProvider.notifier).update(idea);
   }
 
   /// Read idea with [fromId]

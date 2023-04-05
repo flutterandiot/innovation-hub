@@ -181,7 +181,8 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
     List<Idea> ideaList,
   ) {
     debugPrint('rebuild idea rows');
-    return ideaList
+
+    final rows = ideaList
         .map(
           (mIdea) => PlutoRow(
             cells: {
@@ -200,12 +201,15 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
           ),
         )
         .toList();
+
+    return rows;
   }
 
   @override
   Widget build(BuildContext context) {
     final ideaList = ref.watch(ideasProvider);
     debugPrint('Rebuid idea table');
+
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(15),
@@ -220,12 +224,7 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
           onChanged: (PlutoGridOnChangedEvent event) {
             debugPrint(event.toString());
           },
-          onRowDoubleTap: (event) {
-            debugPrint('Row selected: ${event.rowIdx}');
-          },
-          onRowChecked: (event) {
-            debugPrint('Row selected: ${event.rowIdx}');
-          },
+
           configuration: const PlutoGridConfiguration(
             columnSize: PlutoGridColumnSizeConfig(
               autoSizeMode: PlutoAutoSizeMode.scale,

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
+import 'package:innovation_hub/app/provider/project_provider.dart';
+import 'package:innovation_hub/app_routing.dart';
 
 class IdeaDetailsPage extends HookConsumerWidget {
   const IdeaDetailsPage({super.key});
@@ -10,44 +14,66 @@ class IdeaDetailsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final idea = ref.watch(ideaManageProvider)!;
-
     final nameTextController = useTextEditingController(text: idea.name);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Idea page'),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8, top: 32),
-            child: Column(
-              children: [
-                Text(idea.concept),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: nameTextController,
-                  decoration: const InputDecoration(
-                    hintText: 'Idea name',
-                    labelText: 'Name',
+    // final desccriptionTextController = useTextEditingController(text: idea.description);
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Idea page'),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {
+              _saveIdeaName(ref, idea);
+              context.goNamed(AppRoute.projectDashboard.name, params: {
+                'id': ref.read(activeProjectProvider).id,
+              });
+            },
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8, top: 32),
+              child: Column(
+                children: [
+                  Text(idea.concept),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: nameTextController,
+                    decoration: const InputDecoration(
+                      hintText: 'Idea name',
+                      labelText: 'Name',
+                    ),
+                    onSubmitted: (value) {
+                      idea.name = nameTextController.text;
+                      // _saveIdeaName(ref, idea);
+                    },
                   ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: nameTextController,
-                  decoration: const InputDecoration(
-                    hintText: 'description of idea',
-                    labelText: 'Description',
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text('Rating idea'),
-                const _RatingIdea(),
-              ],
+                  // const SizedBox(height: 12),
+                  // TextField(
+                  //   controller: nameTextController,
+                  //   decoration: const InputDecoration(
+                  //     hintText: 'description of idea',
+                  //     labelText: 'Description',
+                  //   ),
+                  // ),
+                  const SizedBox(height: 12),
+                  const Text('Rating idea'),
+                  const _RatingIdea(),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  void _saveIdeaName(WidgetRef ref, Idea idea) {
+    ref.read(ideaManageProvider.notifier).update(idea);
   }
 }
 

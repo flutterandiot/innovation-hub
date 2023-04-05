@@ -1,16 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
 
-import '../../../app_routing.dart';
-import '../../provider/project_provider.dart';
-
 class IdeaDetailsPage extends HookConsumerWidget {
-  const IdeaDetailsPage({super.key});
+  const IdeaDetailsPage({
+    super.key,
+    required this.goFromPage,
+  });
+
+  /// Record the page call this page
+  final String goFromPage;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,9 +33,10 @@ class IdeaDetailsPage extends HookConsumerWidget {
             ),
             onPressed: () {
               _saveIdeaName(ref, idea);
-              context.goNamed(AppRoute.projectDashboard.name, params: {
-                'id': ref.read(activeProjectProvider).id,
-              });
+              context.go(goFromPage);
+              // context.goNamed(AppRoute.projectDashboard.name, params: {
+              //   'id': ref.read(activeProjectProvider).id,
+              // });
             },
           ),
         ),

@@ -117,9 +117,11 @@ final router = GoRouter(
           path: '/:id/ideas/:ideaId',
           name: AppRoute.ideaPage.name,
           pageBuilder: (context, state) {
-            // final idea = state.extra as Idea;
+            final String goFromPage = state.extra as String;
             return CustomTransitionPage(
-              child: const IdeaDetailsPage(),
+              child: IdeaDetailsPage(
+                goFromPage: goFromPage,
+              ),
               transitionsBuilder: (context, animation, secondAnimation, child) {
                 const begin = Offset(1.0, 0.0);
                 const end = Offset.zero;

@@ -264,12 +264,15 @@ class _EditButton extends ConsumerWidget {
       onPressed: () {
         _onEditRow(rendererContext, context);
         ref.read(ideaManageProvider.notifier).setIdea(idea);
+        final currentLocation = GoRouter.of(context).location;
+
         context.goNamed(
           AppRoute.ideaPage.name,
           params: {
             'id': project.id,
             'ideaId': idea.id,
           },
+          extra: currentLocation,
         );
       },
       child: const Text('Edit'),

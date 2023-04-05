@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
@@ -65,23 +64,6 @@ class _IdeaListViewContainer extends ConsumerWidget {
           Expanded(
             child: (ideas.isNotEmpty)
                 ? const PlutoGridExamplePage()
-                // ? ListView.builder(
-                //     padding: const EdgeInsets.only(left: 8, right: 8),
-                //     itemCount: ideas.length,
-                //     itemBuilder: (context, index) {
-                //       return ProviderScope(
-                //         overrides: [
-                //           ideaIndexProvider.overrideWithValue(index),
-                //         ],
-                //         child: const _IdeaListTile(),
-                //       );
-                //       // return _IdeaListTile(ideas[index]);
-                //       // _IdeaListTile(idea: ideas[index]);
-                //     },
-                //     // separatorBuilder: (context, index) {
-                //     //   return const Divider();
-                //     // },
-                //   )
                 : const SizedBox(
                     child: Center(
                       child: Text("There isn't any idea for this for project."),
@@ -89,84 +71,6 @@ class _IdeaListViewContainer extends ConsumerWidget {
                   ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _IdeaListTile extends HookConsumerWidget {
-  const _IdeaListTile(
-      // this.idea,
-      );
-  // final Idea idea;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final selectedIdea = ref.watch(ideaManageProvider);
-    final ideaIndex = ref.watch(ideaIndexProvider);
-    final ideaList = ref.watch(ideasProvider);
-    final idea = ideaList[ideaIndex];
-    final isSelected = useState(false);
-    isSelected.value = idea.id == selectedIdea?.id;
-
-    debugPrint('Idea  rebuilt: ${idea.id}');
-
-    return Card(
-      child: ListTile(
-        selected: isSelected.value,
-        selectedTileColor: Colors.amberAccent,
-        title: Text(idea.concept),
-        trailing: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 300,
-            minWidth: 100,
-          ),
-          child: Row(
-            children: [
-              Tooltip(
-                message: 'Feasible',
-                child: TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    side: const BorderSide(),
-                  ),
-                  child: const Text('F'),
-                ),
-              ),
-              Tooltip(
-                message: 'Desirable',
-                child: TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    side: const BorderSide(),
-                  ),
-                  child: const Text('D'),
-                ),
-              ),
-              SizedBox(
-                width: 64,
-                height: 64,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Icon(
-                      Icons.star,
-                      color: isSelected.value ? Colors.white : Colors.amber,
-                      size: 48,
-                    ),
-                    Text(
-                      '${idea.rating}',
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        onTap: () {
-          ref.read(ideaManageProvider.notifier).setIdea(idea);
-        },
       ),
     );
   }
@@ -183,7 +87,6 @@ class PlutoGridExamplePage extends ConsumerStatefulWidget {
 }
 
 class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
-  late BuildContext myContext;
   final List<PlutoColumn> columns = <PlutoColumn>[
     PlutoColumn(
       title: 'Action',
@@ -198,9 +101,7 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
           children: [
             ElevatedButton.icon(
               icon: const Icon(Icons.delete),
-              onPressed: () {
-                _onDeleteRow(rendererContext);
-              },
+              onPressed: () {},
               label: const Text('Delete'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -259,39 +160,6 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
     ),
   ];
 
-  final List<PlutoRow> rows = [
-    PlutoRow(
-      cells: {
-        'rating': PlutoCell(value: 'user1'),
-        'name': PlutoCell(value: 'Mike'),
-        'component': PlutoCell(value: 20),
-        'method': PlutoCell(value: 'Programmer'),
-        'feasibility': PlutoCell(value: '2021-01-01'),
-        'updated_at': PlutoCell(value: '09:00'),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'rating': PlutoCell(value: 'user2'),
-        'name': PlutoCell(value: 'Jack'),
-        'component': PlutoCell(value: 25),
-        'method': PlutoCell(value: 'Designer'),
-        'feasibility': PlutoCell(value: '2021-02-01'),
-        'updated_at': PlutoCell(value: '10:00'),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'rating': PlutoCell(value: 'user3'),
-        'name': PlutoCell(value: 'Suzi'),
-        'component': PlutoCell(value: 40),
-        'method': PlutoCell(value: 'Owner'),
-        'feasibility': PlutoCell(value: '2021-03-01'),
-        'updated_at': PlutoCell(value: '11:00'),
-      },
-    ),
-  ];
-
   /// columnGroups that can group columns can be omitted.
   final List<PlutoColumnGroup> columnGroups = [
     PlutoColumnGroup(title: 'rating', fields: ['rating'], expandedColumn: true),
@@ -329,27 +197,8 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
         .toList();
   }
 
-  static void _onDeleteRow(PlutoColumnRendererContext rendererContext) {
-    final rowIdx = rendererContext.rowIdx;
-    debugPrint('Delete row: $rowIdx');
-  }
-
-  static void _onFavoriteRow(PlutoColumnRendererContext rendererContext) {
-    final rowIdx = rendererContext.rowIdx;
-    debugPrint('Favorite row: $rowIdx');
-  }
-
-  static void _onEditRow(
-    PlutoColumnRendererContext rendererContext,
-  ) {
-    final rowIdx = rendererContext.rowIdx;
-
-    debugPrint('Edit row: $rowIdx');
-  }
-
   @override
   Widget build(BuildContext context) {
-    myContext = context;
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(15),

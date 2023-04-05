@@ -5,8 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
-import 'package:innovation_hub/app/provider/project_provider.dart';
-import 'package:innovation_hub/app_routing.dart';
+
+import '../../../app_routing.dart';
+import '../../provider/project_provider.dart';
 
 class IdeaDetailsPage extends HookConsumerWidget {
   const IdeaDetailsPage({super.key});
@@ -95,7 +96,6 @@ class _RatingIdea extends ConsumerWidget {
         color: Colors.amber,
       ),
       onRatingUpdate: (rating) {
-        print(rating);
         ref.read(ideaManageProvider.notifier).ratingIdea(idea, rating);
       },
     );

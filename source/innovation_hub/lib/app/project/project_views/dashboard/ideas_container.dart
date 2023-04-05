@@ -91,6 +91,8 @@ class PlutoGridExamplePage extends ConsumerStatefulWidget {
 class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
   final List<PlutoColumn> columns = <PlutoColumn>[
     PlutoColumn(
+      readOnly: true,
+      enableContextMenu: false,
       title: 'Action',
       field: 'details',
       type: PlutoColumnType.text(),
@@ -122,20 +124,25 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
       },
     ),
     PlutoColumn(
+      readOnly: true,
+      enableContextMenu: false,
       title: 'Rating',
       field: 'rating',
       type: PlutoColumnType.number(),
       // minWidth: 80,
       titleTextAlign: PlutoColumnTextAlign.center,
-      enableContextMenu: false,
     ),
     PlutoColumn(
+      readOnly: true,
+      enableContextMenu: false,
       title: 'Name',
       field: 'name',
       type: PlutoColumnType.text(),
       titleTextAlign: PlutoColumnTextAlign.center,
     ),
     PlutoColumn(
+      readOnly: true,
+      enableContextMenu: false,
       title: 'Component',
       field: 'component',
       type: PlutoColumnType.text(),
@@ -143,18 +150,23 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
     ),
     PlutoColumn(
       readOnly: true,
+      enableContextMenu: false,
       title: 'Method',
       field: 'method',
       type: PlutoColumnType.text(),
       titleTextAlign: PlutoColumnTextAlign.center,
     ),
     PlutoColumn(
+      readOnly: true,
+      enableContextMenu: false,
       title: 'Feasibility',
       field: 'feasibility',
       type: PlutoColumnType.number(),
       titleTextAlign: PlutoColumnTextAlign.center,
     ),
     PlutoColumn(
+      readOnly: true,
+      enableContextMenu: false,
       title: 'Updated',
       field: 'updated_at',
       type: PlutoColumnType.date(format: 'dd-MM-yy'),
@@ -182,25 +194,24 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
   ) {
     debugPrint('rebuild idea rows');
 
-    final rows = ideaList
-        .map(
-          (mIdea) => PlutoRow(
-            cells: {
-              'rating': PlutoCell(value: mIdea.rating),
-              'name': PlutoCell(value: mIdea.name),
-              'component': PlutoCell(value: mIdea.componentId),
-              'method': PlutoCell(value: mIdea.method.name),
-              'feasibility': PlutoCell(value: mIdea.rating),
-              'updated_at': PlutoCell(
-                value: AppUtilities.getTimeFromEpoch(
-                  int.tryParse(mIdea.createdAt) ?? DateTime.now().millisecondsSinceEpoch ~/ 1000,
-                ),
-              ),
-              'details': PlutoCell(value: 'Edit'),
-            },
+    final rows = ideaList.map((mIdea) {
+      debugPrint('✅ Update idea: ${mIdea.name}');
+      return PlutoRow(
+        cells: {
+          'rating': PlutoCell(value: mIdea.rating),
+          'name': PlutoCell(value: mIdea.name),
+          'component': PlutoCell(value: mIdea.componentId),
+          'method': PlutoCell(value: mIdea.method.name),
+          'feasibility': PlutoCell(value: mIdea.rating),
+          'updated_at': PlutoCell(
+            value: AppUtilities.getTimeFromEpoch(
+              int.tryParse(mIdea.createdAt) ?? DateTime.now().millisecondsSinceEpoch ~/ 1000,
+            ),
           ),
-        )
-        .toList();
+          'details': PlutoCell(value: 'Edit'),
+        },
+      );
+    }).toList();
 
     return rows;
   }
@@ -253,7 +264,7 @@ class _EditButton extends ConsumerWidget {
       onPressed: () {
         _onEditRow(rendererContext, context);
         ref.read(ideaManageProvider.notifier).setIdea(idea);
-        context.pushNamed(
+        context.goNamed(
           AppRoute.ideaPage.name,
           params: {
             'id': project.id,

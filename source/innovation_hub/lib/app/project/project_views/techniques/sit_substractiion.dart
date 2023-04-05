@@ -22,8 +22,9 @@ class SITSubstraction extends ConsumerWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
+          const SizedBox(height: 12),
           Text(
-            'Select a component to use Substraction technique to generate idea',
+            'Select a component to generate new idea concept',
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const Divider(),

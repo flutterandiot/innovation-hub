@@ -34,7 +34,7 @@ final ideaManageProvider = NotifierProvider<IdeaManage, Idea?>.internal(
 );
 
 typedef _$IdeaManage = Notifier<Idea?>;
-String _$ideasHash() => r'dcf4267bb09e7338c25c31e0f04671dca8687491';
+String _$ideasHash() => r'a455b31b92c39dfd7c77fe19b89ca39e712fbd19';
 
 /// See also [Ideas].
 @ProviderFor(Ideas)

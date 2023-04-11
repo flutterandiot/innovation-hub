@@ -6,8 +6,23 @@ part of 'component_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$componentIndexHash() => r'75334dddc08df52ed45c63510d4b45ba5d563378';
+
+/// See also [componentIndex].
+@ProviderFor(componentIndex)
+final componentIndexProvider = AutoDisposeProvider<int>.internal(
+  componentIndex,
+  name: r'componentIndexProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$componentIndexHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef ComponentIndexRef = AutoDisposeProviderRef<int>;
 String _$componentControllerHash() =>
-    r'adc2ba25f93a44e21b63f9e95c2322b552547007';
+    r'1ca3c956a98df56e6f903571fa1199a5f8208845';
 
 /// Keep alive to keep the component works on many screen
 ///
@@ -20,12 +35,12 @@ final componentControllerProvider =
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$componentControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[activeProjectProvider],
+  allTransitiveDependencies: <ProviderOrFamily>[activeProjectProvider],
 );
 
 typedef _$ComponentController = Notifier<Component?>;
-String _$componentsHash() => r'621fa1d17901682146682b275346cf2378a42135';
+String _$componentsHash() => r'e7362edb692dedc13d489bd89472ea2e5d87a185';
 
 /// See also [Components].
 @ProviderFor(Components)
@@ -35,8 +50,8 @@ final componentsProvider =
   name: r'componentsProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$componentsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[activeProjectProvider],
+  allTransitiveDependencies: <ProviderOrFamily>[activeProjectProvider],
 );
 
 typedef _$Components = Notifier<List<Component>>;

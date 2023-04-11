@@ -97,26 +97,27 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
       field: 'details',
       type: PlutoColumnType.text(),
       titleTextAlign: PlutoColumnTextAlign.center,
-      minWidth: 300,
+      minWidth: 180,
       renderer: (rendererContext) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.min,
           children: [
-            ElevatedButton.icon(
+            IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {},
-              label: const Text('Delete'),
-              style: ElevatedButton.styleFrom(
+              style: IconButton.styleFrom(
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                // _onFavoriteRow();
-              },
-              child: const Text('Favorite'),
+            IconButton(
+              icon: const Icon(Icons.favorite),
+              onPressed: () {},
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.pink[300],
+                foregroundColor: Colors.white,
+              ),
             ),
             _EditButton(rendererContext: rendererContext),
           ],
@@ -131,6 +132,17 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
       type: PlutoColumnType.number(),
       // minWidth: 80,
       titleTextAlign: PlutoColumnTextAlign.center,
+    ),
+    PlutoColumn(
+      readOnly: true,
+      enableContextMenu: false,
+      title: 'Idea',
+      field: 'idea',
+
+      type: PlutoColumnType.text(),
+      // minWidth: 80,
+      titleTextAlign: PlutoColumnTextAlign.center,
+      minWidth: 300,
     ),
     PlutoColumn(
       readOnly: true,
@@ -175,14 +187,14 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
   ];
 
   /// columnGroups that can group columns can be omitted.
-  final List<PlutoColumnGroup> columnGroups = [
-    PlutoColumnGroup(title: 'rating', fields: ['rating'], expandedColumn: true),
-    PlutoColumnGroup(title: 'User information', fields: ['name', 'component']),
-    PlutoColumnGroup(title: 'Status', children: [
-      PlutoColumnGroup(title: 'A', fields: ['method'], expandedColumn: true),
-      PlutoColumnGroup(title: 'Etc.', fields: ['feasibility', 'updated_at']),
-    ]),
-  ];
+  // final List<PlutoColumnGroup> columnGroups = [
+  //   PlutoColumnGroup(title: 'rating', fields: ['rating'], expandedColumn: true),
+  //   PlutoColumnGroup(title: 'User information', fields: ['name', 'component']),
+  //   PlutoColumnGroup(title: 'Status', children: [
+  //     PlutoColumnGroup(title: 'A', fields: ['method'], expandedColumn: true),
+  //     PlutoColumnGroup(title: 'Etc.', fields: ['feasibility', 'updated_at']),
+  //   ]),
+  // ];
 
   /// [PlutoGridStateManager] has many methods and properties to dynamically manipulate the grid.
   /// You can manipulate the grid dynamically at runtime by passing this through the [onLoaded] callback.
@@ -194,24 +206,27 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
   ) {
     debugPrint('rebuild idea rows');
 
-    final rows = ideaList.map((mIdea) {
-      debugPrint('✅ Update idea: ${mIdea.name}');
-      return PlutoRow(
-        cells: {
-          'rating': PlutoCell(value: mIdea.rating),
-          'name': PlutoCell(value: mIdea.name),
-          'component': PlutoCell(value: mIdea.componentId),
-          'method': PlutoCell(value: mIdea.method.name),
-          'feasibility': PlutoCell(value: mIdea.rating),
-          'updated_at': PlutoCell(
-            value: AppUtilities.getTimeFromEpoch(
-              int.tryParse(mIdea.createdAt) ?? DateTime.now().millisecondsSinceEpoch ~/ 1000,
+    final rows = ideaList.map(
+      (mIdea) {
+        debugPrint('✅ Update idea: ${mIdea.name}');
+        return PlutoRow(
+          cells: {
+            'rating': PlutoCell(value: mIdea.rating),
+            'idea': PlutoCell(value: mIdea.concept.replaceAll('Imagine you have a new', '')),
+            'name': PlutoCell(value: mIdea.name),
+            'component': PlutoCell(value: mIdea.componentId),
+            'method': PlutoCell(value: mIdea.method.name),
+            'feasibility': PlutoCell(value: mIdea.rating),
+            'updated_at': PlutoCell(
+              value: AppUtilities.getTimeFromEpoch(
+                int.tryParse(mIdea.createdAt) ?? DateTime.now().millisecondsSinceEpoch ~/ 1000,
+              ),
             ),
-          ),
-          'details': PlutoCell(value: 'Edit'),
-        },
-      );
-    }).toList();
+            'details': PlutoCell(value: 'Edit'),
+          },
+        );
+      },
+    ).toList();
 
     return rows;
   }
@@ -260,7 +275,7 @@ class _EditButton extends ConsumerWidget {
     final project = ref.watch(activeProjectProvider);
     final ideaList = ref.watch(ideasProvider);
     final idea = ideaList[rendererContext.rowIdx];
-    return ElevatedButton(
+    return IconButton(
       onPressed: () {
         _onEditRow(rendererContext, context);
         ref.read(ideaManageProvider.notifier).setIdea(idea);
@@ -275,7 +290,11 @@ class _EditButton extends ConsumerWidget {
           extra: currentLocation,
         );
       },
-      child: const Text('Edit'),
+      icon: const Icon(Icons.edit),
+      style: IconButton.styleFrom(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+      ),
     );
   }
 

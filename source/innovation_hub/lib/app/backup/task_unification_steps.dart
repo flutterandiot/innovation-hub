@@ -20,7 +20,7 @@ class TaskUnificationSteps extends ConsumerWidget {
       stepShape: StepShape.rRectangle,
       stepBorderRadius: 15,
       borderThickness: 2,
-      padding: 20,
+      padding: const EdgeInsetsDirectional.all(10),
       stepRadius: 32,
       finishedStepBorderColor: Colors.deepOrange,
       finishedStepTextColor: Colors.black,

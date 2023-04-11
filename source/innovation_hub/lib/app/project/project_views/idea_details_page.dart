@@ -53,6 +53,7 @@ class IdeaDetailsPage extends HookConsumerWidget {
                     decoration: const InputDecoration(
                       hintText: 'Idea name',
                       labelText: 'Name',
+                      helperText: 'Press Enter to save',
                     ),
                     onSubmitted: (value) {
                       idea.name = nameTextController.text;

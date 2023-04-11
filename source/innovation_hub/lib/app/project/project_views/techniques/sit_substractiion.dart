@@ -292,16 +292,5 @@ class _ComponentListTile extends ConsumerWidget {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('This component is already used to create an idea')));
     }
-    //   await showDialog(
-    //       context: context,
-    //       barrierDismissible: false,
-    //       builder: (context) {
-    //         return WillPopScope(
-    //           onWillPop: () async => false,
-    //           child: SubstractionIdeaDialog(
-    //             component: component,
-    //           ),
-    //         );
-    //       });
   }
 }

@@ -89,67 +89,67 @@ class ActiveProject extends _$ActiveProject {
     );
   }
 
-  void addComponentToProject(Component component) {
-    var prj = state;
-    prj.components.add(component);
-    state = state.copyWith(
-      components: prj.components,
-    );
-  }
+  // void addComponentToProject(Component component) {
+  //   var prj = state;
+  //   prj.components.add(component);
+  //   state = state.copyWith(
+  //     components: prj.components,
+  //   );
+  // }
 
-  void updateComponentToProject(Component component) {
-    var prj = state;
-    bool found = false;
-    int i = 0;
-    final len = prj.components.length;
-    //Check internal
-    while (!found && i < len) {
-      final comp = prj.components[i];
-      if (comp.id == component.id) {
-        //Remove old one
-        prj.components.removeAt(i);
-        // insert update one
-        prj.components.insert(i, component);
-        state = state.copyWith(
-          components: prj.components,
-        );
-        found = true;
-      }
-      i++;
-    }
-  }
+  // void updateComponentToProject(Component component) {
+  //   var prj = state;
+  //   bool found = false;
+  //   int i = 0;
+  //   final len = prj.components.length;
+  //   //Check internal
+  //   while (!found && i < len) {
+  //     final comp = prj.components[i];
+  //     if (comp.id == component.id) {
+  //       //Remove old one
+  //       prj.components.removeAt(i);
+  //       // insert update one
+  //       prj.components.insert(i, component);
+  //       state = state.copyWith(
+  //         components: prj.components,
+  //       );
+  //       found = true;
+  //     }
+  //     i++;
+  //   }
+  // }
 
-  void deleteComponentFromProject(Component component) {
-    var prj = state;
-    bool found = false;
-    found = prj.components.contains(component);
-    if (found) {
-      prj.components.removeWhere((element) => element.id == component.id);
-      state = state.copyWith(
-        components: prj.components,
-      );
-    }
-  }
+  // void deleteComponentFromProject(Component component) {
+  //   var prj = state;
+  //   bool found = false;
+  //   found = prj.components.contains(component);
+  //   if (found) {
+  //     prj.components.removeWhere((element) => element.id == component.id);
+  //     state = state.copyWith(
+  //       components: prj.components,
+  //     );
+  //   }
+  // }
 
-  void componentEnableToggle(Component component) {
-    var prj = state;
-    bool found = false;
-    int i = 0;
-    final len = prj.components.length;
-    while (!found && i < len) {
-      final comp = prj.components[i];
-      if (comp.id == component.id) {
-        //Remove old one
-        prj.components[i].enabled = !prj.components[i].enabled;
-        // insert update one
-        state = state.copyWith(
-          components: prj.components,
-        );
-        found = true;
-      }
-      i++;
-    }
-  }
+  // void componentEnableToggle(Component component) {
+  //   var prj = state;
+  //   bool found = false;
+  //   int i = 0;
+  //   final len = prj.components.length;
+  //   while (!found && i < len) {
+  //     final comp = prj.components[i];
+  //     if (comp.id == component.id) {
+  //       //Remove old one
+  //       prj.components[i].enabled = !prj.components[i].enabled;
+  //       // insert update one
+  //       state = state.copyWith(
+  //         components: prj.components,
+  //       );
+  //       found = true;
+  //     }
+  //     i++;
+  //   }
+  // }
 
   void addAttribute(Component component, Attribute attribute) {
     var prj = state;
@@ -194,7 +194,7 @@ class ActiveProject extends _$ActiveProject {
       i++;
     }
     //Update component
-    updateComponentToProject(component);
+    // updateComponentToProject(component);
   }
 }
 

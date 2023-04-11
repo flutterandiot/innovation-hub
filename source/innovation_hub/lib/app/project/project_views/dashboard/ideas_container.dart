@@ -208,7 +208,6 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
 
     final rows = ideaList.map(
       (mIdea) {
-        debugPrint('✅ Update idea: ${mIdea.name}');
         return PlutoRow(
           cells: {
             'rating': PlutoCell(value: mIdea.rating),

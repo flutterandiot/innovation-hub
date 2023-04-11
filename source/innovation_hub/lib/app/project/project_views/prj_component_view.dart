@@ -14,8 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/widgets/dialogs/component_dialog.dart';
 import 'package:innovation_hub/app/project/widgets/top_navi_view.dart';
+import 'package:innovation_hub/app/provider/component_controller.dart';
 
-import '../../provider/project_provider.dart';
 import '../widgets/component_card.dart';
 
 class ProjectComponentView extends ConsumerWidget {
@@ -24,8 +24,8 @@ class ProjectComponentView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
-    final activeProject = ref.watch(activeProjectProvider);
-    final components = activeProject.components;
+    // final activeProject = ref.watch(activeProjectProvider);
+    final components = ref.watch(componentsProvider);
 
     return Scaffold(
       // appBar: PreferredSize(

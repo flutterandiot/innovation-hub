@@ -1,7 +1,6 @@
 import 'package:innovation_hub/app/model/component_model.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../model/project_model.dart';
 
 part 'component_controller.g.dart';
 
@@ -14,10 +13,31 @@ class ComponentController extends _$ComponentController {
   @override
   Component? build() => null;
 
+  /// Add [comp] to [componentsProvider]
+  void _addToList(Component comp) {
+    ref.read(componentsProvider.notifier).add(comp);
+  }
+
   void set(Component comp) => state = comp;
 
-  void addComponentToProject(Project toProject, Component comp) {
-    toProject.components.add(comp);
+  /// Create a component for project,
+  /// Add [comp] to  [componentsProvider]
+  void create(Component comp) {
+    _addToList(comp);
+  }
+
+  /// Update [comp] to the list, in [componentsProvider]
+  void update(Component comp) {
+    ref.read(componentsProvider.notifier).update(comp);
+  }
+
+  void enableToggle(Component comp) {
+    comp.enabled = !comp.enabled;
+    update(comp);
+  }
+
+  void delete(Component comp) {
+    ref.read(componentsProvider.notifier).remove(comp);
   }
 }
 
@@ -66,11 +86,6 @@ class Components extends _$Components {
   void remove(Component comp) {
     state = state.where((mComp) => mComp.id == comp.id).toList();
     _updateToProject();
-  }
-
-  void enableToggle(Component comp) {
-    comp.enabled = !comp.enabled;
-    update(comp);
   }
 
   void _updateToProject() {

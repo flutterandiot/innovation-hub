@@ -4,9 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/model/project_models.dart';
+import 'package:innovation_hub/app/provider/component_controller.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
-
-import '../../../provider/project_provider.dart';
 
 class ComponentDialog extends HookConsumerWidget {
   const ComponentDialog({
@@ -175,9 +174,10 @@ class ComponentDialog extends HookConsumerWidget {
     bool isEdit,
   ) {
     if (isEdit) {
-      ref.read(activeProjectProvider.notifier).updateComponentToProject(component);
+      // ref.read(activeProjectProvider.notifier).updateComponentToProject(component);
+      ref.read(componentControllerProvider.notifier).update(component);
     } else {
-      ref.read(activeProjectProvider.notifier).addComponentToProject(component);
+      ref.read(componentControllerProvider.notifier).create(component);
     }
   }
 

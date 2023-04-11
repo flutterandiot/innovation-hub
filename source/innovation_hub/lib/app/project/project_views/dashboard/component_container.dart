@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/widgets/chart_indicator.dart';
+import 'package:innovation_hub/app/provider/component_controller.dart';
 import 'package:innovation_hub/app_routing.dart';
 
 import '../../../provider/project_provider.dart';
@@ -13,7 +14,7 @@ class ProjectComponentsContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final components = ref.watch(activeProjectProvider.select((value) => value.components));
+    final components = ref.watch(componentsProvider);
 
     if (components.isEmpty) {
       return const _EmptyComponentView();

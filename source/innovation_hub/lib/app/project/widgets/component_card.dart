@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:innovation_hub/app/project/widgets/dialogs/attribute_dialog.dart';
+import 'package:innovation_hub/app/provider/component_controller.dart';
 
 import '../../model/component_model.dart';
-import '../../provider/project_provider.dart';
 import 'attribute_card.dart';
 import 'dialogs/component_dialog.dart';
 import 'delete_comp_confirm_dialog.dart';
@@ -145,7 +145,7 @@ class ComponentCard extends HookConsumerWidget {
           onWillPop: () async => false,
           child: DeleteComponentCofirmDialog(
             onDelete: () {
-              ref.read(activeProjectProvider.notifier).deleteComponentFromProject(component);
+              ref.read(componentControllerProvider.notifier).delete(component);
             },
           ),
         );
@@ -154,7 +154,7 @@ class ComponentCard extends HookConsumerWidget {
   }
 
   void _enableToggle(WidgetRef ref, Component component) {
-    ref.read(activeProjectProvider.notifier).componentEnableToggle(component);
+    ref.read(componentControllerProvider.notifier).enableToggle(component);
   }
 
   Future<void> _addAttribute(BuildContext context, Component component) async {

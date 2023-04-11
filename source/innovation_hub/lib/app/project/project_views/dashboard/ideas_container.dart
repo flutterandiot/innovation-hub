@@ -215,7 +215,7 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
             'idea': PlutoCell(value: mIdea.concept.replaceAll('Imagine you have a new', '')),
             'name': PlutoCell(value: mIdea.name),
             'component': PlutoCell(value: mIdea.componentId),
-            'method': PlutoCell(value: mIdea.method.name),
+            'method': PlutoCell(value: mIdea.method.name.characters.first.toUpperCase()),
             'feasibility': PlutoCell(value: mIdea.rating),
             'updated_at': PlutoCell(
               value: AppUtilities.getTimeFromEpoch(

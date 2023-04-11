@@ -1,6 +1,6 @@
 import 'package:innovation_hub/app/model/component_model.dart';
+import 'package:innovation_hub/app/provider/project_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 import '../model/project_model.dart';
 
 part 'component_controller.g.dart';
@@ -16,4 +16,10 @@ class ComponentController extends _$ComponentController {
   void addComponentToProject(Project toProject, Component comp) {
     toProject.components.add(comp);
   }
+}
+
+@Riverpod(keepAlive: true)
+class Components extends _$Components {
+  @override
+  List<Component> build() => ref.watch(activeProjectProvider).components;
 }

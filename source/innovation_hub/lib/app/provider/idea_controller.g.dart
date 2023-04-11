@@ -20,7 +20,7 @@ final ideaIndexProvider = AutoDisposeProvider<int>.internal(
 );
 
 typedef IdeaIndexRef = AutoDisposeProviderRef<int>;
-String _$ideaManageHash() => r'22963ff63b1fa6578ddedc735ab2657237bb179f';
+String _$ideaManageHash() => r'6ae9a0ae78c40edc94c8c475e4b2bed3aac34b72';
 
 /// See also [IdeaManage].
 @ProviderFor(IdeaManage)

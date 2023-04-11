@@ -199,7 +199,7 @@ class Ideas extends _$Ideas {
     final ideaMap = withIdea.toMap();
     state = [
       for (final idea in state)
-        if (idea.id == withIdea.id) Idea.fromMap(ideaMap) else idea
+        if (idea.id == withIdea.id) withIdea else idea
     ];
     ref.read(activeProjectProvider).ideas = state;
   }

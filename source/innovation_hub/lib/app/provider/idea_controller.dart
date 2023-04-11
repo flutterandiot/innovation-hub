@@ -39,32 +39,33 @@ class IdeaManage extends _$IdeaManage {
         // TODO: Handle this case.
         return null;
       case SITTechniques.substraction:
-        final concept = "Imagine you have a new ${ofProject.type} '${ofProject.name}' without the '${withComponent.name}'";
-        final idea = Idea(
-          id: AppUtilities.getUid(),
-          concept: concept,
-          name: '',
-          rating: 1,
-          benefit: 3,
-          method: SITTechniques.substraction,
-          componentId: withComponent.id,
-          attributeIds: [],
-          createdAt: AppUtilities.getTimeStampFromNow(),
-          createdBy: User.demoUser1,
-        );
+        return _createIdeaWithSubstractionTechnique(ofProject, withComponent);
+      // final concept = "Imagine you have a new ${ofProject.type} '${ofProject.name}' without the '${withComponent.name}'";
+      // final idea = Idea(
+      //   id: AppUtilities.getUid(),
+      //   concept: concept,
+      //   name: '',
+      //   rating: 1,
+      //   benefit: 3,
+      //   method: SITTechniques.substraction,
+      //   componentId: withComponent.id,
+      //   attributeIds: [],
+      //   createdAt: AppUtilities.getTimeStampFromNow(),
+      //   createdBy: User.demoUser1,
+      // );
 
-        // check if this idea is already generated
-        final ideaList = ref.read(ideasProvider);
-        for (final id in ideaList) {
-          if (id.concept.contains(idea.concept)) {
-            debugPrint('Skip this concept');
-            return null; // Skip the idea
-          }
-        }
-        // else, update to the list
-        // state = idea;
-        addIdeaToList(idea);
-        return idea;
+      // // check if this idea is already generated
+      // final ideaList = ref.read(ideasProvider);
+      // for (final id in ideaList) {
+      //   if (id.concept.contains(idea.concept)) {
+      //     debugPrint('Skip this concept');
+      //     return null; // Skip the idea
+      //   }
+      // }
+      // // else, update to the list
+      // // state = idea;
+      // addIdeaToList(idea);
+      // return idea;
       case SITTechniques.multiplication:
         // TODO: Handle this case.
         return null;
@@ -75,6 +76,35 @@ class IdeaManage extends _$IdeaManage {
         // TODO: Handle this case.
         return null;
     }
+  }
+
+  Idea? _createIdeaWithSubstractionTechnique(Project ofProject, Component withComponent) {
+    final concept = "Imagine you have a new ${ofProject.type} '${ofProject.name}' without the '${withComponent.name}'";
+    final idea = Idea(
+      id: AppUtilities.getUid(),
+      concept: concept,
+      name: '',
+      rating: 1,
+      benefit: 3,
+      method: SITTechniques.substraction,
+      componentId: withComponent.id,
+      attributeIds: [],
+      createdAt: AppUtilities.getTimeStampFromNow(),
+      createdBy: User.demoUser1,
+    );
+
+    // check if this idea is already generated
+    final ideaList = ref.read(ideasProvider);
+    for (final id in ideaList) {
+      if (id.concept.contains(idea.concept)) {
+        debugPrint('Skip this concept');
+        return null; // Skip the idea
+      }
+    }
+    // else, update to the list
+    // state = idea;
+    addIdeaToList(idea);
+    return idea;
   }
 
   void generateIdeasUsingSIT(SITTechniques technique, bool isInternal) {

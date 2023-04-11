@@ -192,20 +192,26 @@ class Ideas extends _$Ideas {
       idea,
     ];
     //Update to project
-    ref.read(activeProjectProvider).ideas = state;
+    // ref.read(activeProjectProvider).ideas = state;
+    _updateToProject();
   }
 
   void update(Idea withIdea) {
-    final ideaMap = withIdea.toMap();
+    // final ideaMap = withIdea.toMap();
     state = [
       for (final idea in state)
         if (idea.id == withIdea.id) withIdea else idea
     ];
-    ref.read(activeProjectProvider).ideas = state;
+    // ref.read(activeProjectProvider).ideas = state;
+    _updateToProject();
   }
 
   void removeIdea(String ideaId) {
     state = state.where((idea) => idea.id != ideaId).toList();
+    _updateToProject();
+  }
+
+  void _updateToProject() {
     ref.read(activeProjectProvider).ideas = state;
   }
 }

@@ -130,10 +130,14 @@ class _ShowHypothesis extends HookConsumerWidget {
   final HypothesisType hypothesis;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final idea = ref.watch(ideaManageProvider)!;
-    final selected = useState(true);
-    final descTextController = useTextEditingController(text: '');
-
+    final assumptions = ref.watch(ideaManageProvider.select((value) => value!.assumptions));
+    final selected = useState(
+      assumptions.firstWhere((element) => element.type == hypothesis).isGood,
+    );
+    final descTextController = useTextEditingController(
+      text: assumptions.firstWhere((element) => element.type == hypothesis).description,
+    );
+    debugPrint(' ✅ Update: ${descTextController.text} and ${selected.value}');
     return Column(
       children: [
         Card(

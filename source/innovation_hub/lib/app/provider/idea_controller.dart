@@ -11,13 +11,13 @@
  */
 import 'package:flutter/foundation.dart';
 import 'package:innovation_hub/app/model/component_model.dart';
+import 'package:innovation_hub/app/model/idea_assumption.dart';
 import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
 import 'package:innovation_hub/app/shared/user.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../model/idea_hypothesis.dart';
 import '../model/project_model.dart';
 
 part 'idea_controller.g.dart';
@@ -93,9 +93,11 @@ class IdeaManage extends _$IdeaManage {
       createdAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.demoUser1,
       updatedAt: AppUtilities.getTimeStampFromNow(),
-      desirability: IdeaHypothesis(),
-      feasibility: IdeaHypothesis(),
-      viability: IdeaHypothesis(),
+      assumptions: [
+        IdeaAssumption(type: HypothesisType.feasible),
+        IdeaAssumption(type: HypothesisType.desirable),
+        IdeaAssumption(type: HypothesisType.viable),
+      ],
     );
 
     // check if this idea is already generated

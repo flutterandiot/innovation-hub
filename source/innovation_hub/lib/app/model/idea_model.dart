@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import '../shared/user.dart';
-import 'idea_hypothesis.dart';
+import 'idea_assumption.dart';
 
 enum SITTechniques {
   taskUnification,
@@ -49,14 +49,8 @@ class Idea {
   /// Owner of this idea
   User createdBy;
 
-  /// Desirability assumption of the idea
-  IdeaHypothesis desirability;
-
-  /// Viability assumption of the idea
-  IdeaHypothesis viability;
-
-  /// Feasibility of the idea
-  IdeaHypothesis feasibility;
+  /// assumptions of the idea
+  List<IdeaAssumption> assumptions;
 
   Idea({
     required this.id,
@@ -70,9 +64,7 @@ class Idea {
     required this.createdAt,
     required this.updatedAt,
     required this.createdBy,
-    required this.desirability,
-    required this.viability,
-    required this.feasibility,
+    required this.assumptions,
   });
 
   Idea copyWith({
@@ -87,9 +79,7 @@ class Idea {
     String? createdAt,
     String? updatedAt,
     User? createdBy,
-    IdeaHypothesis? feasibility,
-    IdeaHypothesis? viability,
-    IdeaHypothesis? desirability,
+    List<IdeaAssumption>? assumptions,
   }) {
     return Idea(
       id: id ?? this.id,
@@ -103,9 +93,7 @@ class Idea {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       createdBy: createdBy ?? this.createdBy,
-      desirability: desirability ?? this.desirability,
-      feasibility: feasibility ?? this.feasibility,
-      viability: viability ?? this.viability,
+      assumptions: assumptions ?? this.assumptions,
     );
   }
 
@@ -122,9 +110,7 @@ class Idea {
       'createdAt': createdAt,
       'updatedAt': updatedAt,
       'createdBy': createdBy.toMap(),
-      'viability': viability.toMap(),
-      'desirability': desirability.toMap(),
-      'feasibility': feasibility.toMap(),
+      'assumptions': assumptions.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -140,10 +126,12 @@ class Idea {
       attributeIds: List<String>.from(map['attributeIds'] as List<String>),
       createdAt: map['createdAt'],
       updatedAt: map['updatedAt'],
-      createdBy: User.fromMap(map['createdBy']),
-      desirability: IdeaHypothesis.fromMap(map['desirability']),
-      feasibility: IdeaHypothesis.fromMap(map['feasibility']),
-      viability: IdeaHypothesis.fromMap(map['viability']),
+      createdBy: User.fromMap(map['createdBy'] as Map<String, dynamic>),
+      assumptions: List<IdeaAssumption>.from(
+        (map['assumptions'] as List<int>).map<IdeaAssumption>(
+          (x) => IdeaAssumption.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
@@ -153,7 +141,7 @@ class Idea {
 
   @override
   String toString() {
-    return 'Idea(id: $id, concept: $concept, name: $name, rating: $rating, benefit: $benefit, method: $method, componentId: $componentId, attributeIds: $attributeIds, createdAt: $createdAt, updatedAt: $updatedAt, createdBy: $createdBy)';
+    return 'Idea(id: $id, concept: $concept, name: $name, rating: $rating, benefit: $benefit, method: $method, componentId: $componentId, attributeIds: $attributeIds, createdAt: $createdAt, updatedAt: $updatedAt, createdBy: $createdBy, assumptions: $assumptions)';
   }
 
   @override
@@ -170,7 +158,8 @@ class Idea {
         listEquals(other.attributeIds, attributeIds) &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt &&
-        other.createdBy == createdBy;
+        other.createdBy == createdBy &&
+        listEquals(other.assumptions, assumptions);
   }
 
   @override
@@ -185,6 +174,7 @@ class Idea {
         attributeIds.hashCode ^
         createdAt.hashCode ^
         updatedAt.hashCode ^
-        createdBy.hashCode;
+        createdBy.hashCode ^
+        assumptions.hashCode;
   }
 }

@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:innovation_hub/app/model/idea_model.dart';
 import 'package:innovation_hub/app/provider/idea_controller.dart';
+import 'package:innovation_hub/gaps.dart';
 
 class IdeaDetailsPage extends HookConsumerWidget {
   const IdeaDetailsPage({
@@ -21,7 +22,6 @@ class IdeaDetailsPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final idea = ref.watch(ideaManageProvider)!;
     final nameTextController = useTextEditingController(text: idea.name);
-    // final desccriptionTextController = useTextEditingController(text: idea.description);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -43,32 +43,43 @@ class IdeaDetailsPage extends HookConsumerWidget {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8, top: 32),
+              padding: const EdgeInsets.only(left: 24, right: 24, top: 32),
               child: Column(
                 children: [
                   Text(idea.concept),
-                  const SizedBox(height: 12),
-                  TextField(
-                    controller: nameTextController,
-                    decoration: const InputDecoration(
-                      hintText: 'Idea name',
-                      labelText: 'Name',
-                      helperText: 'Press Enter to save',
+                  gapH12,
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(minWidth: 200, maxWidth: 400),
+                    child: TextField(
+                      controller: nameTextController,
+                      decoration: const InputDecoration(
+                        hintText: 'Idea name',
+                        labelText: 'Name',
+                        helperText: 'Press Enter to save',
+                      ),
+                      onSubmitted: (value) {
+                        idea.name = nameTextController.text;
+                        // _saveIdeaName(ref, idea);
+                      },
                     ),
-                    onSubmitted: (value) {
-                      idea.name = nameTextController.text;
-                      // _saveIdeaName(ref, idea);
-                    },
                   ),
-                  // const SizedBox(height: 12),
-                  // TextField(
-                  //   controller: nameTextController,
-                  //   decoration: const InputDecoration(
-                  //     hintText: 'description of idea',
-                  //     labelText: 'Description',
-                  //   ),
-                  // ),
-                  const SizedBox(height: 12),
+                  gapH12,
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(minWidth: 200, maxWidth: 400),
+                    child: TextField(
+                      controller: nameTextController,
+                      decoration: const InputDecoration(
+                        hintText: 'Idea description',
+                        labelText: 'Description',
+                        helperText: 'Press Enter to save',
+                      ),
+                      onSubmitted: (value) {
+                        idea.name = nameTextController.text;
+                        // _saveIdeaName(ref, idea);
+                      },
+                    ),
+                  ),
+                  gapH12,
                   const Text('Rating idea'),
                   const _RatingIdea(),
                 ],

@@ -17,6 +17,7 @@ import 'package:innovation_hub/app/shared/user.dart';
 import 'package:innovation_hub/utils/app_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../model/idea_hypothesis.dart';
 import '../model/project_model.dart';
 
 part 'idea_controller.g.dart';
@@ -91,6 +92,10 @@ class IdeaManage extends _$IdeaManage {
       attributeIds: [],
       createdAt: AppUtilities.getTimeStampFromNow(),
       createdBy: User.demoUser1,
+      updatedAt: AppUtilities.getTimeStampFromNow(),
+      desirability: IdeaHypothesis(),
+      feasibility: IdeaHypothesis(),
+      viability: IdeaHypothesis(),
     );
 
     // check if this idea is already generated

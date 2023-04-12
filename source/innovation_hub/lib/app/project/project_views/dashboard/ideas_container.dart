@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:innovation_hub/app/provider/component_controller.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
 import 'package:innovation_hub/app_routing.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -167,13 +168,17 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
       field: 'method',
       type: PlutoColumnType.text(),
       titleTextAlign: PlutoColumnTextAlign.center,
+      textAlign: PlutoColumnTextAlign.center,
     ),
     PlutoColumn(
-      readOnly: true,
+      // readOnly: true,
       enableContextMenu: false,
-      title: 'Feasibility',
-      field: 'feasibility',
-      type: PlutoColumnType.number(),
+      title: 'Opportunity',
+      field: 'opportunity',
+      type: PlutoColumnType.select(
+        [true, false],
+        defaultValue: true,
+      ),
       titleTextAlign: PlutoColumnTextAlign.center,
     ),
     PlutoColumn(
@@ -192,7 +197,7 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
   //   PlutoColumnGroup(title: 'User information', fields: ['name', 'component']),
   //   PlutoColumnGroup(title: 'Status', children: [
   //     PlutoColumnGroup(title: 'A', fields: ['method'], expandedColumn: true),
-  //     PlutoColumnGroup(title: 'Etc.', fields: ['feasibility', 'updated_at']),
+  //     PlutoColumnGroup(title: 'Etc.', fields: ['opportunity', 'updated_at']),
   //   ]),
   // ];
 
@@ -208,14 +213,16 @@ class _PlutoGridExamplePageState extends ConsumerState<PlutoGridExamplePage> {
 
     final rows = ideaList.map(
       (mIdea) {
+        final compName = ref.read(componentsProvider.notifier).findWithId(mIdea.componentId)?.name ?? 'N/A';
+
         return PlutoRow(
           cells: {
             'rating': PlutoCell(value: mIdea.rating),
             'idea': PlutoCell(value: mIdea.concept.replaceAll('Imagine you have a new', '')),
             'name': PlutoCell(value: mIdea.name),
-            'component': PlutoCell(value: mIdea.componentId),
+            'component': PlutoCell(value: compName),
             'method': PlutoCell(value: mIdea.method.name.characters.first.toUpperCase()),
-            'feasibility': PlutoCell(value: mIdea.rating),
+            'opportunity': PlutoCell(value: mIdea.rating > 3),
             'updated_at': PlutoCell(
               value: AppUtilities.getTimeFromEpoch(
                 int.tryParse(mIdea.createdAt) ?? DateTime.now().millisecondsSinceEpoch ~/ 1000,

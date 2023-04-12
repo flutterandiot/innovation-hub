@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:innovation_hub/app/model/component_model.dart';
 import 'package:innovation_hub/app/provider/project_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -90,6 +91,15 @@ class Components extends _$Components {
 
   void _updateToProject() {
     ref.read(activeProjectProvider).components = state;
+  }
+
+  Component? findWithId(String compId) {
+    try {
+      return state.firstWhere((mComp) => mComp.id == compId);
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
   }
 }
 

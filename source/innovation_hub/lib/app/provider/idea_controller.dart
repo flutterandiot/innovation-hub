@@ -150,6 +150,16 @@ class IdeaManage extends _$IdeaManage {
     ref.read(ideasProvider.notifier).update(idea);
   }
 
+  void updateAssumption(IdeaAssumption assumption) {
+    final updatedAssumptions = [
+      for (final assump in state!.assumptions)
+        if (assump.type == assumption.type) assumption else assump
+    ];
+    state = state!.copyWith(
+      assumptions: updatedAssumptions,
+    );
+  }
+
   /// Read idea with [fromId]
   /// return: read idea
   /// if not found, return null

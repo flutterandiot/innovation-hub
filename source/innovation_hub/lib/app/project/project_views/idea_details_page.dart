@@ -209,26 +209,13 @@ class _ShowHypothesis extends HookConsumerWidget {
   }
 
   void _updateHypothesis(WidgetRef ref, HypothesisType hypothesis, bool isGood, int level, String desc) {
-    // final idea = ref.read(ideaManageProvider)!;
-    // switch (hypothesis) {
-    //   case Hypothesis.feasible:
-    //     idea.feasibility.isGood = isGood;
-    //     idea.feasibility.description = desc;
-    //     idea.feasibility.level = level;
-    //     ref.read(ideaManageProvider.notifier).update(idea);
-    //     break;
-    //   case Hypothesis.desirable:
-    //     idea.desirability.isGood = isGood;
-    //     idea.desirability.description = desc;
-    //     idea.desirability.level = level;
-    //     ref.read(ideaManageProvider.notifier).update(idea);
-    //     break;
-    //   case Hypothesis.viable:
-    //     idea.viability.isGood = isGood;
-    //     idea.viability.description = desc;
-    //     idea.viability.level = level;
-    //     ref.read(ideaManageProvider.notifier).update(idea);
-    //     break;
-    // }
+    final assumption = IdeaAssumption(
+      type: hypothesis,
+      isGood: isGood,
+      level: level,
+      description: desc,
+    );
+
+    ref.read(ideaManageProvider.notifier).updateAssumption(assumption);
   }
 }
